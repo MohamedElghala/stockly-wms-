@@ -1,0 +1,29 @@
+{
+  "name": "wms-monorepo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "emulators": "firebase emulators:start --import=./emulator-data --export-on-exit=./emulator-data"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.17.0",
+      "onFail": "download"
+    }
+  },
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "eslint": "^10.8.0",
+    "firebase-tools": "12.9.1",
+    "prettier": "^3.9.6",
+    "turbo": "^2.10.7",
+    "typescript": "^7.0.2"
+  }
+}

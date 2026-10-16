@@ -1,0 +1,29 @@
+﻿{
+  "name": "The Calm WMS - منظومة إدارة المخازن",
+  "short_name": "Calm WMS",
+  "description": "منظومة إدارة المخازن وسلاسل الإمداد المتطورة - The Calm WMS",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#099A75",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/apple-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

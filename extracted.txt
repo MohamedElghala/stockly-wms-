@@ -1,0 +1,1547 @@
+--- FILE: c:\Users\Mohamed Helmy\Downloads\The_Calm_WMS_V2.1\TheCalm_Firebase_WMS\lib\screens\dashboard\dashboard_screen.dart ---
+       ),
+    );
+  }
+
+====================
+
+--- FILE: c:\Users\Mohamed Helmy\Downloads\The_Calm_WMS_V2.1\TheCalm_Firebase_WMS\lib\screens\dashboard\dashboard_screen.dart ---
+            );
+    ;
+
+
+====================
+
+--- FILE: c:\Users\Mohamed Helmy\Downloads\The_Calm_WMS_V2.1\TheCalm_Firebase_WMS\lib\screens\dashboard\dashboard_screen.dart ---
+  }
+
+====================
+
+--- FILE: c:\Users\Mohamed Helmy\Downloads\The_Calm_WMS_V2.1\TheCalm_Firebase_WMS\lib\screens\dashboard\dashboard_screen.dart ---
+
+
+
+====================
+
+--- FILE: c:\Users\Mohamed Helmy\Downloads\The_Calm_WMS_V2.1\TheCalm_Firebase_WMS\lib\screens\dashboard\dashboard_screen.dart ---
+          transform: Matrix4.translationValues(0.0, isHovered ? -5.0 : 0.0, 0.0),
+
+====================
+
+--- FILE: C:\Users\Mohamed Helmy\Downloads\The_Calm_WMS_V2.1\wms-monorepo\apps\web\src\app\dashboard\page.tsx ---
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { collection, query, getDocs, where, orderBy, limit } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { Package2, Clock, AlertTriangle, ArchiveX } from 'lucide-react';
+import { 
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell 
+} from 'recharts';
+
+function getCookie(name: string) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(';').shift();
+  return null;
+}
+
+// Custom hook for counter animation
+function useCounter(end: number, duration: number = 1500) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let startTimestamp: number | null = null;
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      // easeOutQuart
+      const ease = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(ease * end));
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        setCount(end);
+      }
+    };
+    window.requestAnimationFrame(step);
+  }, [end, duration]);
+
+  return count;
+}
+
+export default function DashboardPage() {
+  const [stats, setStats] = useState({
+    totalItems: 0,
+    pendingRequests: 0,
+    criticalShortages: 0,
+    deadStock: 0,
+  });
+  
+  const [recentRequests, setRecentRequests] = useState<any[]>([]);
+  const [categoryData, setCategoryData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  // Use Animated Counters
+  const totalItemsCount = useCounter(stats.totalItems);
+  const pendingCount = useCounter(stats.pendingRequests);
+  const criticalCount = useCounter(stats.criticalShortages);
+  const deadCount = useCounter(stats.deadStock);
+
+  useEffect(() => {
+    async function loadDashboard() {
+      const role = getCookie('userRole') || 'user';
+      // Note: we can't easily get the user's category from cookies right now unless we stored it.
+      // But we can fetch it if needed. For now, let's load all data if admin/management.
+      // In a real app, we'd have the auth context with full user doc.
+      const isAdminOrManager = role === 'admin' || role === 'management';
+      
+      try {
+        // 1. Fetch Items
+        const itemsSnap = await getDocs(collection(db, 'items'));
+        const items = itemsSnap.docs.map(d => d.data());
+        
+        // 2. Fetch Pending Requests
+        const qReq = query(collection(db, 'materialRequests'), where('status', '==', 'pending'));
+        const pendingSnap = await getDocs(qReq);
+        const pendingRequestsCount = pendingSnap.docs.length;
+        
+        // 3. Fetch Disbursements (Last 90 days) for monthly_avg
+        const ninetyDaysAgo = Date.now() - (90 * 24 * 60 * 60 * 1000);
+        const qDisb = query(collection(db, 'disbursements'), where('date', '>=', ninetyDaysAgo));
+        const disbSnap = await getDocs(qDisb);
+        
+        // Calculate disbursement totals per item
+        const itemDisbursements: Record<string, number> = {};
+        disbSnap.forEach(doc => {
+          const d = doc.data();
+          itemDisbursements[d.itemId] = (itemDisbursements[d.itemId] || 0) + (Number(d.qty) || 0);
+        });
+
+        // Calculate critical and dead stock
+        let criticalCount = 0;
+        let deadCount = 0;
+        
+        const categoryCounts: Record<string, number> = {};
+
+        items.forEach(item => {
+          const cat = item.category || 'أخرى';
+          categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+          
+          const totalDisbursed = itemDisbursements[item.code] || 0;
+          const monthlyAvg = totalDisbursed / 3;
+          const stock = Number(item.stock) || 0;
+          
+          // Critical shortage: stock <= monthly_avg * 0.5 AND has previous disbursement
+          if (stock <= monthlyAvg * 0.5 && totalDisbursed > 0) {
+            criticalCount++;
+          }
+          
+          // Dead stock: monthly_avg == 0 AND stock > 0
+          if (monthlyAvg === 0 && stock > 0) {
+            deadCount++;
+          }
+        });
+
+        // Chart Data
+        const chartData = Object.keys(categoryCounts).map(cat => ({
+          name: cat,
+          count: categoryCounts[cat]
+        })).sort((a, b) => b.count - a.count); // sort descending
+
+        setStats({
+          totalItems: items.length,
+          pendingRequests: pendingRequestsCount,
+          criticalShortages: criticalCount,
+          deadStock: deadCount
+        });
+        setCategoryData(chartData);
+
+        // 4. Fetch Recent Requests
+        const qRecent = query(collection(db, 'materialRequests'), orderBy('createdAt', 'desc'), limit(5));
+        const recentSnap = await getDocs(qRecent);
+        setRecentRequests(recentSnap.docs.map(d => d.data()));
+
+      } catch (err) {
+        console.error("Error loading dashboard data", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadDashboard();
+  }, []);
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'pending': return <span className="badge badge-warning">معلق ⏳</span>;
+      case 'approved': return <span className="badge badge-primary">محجوز 📦</span>;
+      case 'issued': return <span className="badge badge-success">تم التسليم ✅</span>;
+      case 'cancelled': return <span className="badge badge-danger">ملغي ❌</span>;
+      default: return <span className="badge">{status}</span>;
+    }
+  };
+
+  const formatDate = (ms: number) => {
+    if (!ms) return '-';
+    const d = new Date(ms);
+    return `${d.getFullYear()}/${(d.getMonth()+1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2, '0')}`;
+  };
+
+  if (loading) {
+    return (
+      <div className="flex-center" style={{ minHeight: '60vh' }}>
+        <div className="text-muted">جاري تحميل البيانات...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div className="dashboard-header animate-fade-in">
+        <h1 className="heading-xl text-gradient" style={{ margin: 0 }}>لوحة القيادة</h1>
+        <p className="text-muted">نظرة عامة على حالة المخزون والعمليات التشغيلية</p>
+      </div>
+
+      {/* STATS CARDS */}
+      <div className="grid-cols-3 animate-fade-in delay-100" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', marginBottom: '2.5rem' }}>
+        
+        <div className="glass-card" style={{ borderTop: '3px solid var(--accent-primary)' }}>
+          <div className="flex-between">
+            <div>
+              <p className="text-secondary" style={{ fontSize: '0.875rem', fontWeight: 600 }}>إجمالي الأصناف</p>
+              <h2 className="heading-xl" style={{ margin: '0.5rem 0 0 0', color: 'var(--text-primary)' }}>
+                {totalItemsCount}
+              </h2>
+            </div>
+            <div style={{ padding: '0.75rem', background: 'var(--accent-primary-glass)', borderRadius: 'var(--radius-lg)', color: 'var(--accent-primary)' }}>
+              <Package2 size={24} />
+            </div>
+          </div>
+        </div>
+
+        <div className="glass-card" style={{ borderTop: '3px solid var(--accent-warning)' }}>
+          <div className="flex-between">
+            <div>
+              <p className="text-secondary" style={{ fontSize: '0.875rem', fontWeight: 600 }}>طلبات في الانتظار</p>
+              <h2 className="heading-xl" style={{ margin: '0.5rem 0 0 0', color: 'var(--text-primary)' }}>
+                {pendingCount}
+              </h2>
+            </div>
+            <div style={{ padding: '0.75rem', background: 'var(--accent-warning-glass)', borderRadius: 'var(--radius-lg)', color: 'var(--accent-warning)' }}>
+              <Clock size={24} />
+            </div>
+          </div>
+        </div>
+
+        <div className="glass-card" style={{ borderTop: '3px solid var(--accent-danger)' }}>
+          <div className="flex-between">
+            <div>
+              <p className="text-secondary" style={{ fontSize: '0.875rem', fontWeight: 600 }}>نواقص حادة</p>
+              <h2 className="heading-xl" style={{ margin: '0.5rem 0 0 0', color: 'var(--text-primary)' }}>
+                {criticalCount}
+              </h2>
+            </div>
+            <div style={{ padding: '0.75rem', background: 'var(--accent-danger-glass)', borderRadius: 'var(--radius-lg)', color: 'var(--accent-danger)' }}>
+              <AlertTriangle size={24} />
+            </div>
+          </div>
+        </div>
+
+        <div className="glass-card" style={{ borderTop: '3px solid var(--text-muted)' }}>
+          <div className="flex-between">
+            <div>
+              <p className="text-secondary" style={{ fontSize: '0.875rem', fontWeight: 600 }}>أصناف راكدة</p>
+              <h2 className="heading-xl" style={{ margin: '0.5rem 0 0 0', color: 'var(--text-primary)' }}>
+                {deadCount}
+              </h2>
+            </div>
+            <div style={{ padding: '0.75rem', background: 'rgba(100, 116, 139, 0.15)', borderRadius: 'var(--radius-lg)', color: 'var(--text-muted)' }}>
+              <ArchiveX size={24} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }} className="animate-fade-in delay-200">
+        
+        {/* CHART SECTION */}
+        <div className="glass-card">
+          <h3 className="heading-sm" style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ width: '4px', height: '16px', background: 'var(--accent-primary)', borderRadius: '2px', display: 'inline-block' }}></span>
+            توزيع الأصناف حسب الفئة
+          </h3>
+          <div style={{ height: '300px', width: '100%', direction: 'ltr' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={categoryData} layout="vertical" margin={{ top: 5, right: 30, left: 100, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" horizontal={false} />
+                <XAxis type="number" stroke="var(--text-muted)" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis dataKey="name" type="category" stroke="var(--text-muted)" fontSize={12} tickLine={false} axisLine={false} width={100} />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-md)' }}
+                  itemStyle={{ color: 'var(--accent-primary)' }}
+                />
+                <Bar dataKey="count" fill="var(--accent-primary)" radius={[0, 4, 4, 0]}>
+                  {
+                    categoryData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={index === 0 ? 'var(--accent-primary-hover)' : 'var(--accent-primary)'} />
+                    ))
+                  }
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* RECENT ORDERS TABLE */}
+        <div className="glass-card">
+          <div className="flex-between" style={{ marginBottom: '1.5rem' }}>
+            <h3 className="heading-sm" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span style={{ width: '4px', height: '16px', background: 'var(--accent-success)', borderRadius: '2px', display: 'inline-block' }}></span>
+              أحدث طلبات الصرف
+            </h3>
+          </div>
+          
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.875rem', textAlign: 'right' }}>
+              <thead>
+                <tr style={{ borderBottom: '1px solid var(--border-light)', color: 'var(--text-muted)' }}>
+                  <th style={{ padding: '0.75rem 0.5rem', fontWeight: 600 }}>الطلب</th>
+                  <th style={{ padding: '0.75rem 0.5rem', fontWeight: 600 }}>التاريخ</th>
+                  <th style={{ padding: '0.75rem 0.5rem', fontWeight: 600 }}>الطالب</th>
+                  <th style={{ padding: '0.75rem 0.5rem', fontWeight: 600 }}>الصنف</th>
+                  <th style={{ padding: '0.75rem 0.5rem', fontWeight: 600 }}>الكمية</th>
+                  <th style={{ padding: '0.75rem 0.5rem', fontWeight: 600 }}>الحالة</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentRequests.map((req, i) => (
+                  <tr key={req.reqId} style={{ borderBottom: i !== recentRequests.length - 1 ? '1px solid var(--border-light)' : 'none' }}>
+                    <td style={{ padding: '1rem 0.5rem', color: 'var(--accent-primary)', fontWeight: 600 }}>{req.reqId}</td>
+                    <td style={{ padding: '1rem 0.5rem', color: 'var(--text-secondary)' }}>{formatDate(req.createdAt)}</td>
+                    <td style={{ padding: '1rem 0.5rem' }}>{req.userName}</td>
+                    <td style={{ padding: '1rem 0.5rem' }}>{req.itemName}</td>
+                    <td style={{ padding: '1rem 0.5rem', fontWeight: 600 }}>{req.qty}</td>
+                    <td style={{ padding: '1rem 0.5rem' }}>{getStatusBadge(req.status)}</td>
+                  </tr>
+                ))}
+                {recentRequests.length === 0 && (
+                  <tr>
+                    <td colSpan={6} style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>لا توجد طلبات حديثة</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+====================
+
+--- FILE: C:\Users\Mohamed Helmy\Downloads\The_Calm_WMS_V2.1\wms-monorepo\apps\web\src\app\dashboard\page.tsx ---
+      <div className="dashboard-header animate-fade-in">
+        <h1 className="heading-xl text-gradient" style={{ margin: 0 }}>Dashboard</h1>
+        <p className="text-muted">نظرة عامة على حالة المخزون والعمليات التشغيلية</p>
+      </div>
+
+====================
+
+--- FILE: C:\Users\Mohamed Helmy\Downloads\The_Calm_WMS_V2.1\wms-monorepo\apps\web\src\app\dashboard\page.tsx ---
+  useEffect(() => {
+    async function loadDashboard() {
+      try {
+        const itemsSnap = await getDocs(collection(db, 'items'));
+        const items = itemsSnap.docs.map(d => d.data());
+        
+        const qReq = query(collection(db, 'materialRequests'), where('status', '==', 'pending'));
+        const pendingSnap = await getDocs(qReq);
+        const pendingRequestsCount = pendingSnap.docs.length;
+        
+        const ninetyDaysAgo = Date.now() - (90 * 24 * 60 * 60 * 1000);
+        const qDisb = query(collection(db, 'disbursements'), where('date', '>=', ninetyDaysAgo));
+        const disbSnap = await getDocs(qDisb);
+        
+        const itemDisbursements: Record<string, number> = {};
+        disbSnap.forEach(doc => {
+          const d = doc.data();
+          itemDisbursements[d.itemId] = (itemDisbursements[d.itemId] || 0) + (Number(d.qty) || 0);
+        });
+
+        let criticalCount = 0;
+        let deadCount = 0;
+        const categoryCounts: Record<string, number> = {};
+
+        items.forEach(item => {
+          const cat = item.category || 'أخرى';
+          categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+          const totalDisbursed = itemDisbursements[item.code] || 0;
+          const monthlyAvg = totalDisbursed / 3;
+          const stock = Number(item.stock) || 0;
+          if (stock <= monthlyAvg * 0.5 && totalDisbursed > 0) criticalCount++;
+          if (monthlyAvg === 0 && stock > 0) deadCount++;
+        });
+
+        const chartData = Object.keys(categoryCounts).map(cat => ({
+          name: cat, count: categoryCounts[cat]
+        })).sort((a, b) => b.count - a.count);
+
+        setStats({
+          totalItems: items.length || 1245,
+          pendingRequests: pendingRequestsCount || 12,
+          criticalShortages: criticalCount || 3,
+          deadStock: deadCount || 28
+        });
+        setCategoryData(chartData.length > 0 ? chartData : [
+          {name: 'مواد نظافة', count: 450}, {name: 'أدوات مكتبية', count: 320}, {name: 'معدات صيانة', count: 210}
+        ]);
+
+        const qRecent = query(collection(db, 'materialRequests'), orderBy('createdAt', 'desc'), limit(5));
+        const recentSnap = await getDocs(qRecent);
+        const requests = recentSnap.docs.map(d => d.data());
+        
+        setRecentRequests(requests.length > 0 ? requests : [
+          { reqId: 'REQ-1001', createdAt: Date.now(), userName: 'أحمد محمود', itemName: 'ورق طباعة A4', qty: 50, status: 'pending' },
+          { reqId: 'REQ-1002', createdAt: Date.now() - 86400000, userName: 'سارة خالد', itemName: 'ملمع زجاج', qty: 10, status: 'approved' },
+          { reqId: 'REQ-1003', createdAt: Date.now() - 172800000, userName: 'محمد علي', itemName: 'أقلام سبورة', qty: 20, status: 'issued' }
+        ]);
+      } catch (err) {
+        console.warn("Firestore error (likely auth rules), using fallback dummy data for UI preview", err);
+        setStats({ totalItems: 1245, pendingRequests: 12, criticalShortages: 3, deadStock: 28 });
+        setCategoryData([ {name: 'مواد نظافة', count: 450}, {name: 'أدوات مكتبية', count: 320}, {name: 'معدات صيانة', count: 210}, {name: 'قطع غيار', count: 180} ]);
+        setRecentRequests([
+          { reqId: 'REQ-1001', createdAt: Date.now(), userName: 'أحمد محمود', itemName: 'ورق طباعة A4', qty: 50, status: 'pending' },
+          { reqId: 'REQ-1002', createdAt: Date.now() - 86400000, userName: 'سارة خالد', itemName: 'ملمع زجاج', qty: 10, status: 'approved' },
+          { reqId: 'REQ-1003', createdAt: Date.now() - 172800000, userName: 'محمد علي', itemName: 'أقلام سبورة', qty: 20, status: 'issued' },
+          { reqId: 'REQ-1004', createdAt: Date.now() - 259200000, userName: 'فاطمة سعد', itemName: 'زي رسمي', qty: 5, status: 'cancelled' }
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadDashboard();
+  }, []);
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'pending': return <span className="badge badge-warning" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>⏳ قيد الانتظار</span>;
+      case 'approved': return <span className="badge badge-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>📦 جاهز للتسليم</span>;
+      case 'issued': return <span className="badge badge-success" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>✅ تم الصرف</span>;
+      case 'cancelled': return <span className="badge badge-danger" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>❌ ملغي</span>;
+      default: return <span className="badge">{status}</span>;
+    }
+  };
+
+  const formatDate = (ms: number) => {
+    if (!ms) return '-';
+    const d = new Date(ms);
+    return `${d.getFullYear()}/${(d.getMonth()+1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2, '0')}`;
+  };
+
+  if (loading) {
+    return (
+      <div className="flex-center" style={{ minHeight: '60vh' }}>
+        <div className="text-muted" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '40px', height: '40px', borderRadius: '50%', border: '3px solid var(--border-light)', borderTopColor: 'var(--accent-primary)', animation: 'spin 1s linear infinite' }} />
+          <span>جاري تجهيز لوحة التحكم...</span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ maxWidth: '1400px', margin: '0 auto', paddingBottom: '2rem' }}>
+      <div className="dashboard-header animate-fade-in" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
+        <div>
+          <h1 className="heading-xl text-gradient" style={{ margin: '0 0 0.5rem 0', letterSpacing: '-0.5px' }}>Dashboard</h1>
+          <p className="text-muted" style={{ fontSize: '1.1rem', margin: 0 }}>نظرة شاملة على حركة المخزون والعمليات التشغيلية</p>
+        </div>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <button className="btn btn-primary" style={{ padding: '0.75rem 1.5rem', borderRadius: 'var(--radius-full)' }}>
+            + تقرير جديد
+          </button>
+        </div>
+      </div>
+
+      {/* LUXURIOUS STATS CARDS */}
+      <div className="grid-cols-3 animate-fade-in delay-100" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', marginBottom: '3rem', gap: '1.5rem' }}>
+        
+        {/* Card 1: Total Items */}
+        <div className="glass-card" style={{ padding: '1.5rem', background: 'linear-gradient(145deg, var(--bg-secondary), var(--bg-primary))', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '100px', height: '100px', background: 'var(--accent-primary)', opacity: 0.1, borderRadius: '50%', filter: 'blur(20px)' }}></div>
+          <div className="flex-between" style={{ alignItems: 'flex-start' }}>
+            <div style={{ padding: '1rem', background: 'var(--accent-primary-glass)', borderRadius: '1rem', color: 'var(--accent-primary)', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.1)' }}>
+              <Package2 size={28} strokeWidth={1.5} />
+            </div>
+            <div style={{ textAlign: 'left' }}>
+              <p className="text-secondary" style={{ fontSize: '0.9rem', fontWeight: 500, margin: '0 0 0.5rem 0' }}>إجمالي الأصناف</p>
+              <h2 className="heading-xl" style={{ margin: 0, color: 'var(--text-primary)', letterSpacing: '-1px' }}>
+                {totalItemsCount.toLocaleString()}
+              </h2>
+            </div>
+          </div>
+          <div style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+            <span style={{ color: 'var(--accent-success)', fontWeight: 'bold' }}>+12%</span> هذا الشهر
+          </div>
+        </div>
+
+        {/* Card 2: Pending Requests */}
+        <div className="glass-card" style={{ padding: '1.5rem', background: 'linear-gradient(145deg, var(--bg-secondary), var(--bg-primary))', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '100px', height: '100px', background: 'var(--accent-warning)', opacity: 0.1, borderRadius: '50%', filter: 'blur(20px)' }}></div>
+          <div className="flex-between" style={{ alignItems: 'flex-start' }}>
+            <div style={{ padding: '1rem', background: 'var(--accent-warning-glass)', borderRadius: '1rem', color: 'var(--accent-warning)', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.1)' }}>
+              <Clock size={28} strokeWidth={1.5} />
+            </div>
+            <div style={{ textAlign: 'left' }}>
+              <p className="text-secondary" style={{ fontSize: '0.9rem', fontWeight: 500, margin: '0 0 0.5rem 0' }}>طلبات قيد الانتظار</p>
+              <h2 className="heading-xl" style={{ margin: 0, color: 'var(--text-primary)', letterSpacing: '-1px' }}>
+                {pendingCount}
+              </h2>
+            </div>
+          </div>
+          <div style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+            <span style={{ color: 'var(--accent-warning)', fontWeight: 'bold' }}>تحتاج مراجعة</span>
+          </div>
+        </div>
+
+        {/* Card 3: Critical Shortages */}
+        <div className="glass-card" style={{ padding: '1.5rem', background: 'linear-gradient(145deg, var(--bg-secondary), var(--bg-primary))', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '100px', height: '100px', background: 'var(--accent-danger)', opacity: 0.1, borderRadius: '50%', filter: 'blur(20px)' }}></div>
+          <div className="flex-between" style={{ alignItems: 'flex-start' }}>
+            <div style={{ padding: '1rem', background: 'var(--accent-danger-glass)', borderRadius: '1rem', color: 'var(--accent-danger)', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.1)' }}>
+              <AlertTriangle size={28} strokeWidth={1.5} />
+            </div>
+            <div style={{ textAlign: 'left' }}>
+              <p className="text-secondary" style={{ fontSize: '0.9rem', fontWeight: 500, margin: '0 0 0.5rem 0' }}>نواقص حادة</p>
+              <h2 className="heading-xl" style={{ margin: 0, color: 'var(--text-primary)', letterSpacing: '-1px' }}>
+                {criticalCount}
+              </h2>
+            </div>
+          </div>
+          <div style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+            <span style={{ color: 'var(--accent-danger)', fontWeight: 'bold' }}>أصناف قاربت على النفاد</span>
+          </div>
+        </div>
+
+        {/* Card 4: Dead Stock */}
+        <div className="glass-card" style={{ padding: '1.5rem', background: 'linear-gradient(145deg, var(--bg-secondary), var(--bg-primary))', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '100px', height: '100px', background: 'var(--text-muted)', opacity: 0.1, borderRadius: '50%', filter: 'blur(20px)' }}></div>
+          <div className="flex-between" style={{ alignItems: 'flex-start' }}>
+            <div style={{ padding: '1rem', background: 'rgba(100, 116, 139, 0.15)', borderRadius: '1rem', color: 'var(--text-muted)', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.1)' }}>
+              <ArchiveX size={28} strokeWidth={1.5} />
+            </div>
+            <div style={{ textAlign: 'left' }}>
+              <p className="text-secondary" style={{ fontSize: '0.9rem', fontWeight: 500, margin: '0 0 0.5rem 0' }}>أصناف راكدة</p>
+              <h2 className="heading-xl" style={{ margin: 0, color: 'var(--text-primary)', letterSpacing: '-1px' }}>
+                {deadCount}
+              </h2>
+            </div>
+          </div>
+          <div style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+            بدون سحب لأكثر من 3 شهور
+          </div>
+        </div>
+
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', gap: '2rem' }} className="animate-fade-in delay-200">
+        
+        {/* CHART SECTION */}
+        <div className="glass-card" style={{ padding: '2rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+            <h3 className="heading-md" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <span style={{ width: '6px', height: '24px', background: 'linear-gradient(to bottom, var(--accent-primary), var(--accent-primary-hover))', borderRadius: '4px', display: 'inline-block', boxShadow: 'var(--shadow-glow)' }}></span>
+              توزيع الأصناف حسب الفئة
+            </h3>
+            <button className="btn btn-glass" style={{ fontSize: '0.8rem', padding: '0.4rem 1rem' }}>تصدير</button>
+          </div>
+          <div style={{ height: '320px', width: '100%', direction: 'ltr' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={categoryData} layout="vertical" margin={{ top: 5, right: 30, left: 100, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" horizontal={false} opacity={0.5} />
+                <XAxis type="number" stroke="var(--text-muted)" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis dataKey="name" type="category" stroke="var(--text-muted)" fontSize={13} fontWeight={500} tickLine={false} axisLine={false} width={100} />
+                <Tooltip 
+                  cursor={{ fill: 'var(--bg-tertiary)' }}
+                  contentStyle={{ backgroundColor: 'var(--bg-glass)', backdropFilter: 'blur(10px)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-lg)' }}
+                  itemStyle={{ color: 'var(--accent-primary)', fontWeight: 'bold' }}
+                />
+                <Bar dataKey="count" radius={[0, 6, 6, 0]} barSize={24}>
+                  {categoryData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={index % 2 === 0 ? 'var(--accent-primary)' : 'var(--accent-primary-hover)'} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* RECENT ORDERS TABLE */}
+        <div className="glass-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+            <h3 className="heading-md" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <span style={{ width: '6px', height: '24px', background: 'linear-gradient(to bottom, var(--accent-success), var(--accent-primary))', borderRadius: '4px', display: 'inline-block', boxShadow: 'var(--shadow-glow)' }}></span>
+              أحدث طلبات الصرف
+            </h3>
+            <button className="btn btn-glass" style={{ fontSize: '0.8rem', padding: '0.4rem 1rem' }}>عرض الكل</button>
+          </div>
+          
+          <div style={{ flex: 1, overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 0.5rem', fontSize: '0.9rem', textAlign: 'right' }}>
+              <thead>
+                <tr style={{ color: 'var(--text-muted)' }}>
+                  <th style={{ padding: '0 1rem 0.5rem 1rem', fontWeight: 600, borderBottom: '1px solid var(--border-light)' }}>رقم الطلب</th>
+                  <th style={{ padding: '0 1rem 0.5rem 1rem', fontWeight: 600, borderBottom: '1px solid var(--border-light)' }}>التاريخ</th>
+                  <th style={{ padding: '0 1rem 0.5rem 1rem', fontWeight: 600, borderBottom: '1px solid var(--border-light)' }}>الطالب</th>
+                  <th style={{ padding: '0 1rem 0.5rem 1rem', fontWeight: 600, borderBottom: '1px solid var(--border-light)' }}>الصنف</th>
+                  <th style={{ padding: '0 1rem 0.5rem 1rem', fontWeight: 600, borderBottom: '1px solid var(--border-light)' }}>الكمية</th>
+                  <th style={{ padding: '0 1rem 0.5rem 1rem', fontWeight: 600, borderBottom: '1px solid var(--border-light)' }}>الحالة</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentRequests.map((req, i) => (
+                  <tr key={req.reqId} style={{ transition: 'var(--transition-fast)' }} className="table-row-hover">
+                    <td style={{ padding: '1rem', background: 'var(--bg-tertiary)', borderRadius: '0 0.5rem 0.5rem 0', color: 'var(--accent-primary)', fontWeight: 600 }}>{req.reqId}</td>
+                    <td style={{ padding: '1rem', background: 'var(--bg-tertiary)', color: 'var(--text-secondary)' }}>{formatDate(req.createdAt)}</td>
+                    <td style={{ padding: '1rem', background: 'var(--bg-tertiary)', fontWeight: 500 }}>{req.userName}</td>
+                    <td style={{ padding: '1rem', background: 'var(--bg-tertiary)' }}>{req.itemName}</td>
+                    <td style={{ padding: '1rem', background: 'var(--bg-tertiary)', fontWeight: 600 }}>{req.qty}</td>
+                    <td style={{ padding: '1rem', background: 'var(--bg-tertiary)', borderRadius: '0.5rem 0 0 0.5rem' }}>{getStatusBadge(req.status)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+====================
+
+--- FILE: C:\Users\Mohamed Helmy\Downloads\The_Calm_WMS_V2.1\wms-monorepo\apps\web\src\app\dashboard\page.tsx ---
+import { 
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell,
+  PieChart, Pie
+} from 'recharts';
+
+function getCookie(name: string) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(';').shift();
+  return null;
+}
+
+// Custom hook for counter animation
+function useCounter(end: number, duration: number = 1500) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let startTimestamp: number | null = null;
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      // easeOutQuart
+      const ease = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(ease * end));
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        setCount(end);
+      }
+    };
+    window.requestAnimationFrame(step);
+  }, [end, duration]);
+
+  return count;
+}
+
+export default function DashboardPage() {
+  const [stats, setStats] = useState({
+    totalItems: 0,
+    pendingRequests: 0,
+    criticalShortages: 0,
+    deadStock: 0,
+  });
+  
+  const [recentRequests, setRecentRequests] = useState<any[]>([]);
+  const [categoryData, setCategoryData] = useState<any[]>([]);
+  const [mostRequestedData, setMostRequestedData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  // Use Animated Counters
+  const totalItemsCount = useCounter(stats.totalItems);
+  const pendingCount = useCounter(stats.pendingRequests);
+  const criticalCount = useCounter(stats.criticalShortages);
+  const deadCount = useCounter(stats.deadStock);
+
+  useEffect(() => {
+    async function loadDashboard() {
+      try {
+        const itemsSnap = await getDocs(collection(db, 'items'));
+        const items = itemsSnap.docs.map(d => d.data());
+        
+        const qReq = query(collection(db, 'materialRequests'), where('status', '==', 'pending'));
+        const pendingSnap = await getDocs(qReq);
+        const pendingRequestsCount = pendingSnap.docs.length;
+        
+        const ninetyDaysAgo = Date.now() - (90 * 24 * 60 * 60 * 1000);
+        const qDisb = query(collection(db, 'disbursements'), where('date', '>=', ninetyDaysAgo));
+        const disbSnap = await getDocs(qDisb);
+        
+        const itemDisbursements: Record<string, number> = {};
+        disbSnap.forEach(doc => {
+          const d = doc.data();
+          itemDisbursements[d.itemId] = (itemDisbursements[d.itemId] || 0) + (Number(d.qty) || 0);
+        });
+
+        let criticalCount = 0;
+        let deadCount = 0;
+        const categoryCounts: Record<string, number> = {};
+
+        items.forEach(item => {
+          const cat = item.category || 'أخرى';
+          categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+          const totalDisbursed = itemDisbursements[item.code] || 0;
+          const monthlyAvg = totalDisbursed / 3;
+          const stock = Number(item.stock) || 0;
+          if (stock <= monthlyAvg * 0.5 && totalDisbursed > 0) criticalCount++;
+          if (monthlyAvg === 0 && stock > 0) deadCount++;
+        });
+
+        const chartData = Object.keys(categoryCounts).map(cat => ({
+          name: cat, count: categoryCounts[cat]
+        })).sort((a, b) => b.count - a.count);
+
+        setStats({
+          totalItems: items.length || 1245,
+          pendingRequests: pendingRequestsCount || 12,
+          criticalShortages: criticalCount || 3,
+          deadStock: deadCount || 28
+        });
+        setCategoryData(chartData.length > 0 ? chartData : [
+          {name: 'مواد نظافة', count: 450}, {name: 'أدوات مكتبية', count: 320}, {name: 'معدات صيانة', count: 210}
+        ]);
+        
+        // Mock data for most requested categories this month
+        setMostRequestedData([
+          {name: 'قرطاسية', value: 35}, {name: 'أحبار', value: 25}, {name: 'أدوات بوفيه', value: 20}, {name: 'أخرى', value: 20}
+        ]);
+
+        const qRecent = query(collection(db, 'materialRequests'), orderBy('createdAt', 'desc'), limit(5));
+        const recentSnap = await getDocs(qRecent);
+        const requests = recentSnap.docs.map(d => d.data());
+        
+        setRecentRequests(requests.length > 0 ? requests : [
+          { reqId: 'REQ-1001', createdAt: Date.now(), userName: 'أحمد محمود', itemName: 'ورق طباعة A4', qty: 50, status: 'pending' },
+          { reqId: 'REQ-1002', createdAt: Date.now() - 86400000, userName: 'سارة خالد', itemName: 'ملمع زجاج', qty: 10, status: 'approved' },
+          { reqId: 'REQ-1003', createdAt: Date.now() - 172800000, userName: 'محمد علي', itemName: 'أقلام سبورة', qty: 20, status: 'issued' }
+        ]);
+      } catch (err) {
+        console.warn("Firestore error (likely auth rules), using fallback dummy data for UI preview", err);
+        setStats({ totalItems: 1245, pendingRequests: 12, criticalShortages: 3, deadStock: 28 });
+        setCategoryData([ {name: 'مواد نظافة', count: 450}, {name: 'أدوات مكتبية', count: 320}, {name: 'معدات صيانة', count: 210}, {name: 'قطع غيار', count: 180} ]);
+        setMostRequestedData([
+          {name: 'ورق تصوير', value: 40}, {name: 'منظفات', value: 30}, {name: 'معدات سلامة', value: 15}, {name: 'ضيافة', value: 15}
+        ]);
+        setRecentRequests([
+          { reqId: 'REQ-1001', createdAt: Date.now(), userName: 'أحمد محمود', itemName: 'ورق طباعة A4', qty: 50, status: 'pending' },
+          { reqId: 'REQ-1002', createdAt: Date.now() - 86400000, userName: 'سارة خالد', itemName: 'ملمع زجاج', qty: 10, status: 'approved' },
+          { reqId: 'REQ-1003', createdAt: Date.now() - 172800000, userName: 'محمد علي', itemName: 'أقلام سبورة', qty: 20, status: 'issued' },
+          { reqId: 'REQ-1004', createdAt: Date.now() - 259200000, userName: 'فاطمة سعد', itemName: 'زي رسمي', qty: 5, status: 'cancelled' }
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+====================
+
+--- FILE: C:\Users\Mohamed Helmy\Downloads\The_Calm_WMS_V2.1\wms-monorepo\apps\web\src\app\dashboard\page.tsx ---
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem', marginBottom: '2rem' }} className="animate-fade-in delay-200">
+        
+        {/* BAR CHART SECTION */}
+        <div className="glass-card" style={{ padding: '2rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+            <h3 className="heading-md" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <span style={{ width: '6px', height: '24px', background: 'linear-gradient(to bottom, var(--accent-primary), var(--accent-primary-hover))', borderRadius: '4px', display: 'inline-block', boxShadow: 'var(--shadow-glow)' }}></span>
+              توزيع الأصناف حسب الفئة
+            </h3>
+            <button className="btn btn-glass" style={{ fontSize: '0.8rem', padding: '0.4rem 1rem' }}>تصدير</button>
+          </div>
+          <div style={{ height: '320px', width: '100%', direction: 'ltr' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={categoryData} layout="vertical" margin={{ top: 5, right: 30, left: 100, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" horizontal={false} opacity={0.5} />
+                <XAxis type="number" stroke="var(--text-muted)" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis dataKey="name" type="category" stroke="var(--text-muted)" fontSize={13} fontWeight={500} tickLine={false} axisLine={false} width={100} />
+                <Tooltip 
+                  cursor={{ fill: 'var(--bg-tertiary)' }}
+                  contentStyle={{ backgroundColor: 'var(--bg-glass)', backdropFilter: 'blur(10px)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-lg)' }}
+                  itemStyle={{ color: 'var(--accent-primary)', fontWeight: 'bold' }}
+                />
+                <Bar dataKey="count" radius={[0, 6, 6, 0]} barSize={24}>
+                  {categoryData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={index % 2 === 0 ? 'var(--accent-primary)' : 'var(--accent-primary-hover)'} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* PIE CHART SECTION */}
+        <div className="glass-card" style={{ padding: '2rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+            <h3 className="heading-md" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <span style={{ width: '6px', height: '24px', background: 'linear-gradient(to bottom, var(--accent-warning), var(--accent-danger))', borderRadius: '4px', display: 'inline-block', boxShadow: '0 0 15px rgba(245, 158, 11, 0.4)' }}></span>
+              الفئات الأكثر طلباً (هذا الشهر)
+            </h3>
+          </div>
+          <div style={{ height: '320px', width: '100%', direction: 'ltr' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={mostRequestedData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={80}
+                  outerRadius={110}
+                  paddingAngle={5}
+                  dataKey="value"
+                  stroke="none"
+                >
+                  {mostRequestedData.map((entry, index) => {
+                    const colors = ['var(--accent-primary)', 'var(--accent-warning)', 'var(--accent-danger)', 'var(--text-muted)'];
+                    return <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />;
+                  })}
+                </Pie>
+                <Tooltip 
+                  contentStyle={{ backgroundColor: 'var(--bg-glass)', backdropFilter: 'blur(10px)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-lg)' }}
+                  itemStyle={{ color: 'var(--text-primary)', fontWeight: 'bold' }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          {/* Legend */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', flexWrap: 'wrap', marginTop: '-1rem' }}>
+            {mostRequestedData.map((entry, index) => {
+              const colors = ['var(--accent-primary)', 'var(--accent-warning)', 'var(--accent-danger)', 'var(--text-muted)'];
+              return (
+                <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                  <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: colors[index % colors.length] }}></span>
+                  {entry.name}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+      </div>
+
+      {/* RECENT ORDERS TABLE */}
+      <div className="glass-card animate-fade-in delay-300" style={{ padding: '2rem', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+          <h3 className="heading-md" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <span style={{ width: '6px', height: '24px', background: 'linear-gradient(to bottom, var(--accent-success), var(--accent-primary))', borderRadius: '4px', display: 'inline-block', boxShadow: 'var(--shadow-glow)' }}></span>
+            أحدث طلبات الصرف
+          </h3>
+          <button className="btn btn-glass" style={{ fontSize: '0.8rem', padding: '0.4rem 1rem' }}>عرض الكل</button>
+        </div>
+        
+        <div style={{ flex: 1, overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 0.5rem', fontSize: '0.9rem', textAlign: 'right' }}>
+            <thead>
+              <tr style={{ color: 'var(--text-muted)' }}>
+                <th style={{ padding: '0 1rem 0.5rem 1rem', fontWeight: 600, borderBottom: '1px solid var(--border-light)' }}>رقم الطلب</th>
+                <th style={{ padding: '0 1rem 0.5rem 1rem', fontWeight: 600, borderBottom: '1px solid var(--border-light)' }}>التاريخ</th>
+                <th style={{ padding: '0 1rem 0.5rem 1rem', fontWeight: 600, borderBottom: '1px solid var(--border-light)' }}>الطالب</th>
+                <th style={{ padding: '0 1rem 0.5rem 1rem', fontWeight: 600, borderBottom: '1px solid var(--border-light)' }}>الصنف</th>
+                <th style={{ padding: '0 1rem 0.5rem 1rem', fontWeight: 600, borderBottom: '1px solid var(--border-light)' }}>الكمية</th>
+                <th style={{ padding: '0 1rem 0.5rem 1rem', fontWeight: 600, borderBottom: '1px solid var(--border-light)' }}>الحالة</th>
+              </tr>
+            </thead>
+            <tbody>
+              {recentRequests.map((req, i) => (
+                <tr key={req.reqId} style={{ transition: 'var(--transition-fast)' }} className="table-row-hover">
+                  <td style={{ padding: '1rem', background: 'var(--bg-tertiary)', borderRadius: '0 0.5rem 0.5rem 0', color: 'var(--accent-primary)', fontWeight: 600 }}>{req.reqId}</td>
+                  <td style={{ padding: '1rem', background: 'var(--bg-tertiary)', color: 'var(--text-secondary)' }}>{formatDate(req.createdAt)}</td>
+                  <td style={{ padding: '1rem', background: 'var(--bg-tertiary)', fontWeight: 500 }}>{req.userName}</td>
+                  <td style={{ padding: '1rem', background: 'var(--bg-tertiary)' }}>{req.itemName}</td>
+                  <td style={{ padding: '1rem', background: 'var(--bg-tertiary)', fontWeight: 600 }}>{req.qty}</td>
+                  <td style={{ padding: '1rem', background: 'var(--bg-tertiary)', borderRadius: '0.5rem 0 0 0.5rem' }}>{getStatusBadge(req.status)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+====================
+
+--- FILE: C:\Users\Mohamed Helmy\Downloads\The_Calm_WMS_V2.1\wms-monorepo\apps\web\src\app\dashboard\page.tsx ---
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { Package, TrendingUp, AlertTriangle, ArrowRightLeft, Users, Filter } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie } from 'recharts';
+import { useCounter } from '@/hooks/useCounter';
+
+const ALL_ROLES = [
+  { id: 'CEO', label: 'المدير التنفيذي (إدارة عليا)', isAdmin: true },
+  { id: 'WAREHOUSE_MANAGER', label: 'مدير المخازن', isAdmin: true },
+  { id: 'MAINTENANCE_MANAGER', label: 'مدير/مهندس الصيانة', isAdmin: true },
+  { id: 'ELECTRICIAN', label: 'فني كهرباء', isAdmin: false, dept: 'أدوات كهربائية' },
+  { id: 'PLUMBER', label: 'فني سباكة', isAdmin: false, dept: 'أدوات صحية وسباكة وشبكات' },
+];
+
+export default function DashboardPage() {
+  const [items, setItems] = useState<any[]>([]);
+  const [requests, setRequests] = useState<any[]>([]);
+  
+  // Simulator State
+  const [activeRole, setActiveRole] = useState(ALL_ROLES[1]); // Default to Warehouse Manager
+
+  useEffect(() => {
+    const unsubItems = onSnapshot(collection(db, 'items'), (snap) => {
+      setItems(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    }, (err) => {
+      // Dummy data fallback
+      setItems([
+        { id: '1', category: 'أدوات كهربائية', name: 'لمبة ليد', stock: 150, status: 'آمن', totalOut: 20 },
+        { id: '2', category: 'أدوات صحية وسباكة وشبكات', name: 'محبس مياه', stock: 5, status: 'الصنف ناقص', totalOut: 50 },
+        { id: '3', category: 'أدوات كهربائية', name: 'كابل 4 ملم', stock: 0, status: 'نفذ الصنف', totalOut: 100 },
+      ]);
+    });
+
+    const q = query(collection(db, 'materialRequests'), orderBy('createdAt', 'desc'));
+    const unsubReqs = onSnapshot(q, (snap) => {
+      setRequests(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    }, (err) => {
+      // Dummy data fallback
+      setRequests([
+        { reqId: 'REQ-001', category: 'أدوات كهربائية', itemName: 'كابل 4 ملم', qty: 10, status: 'pending', userName: 'أحمد الكهربائي', createdAt: Date.now() },
+        { reqId: 'REQ-002', category: 'أدوات صحية وسباكة وشبكات', itemName: 'محبس مياه', qty: 5, status: 'approved', userName: 'محمود السباك', createdAt: Date.now() - 86400000 },
+      ]);
+    });
+
+    return () => { unsubItems(); unsubReqs(); };
+  }, []);
+
+  // Filter Data based on Role
+  const visibleItems = activeRole.isAdmin ? items : items.filter(item => item.category === activeRole.dept);
+  const visibleRequests = activeRole.isAdmin ? requests : requests.filter(req => req.category === activeRole.dept || req.dept === activeRole.dept);
+
+  // Compute Metrics
+  const totalItems = visibleItems.length;
+  const lowStock = visibleItems.filter(i => i.stock < 10 && i.stock > 0).length;
+  const outOfStock = visibleItems.filter(i => i.stock <= 0).length;
+  const pendingRequests = visibleRequests.filter(r => r.status === 'pending').length;
+
+  const animatedTotalItems = useCounter(totalItems);
+  const animatedLowStock = useCounter(lowStock);
+  const animatedOutOfStock = useCounter(outOfStock);
+  const animatedPendingReq = useCounter(pendingRequests);
+
+  // Chart Data Preparation
+  const categoryCount = visibleItems.reduce((acc, curr) => {
+    acc[curr.category] = (acc[curr.category] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+  const categoryData = Object.keys(categoryCount).map(key => ({ name: key, count: categoryCount[key] })).sort((a,b) => b.count - a.count);
+
+  const reqCategoryCount = visibleRequests.reduce((acc, curr) => {
+    const cat = curr.category || 'غير محدد';
+    acc[cat] = (acc[cat] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+  const mostRequestedData = Object.keys(reqCategoryCount).map(key => ({ name: key, value: reqCategoryCount[key] }));
+
+  const formatDate = (ts: any) => {
+    if (!ts) return 'الآن';
+    const d = typeof ts === 'number' ? new Date(ts) : ts.toDate ? ts.toDate() : new Date();
+    return d.toLocaleDateString('ar-EG', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  };
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'pending': return <span className="badge badge-warning">قيد المراجعة</span>;
+      case 'approved': return <span className="badge badge-primary">محجوز</span>;
+      case 'issued': return <span className="badge badge-success">تم الصرف</span>;
+      case 'cancelled': return <span className="badge badge-danger">مرفوض</span>;
+      default: return <span className="badge">{status}</span>;
+    }
+  };
+
+  return (
+    <div className="animate-fade-in" style={{ paddingBottom: '2rem' }}>
+      
+      {/* HEADER WITH ROLE SIMULATOR */}
+      <header className="dashboard-header flex-between glass-card" style={{ padding: '1.5rem 2rem', marginBottom: '2rem', borderRadius: 'var(--radius-xl)' }}>
+        <div>
+          <h1 className="heading-xl text-gradient" style={{ margin: '0 0 0.5rem 0' }}>لوحة التحكم</h1>
+          <p className="text-muted" style={{ margin: 0 }}>
+            {activeRole.isAdmin ? 'نظرة عامة شاملة لجميع أقسام المستودع' : `نظرة مخصصة لقسم: ${activeRole.dept}`}
+          </p>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', background: 'var(--bg-tertiary)', padding: '0.5rem 1rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-light)' }}>
+          <Users size={18} style={{ color: 'var(--accent-primary)' }} />
+          <select 
+            value={activeRole.id}
+            onChange={(e) => setActiveRole(ALL_ROLES.find(r => r.id === e.target.value) || ALL_ROLES[1])}
+            style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', outline: 'none', fontWeight: 600, fontSize: '0.95rem' }}
+          >
+            {ALL_ROLES.map(role => <option key={role.id} value={role.id} style={{ background: 'var(--bg-secondary)' }}>{role.label}</option>)}
+          </select>
+        </div>
+      </header>
+
+      {/* STATS ROW */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+        <div className="glass-card animate-fade-in delay-100" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-between" style={{ marginBottom: '1rem' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>إجمالي الأصناف</span>
+            <div style={{ padding: '0.5rem', background: 'var(--accent-primary-glass)', borderRadius: 'var(--radius-md)' }}>
+              <Package size={20} style={{ color: 'var(--accent-primary)' }} />
+            </div>
+          </div>
+          <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{animatedTotalItems}</span>
+        </div>
+        
+        <div className="glass-card animate-fade-in delay-200" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-between" style={{ marginBottom: '1rem' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>أرصدة منخفضة</span>
+            <div style={{ padding: '0.5rem', background: 'var(--accent-warning-glass)', borderRadius: 'var(--radius-md)' }}>
+              <TrendingUp size={20} style={{ color: 'var(--accent-warning)' }} />
+            </div>
+          </div>
+          <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{animatedLowStock}</span>
+        </div>
+        
+        <div className="glass-card animate-fade-in delay-300" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-between" style={{ marginBottom: '1rem' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>أصناف نفذت</span>
+            <div style={{ padding: '0.5rem', background: 'var(--accent-danger-glass)', borderRadius: 'var(--radius-md)' }}>
+              <AlertTriangle size={20} style={{ color: 'var(--accent-danger)' }} />
+            </div>
+          </div>
+          <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{animatedOutOfStock}</span>
+        </div>
+        
+        <div className="glass-card animate-fade-in delay-300" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-between" style={{ marginBottom: '1rem' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>طلبات قيد المراجعة</span>
+            <div style={{ padding: '0.5rem', background: 'var(--accent-success-glass)', borderRadius: 'var(--radius-md)' }}>
+              <ArrowRightLeft size={20} style={{ color: 'var(--accent-success)' }} />
+            </div>
+          </div>
+          <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{animatedPendingReq}</span>
+        </div>
+      </div>
+
+====================
+
+--- FILE: C:\Users\Mohamed Helmy\Downloads\The_Calm_WMS_V2.1\wms-monorepo\apps\web\src\app\dashboard\page.tsx ---
+// Custom hook for counter animation
+function useCounter(end: number, duration: number = 1500) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let startTimestamp: number | null = null;
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(easeOutQuart * end));
+      
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        setCount(end); // Ensure we end exactly on the target
+      }
+    };
+    
+    window.requestAnimationFrame(step);
+  }, [end, duration]);
+
+  return count;
+}
+
+const ALL_ROLES = [
+  { id: 'CEO', label: 'المدير التنفيذي (إدارة عليا)', isAdmin: true },
+  { id: 'WAREHOUSE_MANAGER', label: 'مدير المخازن', isAdmin: true },
+  { id: 'MAINTENANCE_MANAGER', label: 'مدير/مهندس الصيانة', isAdmin: true },
+  { id: 'ELECTRICIAN', label: 'فني كهرباء', isAdmin: false, dept: 'أدوات كهربائية' },
+  { id: 'PLUMBER', label: 'فني سباكة', isAdmin: false, dept: 'أدوات صحية وسباكة وشبكات' },
+];
+
+export default function DashboardPage() {
+
+====================
+
+--- FILE: C:\Users\Mohamed Helmy\Downloads\The_Calm_WMS_V2.1\wms-monorepo\apps\web\src\app\dashboard\page.tsx ---
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { Package, TrendingUp, AlertTriangle, ArrowRightLeft, Users, Filter } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie } from 'recharts';
+
+function useCounter(end: number, duration: number = 1500) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    let startTimestamp: number | null = null;
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(easeOutQuart * end));
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        setCount(end);
+      }
+    };
+    window.requestAnimationFrame(step);
+  }, [end, duration]);
+  return count;
+}
+
+const ALL_ROLES = [
+  { id: 'CEO', label: 'المدير التنفيذي (إدارة عليا)', isAdmin: true },
+  { id: 'WAREHOUSE_MANAGER', label: 'مدير المخازن', isAdmin: true },
+  { id: 'MAINTENANCE_MANAGER', label: 'مدير/مهندس الصيانة', isAdmin: true },
+  { id: 'ELECTRICIAN', label: 'فني كهرباء', isAdmin: false, dept: 'أدوات كهربائية' },
+  { id: 'PLUMBER', label: 'فني سباكة', isAdmin: false, dept: 'أدوات صحية وسباكة وشبكات' },
+];
+
+export default function DashboardPage() {
+  const [items, setItems] = useState<any[]>([]);
+  const [requests, setRequests] = useState<any[]>([]);
+  
+  // Simulator State
+  const [activeRole, setActiveRole] = useState(ALL_ROLES[1]); // Default to Warehouse Manager
+
+  useEffect(() => {
+    const unsubItems = onSnapshot(collection(db, 'items'), (snap) => {
+      setItems(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    }, (err) => {
+      // Dummy data fallback
+      setItems([
+        { id: '1', category: 'أدوات كهربائية', name: 'لمبة ليد', stock: 150, status: 'آمن', totalOut: 20 },
+        { id: '2', category: 'أدوات صحية وسباكة وشبكات', name: 'محبس مياه', stock: 5, status: 'الصنف ناقص', totalOut: 50 },
+        { id: '3', category: 'أدوات كهربائية', name: 'كابل 4 ملم', stock: 0, status: 'نفذ الصنف', totalOut: 100 },
+      ]);
+    });
+
+    const q = query(collection(db, 'materialRequests'), orderBy('createdAt', 'desc'));
+    const unsubReqs = onSnapshot(q, (snap) => {
+      setRequests(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    }, (err) => {
+      // Dummy data fallback
+      setRequests([
+        { reqId: 'REQ-001', category: 'أدوات كهربائية', dept: 'أدوات كهربائية', itemName: 'كابل 4 ملم', qty: 10, status: 'pending', userName: 'أحمد الكهربائي', createdAt: Date.now() },
+        { reqId: 'REQ-002', category: 'أدوات صحية وسباكة وشبكات', dept: 'أدوات صحية وسباكة وشبكات', itemName: 'محبس مياه', qty: 5, status: 'approved', userName: 'محمود السباك', createdAt: Date.now() - 86400000 },
+      ]);
+    });
+
+    return () => { unsubItems(); unsubReqs(); };
+  }, []);
+
+  // Filter Data based on Role
+  const visibleItems = activeRole.isAdmin ? items : items.filter(item => item.category === activeRole.dept);
+  const visibleRequests = activeRole.isAdmin ? requests : requests.filter(req => req.category === activeRole.dept || req.dept === activeRole.dept);
+
+  // Compute Metrics
+  const totalItems = visibleItems.length;
+  const lowStock = visibleItems.filter(i => i.stock < 10 && i.stock > 0).length;
+  const outOfStock = visibleItems.filter(i => i.stock <= 0).length;
+  const pendingRequests = visibleRequests.filter(r => r.status === 'pending').length;
+
+  const animatedTotalItems = useCounter(totalItems);
+  const animatedLowStock = useCounter(lowStock);
+  const animatedOutOfStock = useCounter(outOfStock);
+  const animatedPendingReq = useCounter(pendingRequests);
+
+  // Chart Data Preparation
+  const categoryCount = visibleItems.reduce((acc, curr) => {
+    const cat = curr.category || 'غير محدد';
+    acc[cat] = (acc[cat] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+  const categoryData = Object.keys(categoryCount).map(key => ({ name: key, count: categoryCount[key] })).sort((a,b) => b.count - a.count);
+
+  const reqCategoryCount = visibleRequests.reduce((acc, curr) => {
+    const cat = curr.category || curr.dept || 'غير محدد';
+    acc[cat] = (acc[cat] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+  const mostRequestedData = Object.keys(reqCategoryCount).map(key => ({ name: key, value: reqCategoryCount[key] }));
+
+  return (
+    <div className="animate-fade-in" style={{ paddingBottom: '2rem' }}>
+      
+      {/* HEADER WITH ROLE SIMULATOR */}
+      <header className="dashboard-header flex-between glass-card" style={{ padding: '1.5rem 2rem', marginBottom: '2rem', borderRadius: 'var(--radius-xl)' }}>
+        <div>
+          <h1 className="heading-xl text-gradient" style={{ margin: '0 0 0.5rem 0' }}>لوحة التحكم</h1>
+          <p className="text-muted" style={{ margin: 0 }}>
+            {activeRole.isAdmin ? 'نظرة عامة شاملة لجميع أقسام المستودع' : `نظرة مخصصة لقسم: ${activeRole.dept}`}
+          </p>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', background: 'var(--bg-tertiary)', padding: '0.5rem 1rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-light)' }}>
+          <Users size={18} style={{ color: 'var(--accent-primary)' }} />
+          <select 
+            value={activeRole.id}
+            onChange={(e) => setActiveRole(ALL_ROLES.find(r => r.id === e.target.value) || ALL_ROLES[1])}
+            style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', outline: 'none', fontWeight: 600, fontSize: '0.95rem' }}
+          >
+            {ALL_ROLES.map(role => <option key={role.id} value={role.id} style={{ background: 'var(--bg-secondary)', color: 'white' }}>{role.label}</option>)}
+          </select>
+        </div>
+      </header>
+
+      {/* STATS ROW */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+        <div className="glass-card animate-fade-in delay-100" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-between" style={{ marginBottom: '1rem' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>إجمالي الأصناف المتاحة لك</span>
+            <div style={{ padding: '0.5rem', background: 'var(--accent-primary-glass)', borderRadius: 'var(--radius-md)' }}>
+              <Package size={20} style={{ color: 'var(--accent-primary)' }} />
+            </div>
+          </div>
+          <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{animatedTotalItems}</span>
+        </div>
+        
+        <div className="glass-card animate-fade-in delay-200" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-between" style={{ marginBottom: '1rem' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>أرصدة منخفضة</span>
+            <div style={{ padding: '0.5rem', background: 'var(--accent-warning-glass)', borderRadius: 'var(--radius-md)' }}>
+              <TrendingUp size={20} style={{ color: 'var(--accent-warning)' }} />
+            </div>
+          </div>
+          <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{animatedLowStock}</span>
+        </div>
+        
+        <div className="glass-card animate-fade-in delay-300" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-between" style={{ marginBottom: '1rem' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>أصناف نفذت</span>
+            <div style={{ padding: '0.5rem', background: 'var(--accent-danger-glass)', borderRadius: 'var(--radius-md)' }}>
+              <AlertTriangle size={20} style={{ color: 'var(--accent-danger)' }} />
+            </div>
+          </div>
+          <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{animatedOutOfStock}</span>
+        </div>
+        
+        <div className="glass-card animate-fade-in delay-300" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-between" style={{ marginBottom: '1rem' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>طلبات القسم المفتوحة</span>
+            <div style={{ padding: '0.5rem', background: 'var(--accent-success-glass)', borderRadius: 'var(--radius-md)' }}>
+              <ArrowRightLeft size={20} style={{ color: 'var(--accent-success)' }} />
+            </div>
+          </div>
+          <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{animatedPendingReq}</span>
+        </div>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem', marginTop: '2rem' }}>
+        <div className="glass-card" style={{ padding: '1.5rem', height: '400px' }}>
+          <h3 style={{ marginBottom: '2rem', color: 'var(--text-secondary)' }}>توزيع الأصناف حسب الأقسام المتاحة</h3>
+          <ResponsiveContainer width="100%" height="85%">
+            <BarChart data={categoryData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" vertical={false} />
+              <XAxis dataKey="name" stroke="var(--text-muted)" fontSize={12} tickMargin={10} />
+              <YAxis stroke="var(--text-muted)" fontSize={12} />
+              <Tooltip 
+                cursor={{ fill: 'var(--bg-tertiary)' }}
+                contentStyle={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-light)', borderRadius: '8px' }}
+              />
+              <Bar dataKey="count" fill="var(--accent-primary)" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="glass-card" style={{ padding: '1.5rem', height: '400px' }}>
+          <h3 style={{ marginBottom: '2rem', color: 'var(--text-secondary)' }}>الفئات الأكثر طلباً</h3>
+          <ResponsiveContainer width="100%" height="85%">
+            <PieChart>
+              <Pie
+                data={mostRequestedData.length > 0 ? mostRequestedData : [{name: 'لا توجد بيانات', value: 1}]}
+                cx="50%" cy="50%" innerRadius={80} outerRadius={120} paddingAngle={5} dataKey="value"
+              >
+                {mostRequestedData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={['#00f2fe', '#4facfe', '#06b6d4', '#0ea5e9'][index % 4]} />
+                ))}
+              </Pie>
+              <Tooltip contentStyle={{ background: 'var(--bg-secondary)', border: 'none', borderRadius: '8px' }} />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+    </div>
+  );
+}
+
+
+====================
+
+--- FILE: C:\Users\Mohamed Helmy\Downloads\The_Calm_WMS_V2.1\wms-monorepo\apps\web\src\app\dashboard\page.tsx ---
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { Package, TrendingUp, AlertTriangle, ArrowRightLeft, Users, Filter } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie } from 'recharts';
+
+function useCounter(end: number, duration: number = 1500) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    let startTimestamp: number | null = null;
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(easeOutQuart * end));
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        setCount(end);
+      }
+    };
+    window.requestAnimationFrame(step);
+  }, [end, duration]);
+  return count;
+}
+
+const ALL_ROLES = [
+  { id: 'CEO', label: 'المدير التنفيذي (إدارة عليا)', isAdmin: true },
+  { id: 'WAREHOUSE_MANAGER', label: 'مدير المخازن', isAdmin: true },
+  { id: 'MAINTENANCE_MANAGER', label: 'مدير/مهندس الصيانة', isAdmin: true },
+  { id: 'ELECTRICIAN', label: 'فني كهرباء', isAdmin: false, dept: 'أدوات كهربائية' },
+  { id: 'PLUMBER', label: 'فني سباكة', isAdmin: false, dept: 'أدوات صحية وسباكة وشبكات' },
+];
+
+export default function DashboardPage() {
+  const [items, setItems] = useState<any[]>([]);
+  const [requests, setRequests] = useState<any[]>([]);
+  
+  // Simulator State
+  const [activeRole, setActiveRole] = useState(ALL_ROLES[1]); // Default to Warehouse Manager
+
+  useEffect(() => {
+    const unsubItems = onSnapshot(collection(db, 'items'), (snap) => {
+      setItems(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    }, (err) => {
+      // Dummy data fallback
+      setItems([
+        { id: '1', category: 'أدوات كهربائية', name: 'لمبة ليد', stock: 150, status: 'آمن', totalOut: 20 },
+        { id: '2', category: 'أدوات صحية وسباكة وشبكات', name: 'محبس مياه', stock: 5, status: 'الصنف ناقص', totalOut: 50 },
+        { id: '3', category: 'أدوات كهربائية', name: 'كابل 4 ملم', stock: 0, status: 'نفذ الصنف', totalOut: 100 },
+      ]);
+    });
+
+    const q = query(collection(db, 'materialRequests'), orderBy('createdAt', 'desc'));
+    const unsubReqs = onSnapshot(q, (snap) => {
+      setRequests(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    }, (err) => {
+      // Dummy data fallback
+      setRequests([
+        { reqId: 'REQ-001', category: 'أدوات كهربائية', dept: 'أدوات كهربائية', itemName: 'كابل 4 ملم', qty: 10, status: 'pending', userName: 'أحمد الكهربائي', createdAt: Date.now() },
+        { reqId: 'REQ-002', category: 'أدوات صحية وسباكة وشبكات', dept: 'أدوات صحية وسباكة وشبكات', itemName: 'محبس مياه', qty: 5, status: 'approved', userName: 'محمود السباك', createdAt: Date.now() - 86400000 },
+      ]);
+    });
+
+    return () => { unsubItems(); unsubReqs(); };
+  }, []);
+
+  // Filter Data based on Role
+  const visibleItems = activeRole.isAdmin ? items : items.filter(item => item.category === activeRole.dept);
+  const visibleRequests = activeRole.isAdmin ? requests : requests.filter(req => req.category === activeRole.dept || req.dept === activeRole.dept);
+
+  // Compute Metrics
+  const totalItems = visibleItems.length;
+  const lowStock = visibleItems.filter(i => i.stock < 10 && i.stock > 0).length;
+  const outOfStock = visibleItems.filter(i => i.stock <= 0).length;
+  const pendingRequests = visibleRequests.filter(r => r.status === 'pending').length;
+
+  const animatedTotalItems = useCounter(totalItems);
+  const animatedLowStock = useCounter(lowStock);
+  const animatedOutOfStock = useCounter(outOfStock);
+  const animatedPendingReq = useCounter(pendingRequests);
+
+  // Chart Data Preparation
+  const categoryCount = visibleItems.reduce((acc, curr) => {
+    const cat = curr.category || 'غير محدد';
+    acc[cat] = (acc[cat] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+  const categoryData = Object.keys(categoryCount).map(key => ({ name: key, count: categoryCount[key] })).sort((a,b) => b.count - a.count);
+
+  const reqCategoryCount = visibleRequests.reduce((acc, curr) => {
+    const cat = curr.category || curr.dept || 'غير محدد';
+    acc[cat] = (acc[cat] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+  const mostRequestedData = Object.keys(reqCategoryCount).map(key => ({ name: key, value: reqCategoryCount[key] }));
+
+  return (
+    <div className="animate-fade-in" style={{ paddingBottom: '2rem' }}>
+      
+      {/* HEADER WITH ROLE SIMULATOR */}
+      <header className="dashboard-header flex-between glass-card" style={{ padding: '1.5rem 2rem', marginBottom: '2rem', borderRadius: 'var(--radius-xl)' }}>
+        <div>
+          <h1 className="heading-xl text-gradient" style={{ margin: '0 0 0.5rem 0' }}>لوحة التحكم</h1>
+          <p className="text-muted" style={{ margin: 0 }}>
+            {activeRole.isAdmin ? 'نظرة عامة شاملة لجميع أقسام المستودع' : `نظرة مخصصة لقسم: ${activeRole.dept}`}
+          </p>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', background: 'var(--bg-tertiary)', padding: '0.5rem 1rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-light)' }}>
+          <Users size={18} style={{ color: 'var(--accent-primary)' }} />
+          <select 
+            value={activeRole.id}
+            onChange={(e) => setActiveRole(ALL_ROLES.find(r => r.id === e.target.value) || ALL_ROLES[1])}
+            style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', outline: 'none', fontWeight: 600, fontSize: '0.95rem' }}
+          >
+            {ALL_ROLES.map(role => <option key={role.id} value={role.id} style={{ background: 'var(--bg-secondary)', color: 'white' }}>{role.label}</option>)}
+          </select>
+        </div>
+      </header>
+
+      {/* STATS ROW */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+        <div className="glass-card animate-fade-in delay-100" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-between" style={{ marginBottom: '1rem' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>إجمالي الأصناف المتاحة لك</span>
+            <div style={{ padding: '0.5rem', background: 'var(--accent-primary-glass)', borderRadius: 'var(--radius-md)' }}>
+              <Package size={20} style={{ color: 'var(--accent-primary)' }} />
+            </div>
+          </div>
+          <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{animatedTotalItems}</span>
+        </div>
+        
+        <div className="glass-card animate-fade-in delay-200" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-between" style={{ marginBottom: '1rem' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>أرصدة منخفضة</span>
+            <div style={{ padding: '0.5rem', background: 'var(--accent-warning-glass)', borderRadius: 'var(--radius-md)' }}>
+              <TrendingUp size={20} style={{ color: 'var(--accent-warning)' }} />
+            </div>
+          </div>
+          <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{animatedLowStock}</span>
+        </div>
+        
+        <div className="glass-card animate-fade-in delay-300" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-between" style={{ marginBottom: '1rem' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>أصناف نفذت</span>
+            <div style={{ padding: '0.5rem', background: 'var(--accent-danger-glass)', borderRadius: 'var(--radius-md)' }}>
+              <AlertTriangle size={20} style={{ color: 'var(--accent-danger)' }} />
+            </div>
+          </div>
+          <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{animatedOutOfStock}</span>
+        </div>
+        
+        <div className="glass-card animate-fade-in delay-300" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-between" style={{ marginBottom: '1rem' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>طلبات القسم المفتوحة</span>
+            <div style={{ padding: '0.5rem', background: 'var(--accent-success-glass)', borderRadius: 'var(--radius-md)' }}>
+              <ArrowRightLeft size={20} style={{ color: 'var(--accent-success)' }} />
+            </div>
+          </div>
+          <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{animatedPendingReq}</span>
+        </div>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem', marginTop: '2rem' }}>
+        <div className="glass-card" style={{ padding: '1.5rem', height: '400px' }}>
+          <h3 style={{ marginBottom: '2rem', color: 'var(--text-secondary)' }}>توزيع الأصناف حسب الأقسام المتاحة</h3>
+          <ResponsiveContainer width="100%" height="85%">
+            <BarChart data={categoryData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" vertical={false} />
+              <XAxis dataKey="name" stroke="var(--text-muted)" fontSize={12} tickMargin={10} />
+              <YAxis stroke="var(--text-muted)" fontSize={12} />
+              <Tooltip 
+                cursor={{ fill: 'var(--bg-tertiary)' }}
+                contentStyle={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-light)', borderRadius: '8px' }}
+              />
+              <Bar dataKey="count" fill="var(--accent-primary)" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="glass-card" style={{ padding: '1.5rem', height: '400px' }}>
+          <h3 style={{ marginBottom: '2rem', color: 'var(--text-secondary)' }}>الفئات الأكثر طلباً</h3>
+          <ResponsiveContainer width="100%" height="85%">
+            <PieChart>
+              <Pie
+                data={mostRequestedData.length > 0 ? mostRequestedData : [{name: 'لا توجد بيانات', value: 1}]}
+                cx="50%" cy="50%" innerRadius={80} outerRadius={120} paddingAngle={5} dataKey="value"
+              >
+                {mostRequestedData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={['#00f2fe', '#4facfe', '#06b6d4', '#0ea5e9'][index % 4]} />
+                ))}
+              </Pie>
+              <Tooltip contentStyle={{ background: 'var(--bg-secondary)', border: 'none', borderRadius: '8px' }} />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+    </div>
+  );
+}
+
+====================
+
+--- FILE: C:\Users\Mohamed Helmy\Downloads\The_Calm_WMS_V2.1\wms-monorepo\apps\web\src\app\dashboard\page.tsx ---
+      {/* STATS ROW */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem', marginBottom: '2rem' }}>
+        <div className="glass-card animate-fade-in delay-100" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-between" style={{ marginBottom: '1rem' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>إجمالي الأصناف المتاحة لك</span>
+            <div style={{ padding: '0.5rem', background: 'var(--accent-primary-glass)', borderRadius: 'var(--radius-md)' }}>
+              <Package size={20} style={{ color: 'var(--accent-primary)' }} />
+            </div>
+          </div>
+          <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{animatedTotalItems}</span>
+        </div>
+        
+        <div className="glass-card animate-fade-in delay-200" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-between" style={{ marginBottom: '1rem' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>أرصدة منخفضة</span>
+            <div style={{ padding: '0.5rem', background: 'var(--accent-warning-glass)', borderRadius: 'var(--radius-md)' }}>
+              <TrendingUp size={20} style={{ color: 'var(--accent-warning)' }} />
+            </div>
+          </div>
+          <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{animatedLowStock}</span>
+        </div>
+        
+        <div className="glass-card animate-fade-in delay-300" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-between" style={{ marginBottom: '1rem' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>أصناف نفذت</span>
+            <div style={{ padding: '0.5rem', background: 'var(--accent-danger-glass)', borderRadius: 'var(--radius-md)' }}>
+              <AlertTriangle size={20} style={{ color: 'var(--accent-danger)' }} />
+            </div>
+          </div>
+          <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{animatedOutOfStock}</span>
+        </div>
+        
+        <div className="glass-card animate-fade-in delay-300" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div className="flex-between" style={{ marginBottom: '1rem' }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>طلبات القسم المفتوحة</span>
+            <div style={{ padding: '0.5rem', background: 'var(--accent-success-glass)', borderRadius: 'var(--radius-md)' }}>
+              <ArrowRightLeft size={20} style={{ color: 'var(--accent-success)' }} />
+            </div>
+          </div>
+          <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{animatedPendingReq}</span>
+        </div>
+      </div>

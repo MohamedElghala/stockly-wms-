@@ -1,0 +1,35 @@
+{
+  "name": "@stockly/functions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "echo functions build skipped",
+    "test": "vitest run tests/ --no-file-parallelism",
+    "test:security": "vitest run tests/security",
+    "test:inventory": "vitest run tests/inventory --no-file-parallelism",
+    "test:rules": "vitest run tests/rules"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@stockly/domain": "workspace:*",
+    "@stockly/permissions": "workspace:*",
+    "@stockly/validation": "workspace:*",
+    "firebase-admin": "^14.2.0",
+    "firebase-functions": "^5.0.1",
+    "nodemailer": "^6.9.16",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^5.0.1",
+    "@types/nodemailer": "^6.4.17",
+    "firebase-functions-test": "^3.5.0",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
+  },
+  "engines": {
+    "node": "18"
+  }
+}

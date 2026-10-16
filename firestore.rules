@@ -1,0 +1,122 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Core helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function getDocRole() {
+      return exists(/databases/$(database)/documents/users/$(request.auth.uid)) 
+             ? get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role 
+             : 'none';
+    }
+    
+    function getUserRole() {
+      // Safe check to prevent Property Missing errors and fallback to document read if token is stale (Emulator issue)
+      return ('role' in request.auth.token && request.auth.token.role != 'pending' && request.auth.token.role != 'none') 
+             ? request.auth.token.role 
+             : getDocRole();
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && getUserRole() == 'admin';
+    }
+    
+    function isManagement() {
+      return isAuthenticated() && getUserRole() == 'management';
+    }
+    
+    function isUser() {
+      return isAuthenticated() && getUserRole() == 'user';
+    }
+
+    function isSupervisor() {
+      return isAuthenticated() && getUserRole() == 'supervisor';
+    }
+
+    function isManagementOrAdmin() {
+      return isManagement() || isAdmin();
+    }
+
+    // Deny all by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    
+    // -------------------------------------------------------------------------
+    // Users Profile Collection
+    // -------------------------------------------------------------------------
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow read: if isManagementOrAdmin() || isSupervisor();
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update, delete: if isAdmin();
+    }
+
+    // -------------------------------------------------------------------------
+    // Master Data (Items, Categories)
+    // -------------------------------------------------------------------------
+    match /items/{itemId} {
+      allow read: if isManagementOrAdmin() || isSupervisor() || isUser();
+      allow write: if isAdmin();
+    }
+
+    match /categories/{categoryId} {
+      allow read: if isManagementOrAdmin() || isSupervisor() || isUser();
+      allow write: if isAdmin();
+    }
+    
+    // -------------------------------------------------------------------------
+    // Inventory & Stock Transactions (Additions, Disbursements, Scrap)
+    // -------------------------------------------------------------------------
+    match /additions/{additionId} {
+      allow read: if isManagementOrAdmin();
+      allow write: if isAdmin();
+    }
+
+    match /disbursements/{disbursementId} {
+      allow read: if isManagementOrAdmin();
+      allow write: if isAdmin();
+    }
+
+    match /scrap/{scrapId} {
+      allow read: if isManagementOrAdmin();
+      allow write: if isAdmin();
+    }
+
+    match /stockBalances/{balanceId} {
+      allow read: if isManagementOrAdmin();
+      allow write: if isAdmin();
+    }
+
+    // -------------------------------------------------------------------------
+    // Requests & Approvals
+    // -------------------------------------------------------------------------
+    match /materialRequests/{requestId} {
+      allow read: if (isAuthenticated() && (isUser() || isSupervisor()) && resource.data.userId == request.auth.uid) || isSupervisor() || isManagementOrAdmin();
+      allow create: if (isUser() || isSupervisor()) && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAdmin(); 
+    }
+    
+    match /reservations/{reservationId} {
+      allow read: if (isAuthenticated() && (isUser() || isSupervisor()) && resource.data.userId == request.auth.uid) || isManagementOrAdmin();
+      allow write: if isAdmin();
+    }
+
+    // -------------------------------------------------------------------------
+    // Audits and System
+    // -------------------------------------------------------------------------
+    match /auditLogs/{logId} {
+      allow read: if isManagementOrAdmin();
+      allow write: if false; // Only Cloud Functions can write audit logs
+    }
+    
+    match /roles/{roleId} {
+      allow read: if isManagementOrAdmin();
+      allow write: if isAdmin();
+    }
+  }
+}

@@ -1,0 +1,197 @@
+Row 11 | Code 100108 | Disb: 2138.0 | Stock: 134.0 | سلك كهرباء 1.5 مم ثنائي العزل
+Row 8 | Code 100105 | Disb: 990.0 | Stock: 1320.0 | سنسر حركة IR106
+Row 12 | Code 100109 | Disb: 914.0 | Stock: 200.0 | لفة سلك 100 م ترمو 3*3
+Row 18 | Code 100115 | Disb: 596.0 | Stock: 0.0 | لمبة 9 وات
+Row 38 | Code 100135 | Disb: 516.0 | Stock: 51.0 | سلك كهرباء 2.5 مم ثنائي العزل
+Row 4 | Code 100101 | Disb: 506.0 | Stock: 146.0 | كشاف 20*20 غاطس ورم
+Row 56 | Code 100153 | Disb: 480.0 | Stock: 0.0 | لفة 100 متر سلك 16 ملي
+Row 69 | Code 100166 | Disb: 355.0 | Stock: 0.0 | سلك نت كات 6 سويدي
+Row 6 | Code 100103 | Disb: 320.0 | Stock: 332.0 | كشاف 20*20 مدور ورم
+Row 39 | Code 100136 | Disb: 300.0 | Stock: 0.0 | لفة سلك  سويدي مصمت 3*3 100 متر
+Row 20 | Code 100117 | Disb: 298.0 | Stock: 27.0 | ترنس 18 وات
+Row 14 | Code 100111 | Disb: 250.0 | Stock: 150.0 | غطاء بواط
+Row 23 | Code 100120 | Disb: 238.0 | Stock: 69.0 | اعواد دكت
+Row 15 | Code 100112 | Disb: 206.0 | Stock: 110.0 | خلية ضوئية
+Row 9 | Code 100106 | Disb: 200.0 | Stock: 262.0 | سنسر حركة IR112
+Row 95 | Code 100192 | Disb: 200.0 | Stock: 0.0 | شلباية علي التيار 50 وات
+Row 26 | Code 100123 | Disb: 191.0 | Stock: 109.0 | لمبة اليوس 7 وات الترا ورم
+Row 13 | Code 100110 | Disb: 170.0 | Stock: 212.0 | كشاف 15*15 مربع ورم
+Row 40 | Code 100137 | Disb: 162.0 | Stock: 0.0 | اسبوط حربة 12 وات
+Row 30 | Code 100127 | Disb: 159.0 | Stock: 317.0 | لقمة بريزة
+Row 71 | Code 100168 | Disb: 144.0 | Stock: 66.0 | كابل سويدي 70 مم معزول
+Row 72 | Code 100169 | Disb: 125.0 | Stock: 0.0 | لفة سلك سويدي 2*4 بالمتر
+Row 24 | Code 100121 | Disb: 100.0 | Stock: 0.0 | لمبة 8 وات
+Row 57 | Code 100154 | Disb: 100.0 | Stock: 0.0 | ترنس 30 وات
+Row 25 | Code 100122 | Disb: 91.0 | Stock: 0.0 | بواط 10*10 وتر بروف
+Row 5 | Code 100102 | Disb: 82.0 | Stock: 0.0 | ماكينة سلم ومدخل
+Row 16 | Code 100113 | Disb: 67.0 | Stock: 3.0 | تايمر
+Row 31 | Code 100128 | Disb: 65.0 | Stock: 5.0 | ضفدعة نحاس 70مم
+Row 96 | Code 100193 | Disb: 65.0 | Stock: 85.0 | لمبة سويدي 100 وات
+Row 73 | Code 100170 | Disb: 64.0 | Stock: 4.5 | كابل سويدي 35 مم معزول
+Row 17 | Code 100114 | Disb: 63.0 | Stock: 0.0 | لفة سلك 1.5مم
+Row 41 | Code 100138 | Disb: 60.0 | Stock: 0.0 | لفة خرطوم فلسكبل 25 م
+Row 42 | Code 100139 | Disb: 59.0 | Stock: 70.0 | مفتاح احادي 20 امبير
+Row 74 | Code 100171 | Disb: 58.0 | Stock: 0.0 | لمبة بيان
+Row 58 | Code 100155 | Disb: 55.0 | Stock: 55.0 | كشاف ابيض بانل
+Row 59 | Code 100156 | Disb: 53.0 | Stock: 8.0 | سلكتور
+Row 75 | Code 100172 | Disb: 45.0 | Stock: 0.0 | كابل مسلح 4*35 مسلح
+Row 45 | Code 100142 | Disb: 43.0 | Stock: 32.0 | دويل
+Row 43 | Code 100140 | Disb: 40.0 | Stock: 0.0 | لمبة ابليك شوكة 5 وات كاس كعب كبير
+Row 97 | Code 100194 | Disb: 40.0 | Stock: 100.0 | شريط ليد 18 وات 60 سم
+Row 98 | Code 100195 | Disb: 40.0 | Stock: 0.0 | كابل ترمو 4*6
+Row 105 | Code 100202 | Disb: 35.0 | Stock: 0.0 | سلك ترمو 2*2 بالمتر
+Row 44 | Code 100141 | Disb: 30.0 | Stock: 34.0 | سدادة
+Row 60 | Code 100157 | Disb: 30.0 | Stock: 0.0 | كشاف 200 وات
+Row 27 | Code 100124 | Disb: 29.0 | Stock: 41.0 | لقمة جرس
+Row 61 | Code 100158 | Disb: 28.0 | Stock: 1.0 | ريكم
+Row 32 | Code 100129 | Disb: 24.5 | Stock: 0.0 | سلك شباك الوميتال
+Row 46 | Code 100143 | Disb: 21.0 | Stock: 0.0 | مفتاح احادي 16 امبير
+Row 76 | Code 100173 | Disb: 21.0 | Stock: 0.0 | لفة سلك 1 ملي
+Row 47 | Code 100144 | Disb: 20.0 | Stock: 0.0 | سرفيل 35 مم
+Row 48 | Code 100145 | Disb: 20.0 | Stock: 1.0 | ابليك UP&down
+Row 63 | Code 100160 | Disb: 20.0 | Stock: 1.0 | قاعدة بولارد بلاستك
+Row 99 | Code 100196 | Disb: 20.0 | Stock: 0.0 | سلك سويدي 2*1
+Row 100 | Code 100197 | Disb: 18.0 | Stock: 0.0 | ابلايت ارض 12 وات
+Row 62 | Code 100159 | Disb: 17.0 | Stock: 0.0 | سرفيل نحاس 70 مم
+Row 77 | Code 100174 | Disb: 17.0 | Stock: 0.0 | مفتاح شنبدر 25 امبير
+Row 108 | Code 100205 | Disb: 15.0 | Stock: 0.0 | رزتات
+Row 78 | Code 100175 | Disb: 14.0 | Stock: 0.0 | فلتر ديسكات 1.5 بوصة
+Row 33 | Code 100130 | Disb: 12.0 | Stock: 0.0 | مفتاح احادي 32 امبير
+Row 49 | Code 100146 | Disb: 12.0 | Stock: 0.0 | لفة خرطوم فلسكبل 32م
+Row 101 | Code 100198 | Disb: 12.0 | Stock: 0.0 | مفتاح احادي 10 امبير
+Row 103 | Code 100200 | Disb: 12.0 | Stock: 0.0 | مفتاح بوش بوتن
+Row 21 | Code 100118 | Disb: 11.0 | Stock: 0.0 | لفة خرطوم 16 م 45 متر
+Row 28 | Code 100125 | Disb: 11.0 | Stock: 1.0 | لفة خرطوم 23مم 45متر
+Row 102 | Code 100199 | Disb: 11.0 | Stock: 0.0 | شلباية بولارد
+Row 34 | Code 100131 | Disb: 10.0 | Stock: 0.0 | لفة كابل سويدي ترمو بلاستك 2*3
+Row 35 | Code 100132 | Disb: 10.0 | Stock: 34.0 | هيربشن 250 امبير
+Row 104 | Code 100201 | Disb: 10.0 | Stock: 0.0 | ترملة 4 م
+Row 106 | Code 100203 | Disb: 10.0 | Stock: 0.0 | شريط ليد بروفايل
+Row 107 | Code 100204 | Disb: 10.0 | Stock: 0.0 | خرطوم مصطفي محمود 23 مم بالمتر
+Row 29 | Code 100126 | Disb: 8.0 | Stock: 0.0 | لفة كابل سويدي ترمو بلاستك 2*4 متر100
+Row 80 | Code 100177 | Disb: 8.0 | Stock: 0.0 | جوان فلانشة 4 بوصة ميتل مثقب
+Row 81 | Code 100178 | Disb: 8.0 | Stock: 0.0 | جوان فلانشة 3 بوصة ميتل مثقب
+Row 166 | Code 100263 | Disb: 8.0 | Stock: 0.0 | سماعة خاصة بالمناسباات
+Row 169 | Code 100266 | Disb: 8.0 | Stock: 0.0 | بكرة ليد 20 وات
+Row 37 | Code 100134 | Disb: 7.0 | Stock: 22.0 | شاسية بتشينو
+Row 50 | Code 100147 | Disb: 7.0 | Stock: 0.0 | لفة كابل سويدي ترمو بلاستك 2*6
+Row 82 | Code 100179 | Disb: 7.0 | Stock: 0.0 | اسبوط انارة داخلية بحيرات
+Row 216 | Code 100313 | Disb: 7.0 | Stock: 0.0 | لمبة كاسة 6 وات
+Row 52 | Code 100149 | Disb: 6.0 | Stock: 2.0 | لفة سلك ترمو 3*1  100 متر
+Row 64 | Code 100161 | Disb: 6.0 | Stock: 15.0 | هيربشن 100 امبير
+Row 109 | Code 100206 | Disb: 6.0 | Stock: 0.0 | كابل سويدي 16م نحاس معزول
+Row 110 | Code 100207 | Disb: 6.0 | Stock: 0.0 | ابليك ورم 10 وات
+Row 111 | Code 100208 | Disb: 6.0 | Stock: 0.0 | كابلات صوت 2*1
+Row 210 | Code 100307 | Disb: 6.0 | Stock: 0.0 | مفتاح احادي 25 امبيرشنيدر
+Row 51 | Code 100148 | Disb: 5.0 | Stock: 0.0 | مفتاح ثلاثي 63 امبير
+Row 53 | Code 100150 | Disb: 5.0 | Stock: 0.0 | بارة اوميجا
+Row 55 | Code 100152 | Disb: 5.0 | Stock: 0.0 | لفة سلك 2 مم
+Row 65 | Code 100162 | Disb: 5.0 | Stock: 0.0 | لوحة كهرباء 40*30
+Row 66 | Code 100163 | Disb: 5.0 | Stock: 0.0 | كونتاكتور شنيدر 32  امبير LC1D18
+Row 84 | Code 100181 | Disb: 5.0 | Stock: 0.0 | مشترك ثلاثي
+Row 85 | Code 100182 | Disb: 5.0 | Stock: 39.0 | مفتاح ايرث ليكدج 20 امبير 30مم امبير
+Row 112 | Code 100209 | Disb: 5.0 | Stock: 0.0 | مفتاح كوبس
+Row 113 | Code 100210 | Disb: 5.0 | Stock: 0.0 | كابل مسلح 16 م أربعة فازة
+Row 114 | Code 100211 | Disb: 5.0 | Stock: 0.0 | تايمر 24 ساعة صيني
+Row 115 | Code 100212 | Disb: 5.0 | Stock: 0.0 | بكرة ليد بروفايل
+Row 119 | Code 100216 | Disb: 5.0 | Stock: 0.0 | ترنس باور سبلاي 100 وات
+Row 86 | Code 100183 | Disb: 4.0 | Stock: 0.0 | لفة كابل سويدي ترمو بلاستك 2*2
+Row 87 | Code 100184 | Disb: 4.0 | Stock: 0.0 | كويك كابلر 1 بوصة شامل المفتاح
+Row 88 | Code 100185 | Disb: 4.0 | Stock: 0.0 | تايمر ستار دالتا
+Row 116 | Code 100213 | Disb: 4.0 | Stock: 4.0 | حامل حديد
+Row 117 | Code 100214 | Disb: 4.0 | Stock: 0.0 | لفة خطوم فلسكبل 13 ملي
+Row 118 | Code 100215 | Disb: 4.0 | Stock: 0.0 | لفة سلك 3 ملي
+Row 120 | Code 100217 | Disb: 4.0 | Stock: 0.0 | قاعدة ريشة ربلاي
+Row 121 | Code 100218 | Disb: 4.0 | Stock: 1.0 | رليه RMP-01F 14 رجل
+Row 68 | Code 100165 | Disb: 3.0 | Stock: 2.0 | علبة بواط  30*30
+Row 89 | Code 100186 | Disb: 3.0 | Stock: 26.0 | علبة كهرباء تشطيب داخلى
+Row 122 | Code 100219 | Disb: 3.0 | Stock: 0.0 | شريط ليد ورم 12 وات
+Row 123 | Code 100220 | Disb: 3.0 | Stock: 0.0 | اوفرلود 10:7 امبير
+Row 133 | Code 100230 | Disb: 3.0 | Stock: 0.0 | ترنس باور سبلاي 200 وات
+Row 136 | Code 100233 | Disb: 3.0 | Stock: 0.0 | كونتاكتور هيمل 40 امبير
+Row 154 | Code 100251 | Disb: 3.0 | Stock: 0.0 | متر سلك 2 ملي
+Row 215 | Code 100312 | Disb: 3.0 | Stock: 0.0 | ترانس ليد 400 وات
+Row 218 | Code 100315 | Disb: 3.0 | Stock: 0.0 | مسطرة 220 فولت 20 وات
+Row 91 | Code 100188 | Disb: 2.0 | Stock: 19.0 | رزة قفل
+Row 92 | Code 100189 | Disb: 2.0 | Stock: 0.0 | قفل صغير
+Row 94 | Code 100191 | Disb: 2.0 | Stock: 26.0 | هيربشن 160أمبير gad
+Row 124 | Code 100221 | Disb: 2.0 | Stock: 0.0 | كونتاكتور 4 ك 9 امبير
+Row 125 | Code 100222 | Disb: 2.0 | Stock: 0.0 | متر بارة ارضي 10 خط
+Row 126 | Code 100223 | Disb: 2.0 | Stock: 0.0 | مفصلة باب الوميتال
+Row 127 | Code 100224 | Disb: 2.0 | Stock: 0.0 | اوفرلود 12:18 امبير
+Row 128 | Code 100225 | Disb: 2.0 | Stock: 0.0 | كشاف 42 وات بارز ورم
+Row 129 | Code 100226 | Disb: 2.0 | Stock: 0.0 | كنتاكتور هيمل 12 امبير
+Row 130 | Code 100227 | Disb: 2.0 | Stock: 0.0 | اوفر لود 6/4 شيلت
+Row 131 | Code 100228 | Disb: 2.0 | Stock: 0.0 | كنتاكتور شنايدر
+Row 145 | Code 100242 | Disb: 2.0 | Stock: 0.0 | علبة دهان بريمر لاكيه اسود
+Row 155 | Code 100252 | Disb: 2.0 | Stock: 0.0 | متر سلك 10 ملي
+Row 207 | Code 100304 | Disb: 2.0 | Stock: 0.0 | لفة سلك 4 ملي
+Row 219 | Code 100316 | Disb: 2.0 | Stock: 0.0 | لمبة G9 5 وات
+Row 220 | Code 100317 | Disb: 2.0 | Stock: 0.0 | دواية G9
+Row 132 | Code 100229 | Disb: 1.0 | Stock: 5.0 | جوتة ريكم 3*50+25
+Row 134 | Code 100231 | Disb: 1.0 | Stock: 0.0 | كيس ترامل 6 مم
+Row 137 | Code 100234 | Disb: 1.0 | Stock: 0.0 | لفة خرطوم 15 متر
+Row 138 | Code 100235 | Disb: 1.0 | Stock: 0.0 | بواط 30*40 وتر بروف
+Row 139 | Code 100236 | Disb: 1.0 | Stock: 0.0 | بونطة هلتي 35
+Row 141 | Code 100238 | Disb: 1.0 | Stock: 0.0 | فازة ريجارد
+Row 142 | Code 100239 | Disb: 1.0 | Stock: 0.0 | مشترك ثلاثي ذكر
+Row 143 | Code 100240 | Disb: 1.0 | Stock: 0.0 | فيشة ليد
+Row 144 | Code 100241 | Disb: 1.0 | Stock: 89.0 | اكليرك فيبر
+Row 146 | Code 100243 | Disb: 1.0 | Stock: 0.0 | لفة خرطوم فلوسكبل حراري 23مم
+Row 147 | Code 100244 | Disb: 1.0 | Stock: 2.0 | مفتاح ثلاثي 32 امبير
+Row 149 | Code 100246 | Disb: 1.0 | Stock: 0.0 | لفة خرطوم فلسكبل 16 ملي
+Row 152 | Code 100249 | Disb: 1.0 | Stock: 1.0 | فاز سكونس
+Row 157 | Code 100254 | Disb: 1.0 | Stock: 0.0 | بواط 20*30
+Row 211 | Code 100308 | Disb: 1.0 | Stock: 0.0 | مفتاح تكييف 32 امبير
+Row 212 | Code 100309 | Disb: 1.0 | Stock: 0.0 | لفة خرطوم فلسكبل 11 مم
+Row 213 | Code 100310 | Disb: 1.0 | Stock: 0.0 | فيشة ذكر خارجي
+Row 214 | Code 100311 | Disb: 1.0 | Stock: 0.0 | بريزة خارجية
+Row 217 | Code 100314 | Disb: 1.0 | Stock: 0.0 | لمبة ديكور 4 وات
+Row 151 | Code 100248 | Disb: 0.0 | Stock: 27.0 | غطاء مفتاح ثلاثي
+Row 153 | Code 100250 | Disb: 0.0 | Stock: 3.0 | تكييف
+Row 156 | Code 100253 | Disb: 0.0 | Stock: 3.0 | بارة ثلاثية 380
+Row 158 | Code 100255 | Disb: 0.0 | Stock: 100.0 | فيشة ترنس كشاف
+Row 159 | Code 100256 | Disb: 0.0 | Stock: 3.0 | غطاء لوحة كهرباء كبير
+Row 160 | Code 100257 | Disb: 0.0 | Stock: 1.0 | مفتاح ثنائي 63 امبير
+Row 161 | Code 100258 | Disb: 0.0 | Stock: 60.0 | لفة سلك ترمو4* 16 ملي
+Row 162 | Code 100259 | Disb: 0.0 | Stock: 1.0 | علبة كهرباء خاصة بالكاميرات
+Row 163 | Code 100260 | Disb: 0.0 | Stock: 3.0 | بلاج 3 فاز
+Row 164 | Code 100261 | Disb: 0.0 | Stock: 1.0 | لفة خرطوم كاميرات 3 متر
+Row 165 | Code 100262 | Disb: 0.0 | Stock: 1.0 | تجيعة سرية نور ميدان
+Row 167 | Code 100264 | Disb: 0.0 | Stock: 2.0 | كمبروسر تكيف
+Row 168 | Code 100265 | Disb: 0.0 | Stock: 1.0 | بواط 25*20 وتر بروف
+Row 170 | Code 100267 | Disb: 0.0 | Stock: 100.0 | شريط ليد24 وات ورم 80 سم
+Row 171 | Code 100268 | Disb: 0.0 | Stock: 50.0 | قفل كبير ماستر
+Row 172 | Code 100269 | Disb: 0.0 | Stock: 50.0 | تجميعة سلك ترمو بفيشة ضمن اغرض الصيانة
+Row 173 | Code 100270 | Disb: 0.0 | Stock: 49.0 | هيربشن 160 امبير abb
+Row 174 | Code 100271 | Disb: 0.0 | Stock: 25.0 | بولر مدور
+Row 175 | Code 100272 | Disb: 0.0 | Stock: 25.0 | فلانشة حديد للبولر
+Row 176 | Code 100273 | Disb: 0.0 | Stock: 10.0 | هيربشن 400 امبير
+Row 177 | Code 100274 | Disb: 0.0 | Stock: 9.0 | سلك صاعد 1*95 ملي   احمر
+Row 178 | Code 100275 | Disb: 0.0 | Stock: 6.0 | سلك صاعد  ايرث 50   ملي
+Row 179 | Code 100276 | Disb: 0.0 | Stock: 5.0 | الانكية 4
+Row 180 | Code 100277 | Disb: 0.0 | Stock: 2.0 | حامل تكييف
+Row 182 | Code 100279 | Disb: 0.0 | Stock: 1.0 | مفتاح 160 امبير
+Row 183 | Code 100280 | Disb: 0.0 | Stock: 1.0 | ديزل كهرباء 19 كيلو ( يحتاج صيانة )
+Row 184 | Code 100281 | Disb: 0.0 | Stock: 1.0 | غطاء لوحة كهرباء متوسط
+Row 185 | Code 100282 | Disb: 0.0 | Stock: 1.0 | علبة دهان كيلو اسود مط
+Row 186 | Code 100283 | Disb: 0.0 | Stock: 1.0 | ابليك سور الكمبوبد
+Row 187 | Code 100284 | Disb: 0.0 | Stock: 1.0 | UNI-BEX منظم صوت+ميكروفون
+Row 188 | Code 100285 | Disb: 0.0 | Stock: 1.0 | لفة سلك ازرق مستلزمات الصيانة
+Row 189 | Code 100286 | Disb: 0.0 | Stock: 0.0 | مفتاح قاطع تيار ( بلمبات إشارة np تركي
+Row 190 | Code 100287 | Disb: 0.0 | Stock: 0.0 | مفتاح ديفيتر
+Row 191 | Code 100288 | Disb: 0.0 | Stock: 0.0 | كوسية 50 مم
+Row 193 | Code 100290 | Disb: 0.0 | Stock: 0.0 | مفتاح دفتير بتشينو
+Row 197 | Code 100294 | Disb: 0.0 | Stock: 0.0 | شلباية علي التيار 200 وات
+Row 199 | Code 100296 | Disb: 0.0 | Stock: 0.0 | تايمر ABB
+Row 200 | Code 100297 | Disb: 0.0 | Stock: 0.0 | شلباية عمود نور بالترنس
+Row 201 | Code 100298 | Disb: 0.0 | Stock: 0.0 | سرافيل 16 م
+Row 202 | Code 100299 | Disb: 0.0 | Stock: 0.0 | غطاء كابل 16 م
+Row 203 | Code 100300 | Disb: 0.0 | Stock: 0.0 | كابل مسلح 25 م 4 طرف
+Row 204 | Code 100301 | Disb: 0.0 | Stock: 0.0 | سرافيل 25 م
+Row 205 | Code 100302 | Disb: 0.0 | Stock: 0.0 | بريزة وتر بروف
+Row 206 | Code 100303 | Disb: 0.0 | Stock: 0.0 | بور صبلاي
+Row 208 | Code 100305 | Disb: 0.0 | Stock: 1.0 | مفتاح قاطع تيار 125 امبير
+Row 209 | Code 100306 | Disb: 0.0 | Stock: 1.0 | لو حة كهرباء 50*70*20
+Row 222 | Code 100319 | Disb: 0.0 | Stock: 1.0 | سلك سماعات 1 مم
+Row 223 | Code 100320 | Disb: 0.0 | Stock: 8.0 | خلية ضوئية شنايدر

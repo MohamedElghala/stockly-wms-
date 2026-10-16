@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Calm WMS - شاشة تعديل واستثناء النواقص والبدائل</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Firebase App & Firestore SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; background-color: #0b0f19; color: #f8fafc; }
+    .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .table-row-hover:hover { background-color: rgba(255, 255, 255, 0.03); }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+  </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+  <!-- Top Navigation Header -->
+  <header class="glass-card rounded-2xl p-5 mb-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl border-cyan-500/20 border">
+    <div class="flex items-center gap-4">
+      <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-cyan-600 to-cyan-400 flex items-center justify-center text-slate-950 font-black text-2xl shadow-lg shadow-cyan-500/30">
+        📦
+      </div>
+      <div>
+        <h1 class="text-xl md:text-2xl font-black text-white flex items-center gap-2">
+          The Calm WMS <span class="text-cyan-400 font-bold text-sm bg-cyan-950/60 border border-cyan-500/40 px-2.5 py-0.5 rounded-full">الرؤية الإدارية للنواقص</span>
+        </h1>
+        <p class="text-xs md:text-sm text-slate-400">إدارة واستثناء الأصناف التي لها بدائل لمنع التكدس وتوفير السيولة - ستون رزيدنس</p>
+      </div>
+    </div>
+
+    <!-- Live Status Pill & Quick Nav -->
+    <div class="flex items-center gap-3">
+      <a href="https://the-calm-wms.web.app" target="_blank" class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 border border-cyan-500/30 transition flex items-center gap-1.5">
+        <span>🌐 لوحة تحكم السستم اللايف</span>
+      </a>
+      <div id="connectionStatus" class="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30">
+        <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+        جاري الاتصال بالسستم السحابي...
+      </div>
+    </div>
+  </header>
+
+  <!-- Metric Summary Cards -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+    <div class="glass-card p-4 rounded-xl border-slate-800">
+      <div class="text-xs text-slate-400 font-bold mb-1">إجمالي الأصناف النشطة</div>
+      <div id="statTotalItems" class="text-2xl md:text-3xl font-black text-white">892</div>
+      <div class="text-[11px] text-slate-500 mt-1">مطابق لشيت الإكسيل 100%</div>
+    </div>
+
+    <div class="glass-card p-4 rounded-xl border-red-500/20 bg-red-950/10">
+      <div class="text-xs text-red-400 font-bold mb-1">نواقص حرجة (تتطلب شراء)</div>
+      <div id="statCriticalItems" class="text-2xl md:text-3xl font-black text-red-500">0</div>
+      <div class="text-[11px] text-red-400/70 mt-1">ليس لها بدائل حالية</div>
+    </div>
+
+    <div class="glass-card p-4 rounded-xl border-purple-500/20 bg-purple-950/10">
+      <div class="text-xs text-purple-400 font-bold mb-1">مستثنى بالطلب (له بديل)</div>
+      <div id="statOnDemandItems" class="text-2xl md:text-3xl font-black text-purple-400">0</div>
+      <div class="text-[11px] text-purple-400/70 mt-1">تم توفير ميزانيتها ومنع تكدسها 🎯</div>
+    </div>
+
+    <div class="glass-card p-4 rounded-xl border-yellow-500/20 bg-yellow-950/10">
+      <div class="text-xs text-yellow-400 font-bold mb-1">نواقص عادية (استثناء إداري)</div>
+      <div id="statNormalItems" class="text-2xl md:text-3xl font-black text-yellow-400">0</div>
+      <div class="text-[11px] text-yellow-400/70 mt-1">غير طارئة في المرحلة الحالية</div>
+    </div>
+  </div>
+
+  <!-- Search & Filter Bar -->
+  <div class="glass-card p-4 rounded-2xl mb-6 flex flex-col md:flex-row items-center gap-3">
+    <div class="relative flex-1 w-full">
+      <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="ابحث بكود الصنف أو اسمه (مثلاً: 116128 أو مسمار بواط)..." 
+        class="w-full bg-slate-900/80 border border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition"
+      >
+    </div>
+
+    <div class="flex items-center gap-2 w-full md:w-auto">
+      <select id="categoryFilter" class="bg-slate-900/80 border border-slate-700/80 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-cyan-400 w-full md:w-56">
+        <option value="all">كافة الأقسام الـ 17</option>
+      </select>
+
+      <select id="statusFilter" class="bg-slate-900/80 border border-slate-700/80 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-cyan-400 w-full md:w-48">
+        <option value="all">كافة الحالات</option>
+        <option value="CRITICAL">نقص حرج فقط 🚨</option>
+        <option value="ON_DEMAND">مستثنى بالطلب / له بديل 🔄</option>
+        <option value="NORMAL">نقص عادي 🟡</option>
+        <option value="ACTIVE">آمن ومتوفر ✅</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Items Table -->
+  <div class="glass-card rounded-2xl overflow-hidden shadow-2xl">
+    <div class="overflow-x-auto max-h-[600px] overflow-y-auto">
+      <table class="w-full text-right text-xs border-collapse">
+        <thead class="sticky top-0 bg-slate-900 border-b border-slate-800 text-slate-400 font-bold z-10">
+          <tr>
+            <th class="p-3.5">الكود</th>
+            <th class="p-3.5">القسم</th>
+            <th class="p-3.5">اسم الصنف</th>
+            <th class="p-3.5">الوحدة</th>
+            <th class="p-3.5 text-center">الرصيد الفعلي</th>
+            <th class="p-3.5 text-center">حد الأمان</th>
+            <th class="p-3.5">حالة النقص والرؤية الإدارية</th>
+            <th class="p-3.5">الصنف البديل / ملاحظة الاستثناء</th>
+            <th class="p-3.5 text-center">الإجراء</th>
+          </tr>
+        </thead>
+        <tbody id="itemsTableBody" class="divide-y divide-slate-800/60">
+          <tr>
+            <td colspan="9" class="p-8 text-center text-slate-500">جاري تحميل بيانات الأصناف من السستم اللايف...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Edit Item Modal (Popup) -->
+  <div id="editModal" class="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden animate-fade-in">
+      
+      <!-- Modal Header -->
+      <div class="bg-slate-950 p-4 border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">
+            ✏️
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white">تعديل الرؤية الإدارية واستثناء الصنف</h3>
+            <p id="modalItemSubtitle" class="text-xs text-slate-400">كود الصنف: -</p>
+          </div>
+        </div>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">✕</button>
+      </div>
+
+      <!-- Modal Body -->
+      <form id="editForm" onsubmit="saveItemChanges(event)" class="p-5 space-y-4 text-xs">
+        
+        <!-- Item Name & Stock Display -->
+        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 space-y-1">
+          <div class="text-[11px] text-slate-400">اسم الصنف بالدفاتر:</div>
+          <div id="modalItemName" class="text-sm font-bold text-white">-</div>
+          <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-800/50 mt-1">
+            <span>القسم: <b id="modalItemCategory" class="text-slate-200">-</b></span>
+            <span>الرصيد الفعلي: <b id="modalItemStock" class="text-cyan-400 font-bold">-</b></span>
+          </div>
+        </div>
+
+        <!-- Shortage Priority Options -->
+        <div class="space-y-2">
+          <label class="block font-bold text-slate-300">
+            تحديد تصنيف الصنف في النواقص (الرؤية الإدارية):
+          </label>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <!-- AUTO -->
+            <label class="flex items-start gap-2.5 p-3 rounded-xl border border-slate-700 bg-slate-950/40 hover:bg-slate-800/40 cursor-pointer transition">
+              <input type="radio" name="shortageOverride" value="AUTO" class="mt-0.5 text-cyan-500">
+              <div>
+                <div class="font-bold text-white">تلقائي (حسب السيستم)</div>
+                <div class="text-[10px] text-slate-400">حساب النقص تلقائياً حسب الرصيد</div>
+              </div>
+            </label>
+
+            <!-- ON DEMAND (له بديل) -->
+            <label class="flex items-start gap-2.5 p-3 rounded-xl border border-purple-500/50 bg-purple-950/20 hover:bg-purple-900/30 cursor-pointer transition ring-1 ring-purple-500/30">
+              <input type="radio" name="shortageOverride" value="ON_DEMAND" class="mt-0.5 text-purple-500">
+              <div>
+                <div class="font-bold text-purple-300">بالطلب فقط (له بديل) 🎯</div>
+                <div class="text-[10px] text-purple-400/80">استبعاد تام من النواقص والشراء</div>
+              </div>
+            </label>
+
+            <!-- NORMAL -->
+            <label class="flex items-start gap-2.5 p-3 rounded-xl border border-yellow-500/40 bg-yellow-950/20 hover:bg-yellow-900/30 cursor-pointer transition">
+              <input type="radio" name="shortageOverride" value="NORMAL" class="mt-0.5 text-yellow-500">
+              <div>
+                <div class="font-bold text-yellow-300">استثناء: نقص عادي 🟡</div>
+                <div class="text-[10px] text-yellow-400/80">تنزيل من الحرج للعادي (غير طارئ)</div>
+              </div>
+            </label>
+
+            <!-- CRITICAL -->
+            <label class="flex items-start gap-2.5 p-3 rounded-xl border border-red-500/40 bg-red-950/20 hover:bg-red-900/30 cursor-pointer transition">
+              <input type="radio" name="shortageOverride" value="CRITICAL" class="mt-0.5 text-red-500">
+              <div>
+                <div class="font-bold text-red-400">حرج إلزامي 🚨</div>
+                <div class="text-[10px] text-red-400/80">صنف استراتيجي عاجل للشراء</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Substitute Notes Input -->
+        <div class="space-y-1">
+          <label class="block font-bold text-slate-300">
+            بيان الصنف البديل / سبب الاستثناء:
+          </label>
+          <input 
+            type="text" 
+            id="modalSubstituteNotes" 
+            placeholder="مثال: له بديل متوفر كود 116126 مسمار بواب (14 كيلو بالمخزن)..." 
+            class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400"
+          >
+          <p class="text-[10px] text-slate-500">تظهر هذه الملاحظة لفرق الصيانة والإدارة لتبرير عدم طلب الصنف.</p>
+        </div>
+
+        <!-- Alert Limit (حد الأمان) -->
+        <div class="space-y-1">
+          <label class="block font-bold text-slate-300">
+            حد الأمان (تنبيه انخفاض الرصيد):
+          </label>
+          <input 
+            type="number" 
+            id="modalAlertLimit" 
+            min="0"
+            class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-yellow-400 font-bold focus:outline-none focus:border-cyan-400"
+          >
+        </div>
+
+        <!-- Actions -->
+        <div class="pt-3 border-t border-slate-800 flex items-center justify-end gap-2">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-semibold transition">
+            إلغاء
+          </button>
+          <button type="submit" id="btnSubmitModal" class="px-5 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-600 text-slate-950 font-bold hover:brightness-110 shadow-lg shadow-cyan-500/20 transition flex items-center gap-1.5">
+            <span>حفظ في السستم اللايف 💾</span>
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Client-Side App Logic -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBov0NrvjGouy7iByl4qGb6CpRVWsEc9CM",
+      authDomain: "the-calm-wms.firebaseapp.com",
+      projectId: "the-calm-wms",
+      storageBucket: "the-calm-wms.firebasestorage.app",
+      messagingSenderId: "126854098426",
+      appId: "1:126854098426:web:e9ec91d278cc2d743f8843"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let allItems = [];
+    let currentEditItem = null;
+
+    // Connect & Login
+    async function init() {
+      try {
+        await auth.signInWithEmailAndPassword("mohamedalghala@gmail.com", "password123");
+        document.getElementById("connectionStatus").className = "flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30";
+        document.getElementById("connectionStatus").innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400"></span> متصل بالسستم السحابي (Live)';
+        
+        // Listen to Firestore Items in real-time
+        db.collection("items").onSnapshot((snapshot) => {
+          allItems = [];
+          snapshot.forEach(doc => {
+            allItems.push({ id: doc.id, ...doc.data() });
+          });
+          
+          // Sort items by numeric code
+          allItems.sort((a, b) => (parseInt(a.code) || 0) - (parseInt(b.code) || 0));
+          
+          populateCategories();
+          updateMetrics();
+          renderTable();
+        }, (error) => {
+          console.error("Firestore error:", error);
+          document.getElementById("connectionStatus").className = "flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-red-500/10 text-red-400 border border-red-500/30";
+          document.getElementById("connectionStatus").innerText = "خطأ في الاتصال بالسحابة";
+        });
+
+      } catch (err) {
+        console.error("Auth error:", err);
+      }
+    }
+
+    function populateCategories() {
+      const select = document.getElementById("categoryFilter");
+      const cats = Array.from(new Set(allItems.map(i => i.category).filter(Boolean))).sort();
+      const currentVal = select.value;
+      
+      select.innerHTML = '<option value="all">كافة الأقسام الـ 17</option>';
+      cats.forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c;
+        opt.innerText = c;
+        select.appendChild(opt);
+      });
+      select.value = currentVal || "all";
+    }
+
+    function updateMetrics() {
+      let critical = 0;
+      let onDemand = 0;
+      let normal = 0;
+
+      allItems.forEach(i => {
+        const stock = Number(i.stock) || 0;
+        const alertLimit = Number(i.alertLimit) || 10;
+        const override = i.shortageOverride || i.classification;
+
+        if (override === "ON_DEMAND") {
+          onDemand++;
+        } else if (override === "NORMAL") {
+          normal++;
+        } else if (override === "CRITICAL" || stock <= 0 || stock <= alertLimit) {
+          critical++;
+        }
+      });
+
+      document.getElementById("statTotalItems").innerText = allItems.length;
+      document.getElementById("statCriticalItems").innerText = critical;
+      document.getElementById("statOnDemandItems").innerText = onDemand;
+      document.getElementById("statNormalItems").innerText = normal;
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById("itemsTableBody");
+      const search = document.getElementById("searchInput").value.trim().toLowerCase();
+      const cat = document.getElementById("categoryFilter").value;
+      const status = document.getElementById("statusFilter").value;
+
+      const filtered = allItems.filter(item => {
+        if (cat !== "all" && item.category !== cat) return false;
+        
+        const stock = Number(item.stock) || 0;
+        const alertLimit = Number(item.alertLimit) || 10;
+        const override = item.shortageOverride || item.classification;
+
+        let effectiveStatus = "ACTIVE";
+        if (override === "ON_DEMAND") effectiveStatus = "ON_DEMAND";
+        else if (override === "NORMAL") effectiveStatus = "NORMAL";
+        else if (override === "CRITICAL" || stock <= 0 || stock <= alertLimit) effectiveStatus = "CRITICAL";
+
+        if (status !== "all" && effectiveStatus !== status) return false;
+
+        if (search) {
+          const codeMatch = String(item.code || "").toLowerCase().includes(search);
+          const nameMatch = String(item.name || "").toLowerCase().includes(search);
+          if (!codeMatch && !nameMatch) return false;
+        }
+
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" class="p-8 text-center text-slate-500 font-bold">لا توجد أصناف تطابق البحث المحدد.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(item => {
+        const stock = Number(item.stock) || 0;
+        const alertLimit = Number(item.alertLimit) || 10;
+        const override = item.shortageOverride || item.classification;
+
+        let badge = '<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">آمن ✅</span>';
+        if (override === "ON_DEMAND") {
+          badge = '<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40">بالطلب (له بديل) 🔄</span>';
+        } else if (override === "NORMAL") {
+          badge = '<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-yellow-500/20 text-yellow-300 border border-yellow-500/40">نقص عادي 🟡</span>';
+        } else if (override === "CRITICAL" || stock <= 0 || stock <= alertLimit) {
+          badge = '<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-red-500/20 text-red-400 border border-red-500/40">نقص حرج 🚨</span>';
+        }
+
+        const notes = item.substituteNotes ? `<span class="text-purple-300 font-semibold" title="${item.substituteNotes}">${item.substituteNotes}</span>` : '<span class="text-slate-600">-</span>';
+
+        return `
+          <tr class="table-row-hover transition border-b border-slate-800/40">
+            <td class="p-3.5 font-bold text-cyan-400 font-mono">${item.code || item.id}</td>
+            <td class="p-3.5 text-slate-300">${item.category || '-'}</td>
+            <td class="p-3.5 font-bold text-white">${item.name || '-'}</td>
+            <td class="p-3.5 text-slate-400">${item.unit || '-'}</td>
+            <td class="p-3.5 text-center font-bold ${stock <= 0 ? 'text-red-400' : 'text-slate-200'}">${stock}</td>
+            <td class="p-3.5 text-center text-yellow-400 font-bold">${alertLimit}</td>
+            <td class="p-3.5">${badge}</td>
+            <td class="p-3.5 text-slate-300 max-w-xs truncate">${notes}</td>
+            <td class="p-3.5 text-center">
+              <button 
+                onclick="openEditModal('${item.id}')"
+                class="px-3 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 hover:border-cyan-400 font-bold transition flex items-center gap-1 mx-auto text-xs"
+              >
+                ✏️ تعديل
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Modal Control
+    function openEditModal(itemId) {
+      currentEditItem = allItems.find(i => i.id === itemId);
+      if (!currentEditItem) return;
+
+      document.getElementById("modalItemSubtitle").innerText = `كود الصنف: ${currentEditItem.code || currentEditItem.id}`;
+      document.getElementById("modalItemName").innerText = currentEditItem.name || '-';
+      document.getElementById("modalItemCategory").innerText = currentEditItem.category || '-';
+      document.getElementById("modalItemStock").innerText = `${currentEditItem.stock || 0} ${currentEditItem.unit || ''}`;
+      document.getElementById("modalAlertLimit").value = currentEditItem.alertLimit || 10;
+      document.getElementById("modalSubstituteNotes").value = currentEditItem.substituteNotes || '';
+
+      const override = currentEditItem.shortageOverride || currentEditItem.classification || 'AUTO';
+      const radios = document.getElementsByName("shortageOverride");
+      for (const r of radios) {
+        r.checked = (r.value === override);
+      }
+
+      document.getElementById("editModal").classList.remove("hidden");
+    }
+
+    function closeModal() {
+      document.getElementById("editModal").classList.add("hidden");
+      currentEditItem = null;
+    }
+
+    async function saveItemChanges(e) {
+      e.preventDefault();
+      if (!currentEditItem) return;
+
+      const btn = document.getElementById("btnSubmitModal");
+      btn.disabled = true;
+      btn.innerText = "جاري الحفظ بالسحابة...";
+
+      try {
+        const radios = document.getElementsByName("shortageOverride");
+        let selectedOverride = "AUTO";
+        for (const r of radios) {
+          if (r.checked) selectedOverride = r.value;
+        }
+
+        const notes = document.getElementById("modalSubstituteNotes").value.trim();
+        const limit = Number(document.getElementById("modalAlertLimit").value) || 10;
+
+        let effectiveClass = "ACTIVE";
+        if (selectedOverride === "ON_DEMAND") effectiveClass = "ON_DEMAND";
+        else if (selectedOverride === "NORMAL") effectiveClass = "NORMAL";
+        else if (selectedOverride === "CRITICAL") effectiveClass = "CRITICAL";
+        else {
+          effectiveClass = (currentEditItem.stock <= 0) ? "CRITICAL" : "ACTIVE";
+        }
+
+        await db.collection("items").doc(currentEditItem.id).update({
+          shortageOverride: selectedOverride,
+          classification: effectiveClass,
+          status: effectiveClass,
+          substituteNotes: notes,
+          alertLimit: limit,
+          updatedAt: Date.now()
+        });
+
+        closeModal();
+      } catch (err) {
+        console.error("Update error:", err);
+        alert("حدث خطأ أثناء الحفظ: " + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "حفظ في السستم اللايف 💾";
+      }
+    }
+
+    // Event Listeners
+    document.getElementById("searchInput").addEventListener("input", renderTable);
+    document.getElementById("categoryFilter").addEventListener("change", renderTable);
+    document.getElementById("statusFilter").addEventListener("change", renderTable);
+
+    window.addEventListener("DOMContentLoaded", init);
+  </script>
+</body>
+</html>

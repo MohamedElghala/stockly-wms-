@@ -1,0 +1,278 @@
+Total items with Bal > 0 and Out == 0: 152 (out of 432 positive items)
+
+  UNTOUCHED [100248] (أدوات كهربائية) 'غطاء مفتاح ثلاثي': Open=15, In=12, Out=0, Bal=27
+     ---> DISBURSED SIMILAR [100148] 'مفتاح ثلاثي 63 امبير': Open=0, In=5, Out=5, Bal=0
+     ---> DISBURSED SIMILAR [100244] 'مفتاح ثلاثي 32 امبير': Open=1, In=2, Out=1, Bal=2
+
+  UNTOUCHED [100250] (أدوات كهربائية) 'تكييف': Open=1, In=2, Out=0, Bal=3
+     ---> DISBURSED SIMILAR [100308] 'مفتاح تكييف 32 امبير': Open=0, In=1, Out=1, Bal=0
+
+  UNTOUCHED [100256] (أدوات كهربائية) 'غطاء لوحة كهرباء كبير': Open=0, In=3, Out=0, Bal=3
+     ---> DISBURSED SIMILAR [100162] 'لوحة كهرباء 40*30': Open=0, In=5, Out=5, Bal=0
+
+  UNTOUCHED [100257] (أدوات كهربائية) 'مفتاح ثنائي 63 امبير': Open=0, In=1, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [100139] 'مفتاح احادي 20 امبير': Open=0, In=129, Out=55, Bal=74
+     ---> DISBURSED SIMILAR [100143] 'مفتاح احادي 16 امبير': Open=0, In=21, Out=21, Bal=0
+     ---> DISBURSED SIMILAR [100174] 'مفتاح شنبدر 25 امبير': Open=0, In=17, Out=17, Bal=0
+
+  UNTOUCHED [100265] (أدوات كهربائية) 'بواط 25*20 وتر بروف': Open=0, In=1, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [100122] 'بواط 10*10 وتر بروف': Open=0, In=91, Out=91, Bal=0
+     ---> DISBURSED SIMILAR [100235] 'بواط 30*40 وتر بروف': Open=0, In=1, Out=1, Bal=0
+
+  UNTOUCHED [100267] (أدوات كهربائية) 'شريط ليد24 وات ورم 80 سم': Open=100, In=0, Out=0, Bal=100
+     ---> DISBURSED SIMILAR [100219] 'شريط ليد ورم 12 وات': Open=0, In=3, Out=3, Bal=0
+     ---> DISBURSED SIMILAR [100123] 'لمبة اليوس 7 وات الترا ورم': Open=0, In=300, Out=191, Bal=109
+     ---> DISBURSED SIMILAR [100194] 'شريط ليد 18 وات 60 سم': Open=100, In=40, Out=40, Bal=100
+
+  UNTOUCHED [100269] (أدوات كهربائية) 'تجميعة سلك ترمو بفيشة ضمن اغرض الصيانة': Open=50, In=0, Out=0, Bal=50
+     ---> DISBURSED SIMILAR [100109] 'لفة سلك 100 م ترمو 3*3': Open=0, In=1114, Out=914, Bal=200
+     ---> DISBURSED SIMILAR [100202] 'سلك ترمو 2*2 بالمتر': Open=0, In=35, Out=35, Bal=0
+     ---> DISBURSED SIMILAR [100149] 'لفة سلك ترمو 3*1  100 متر': Open=0, In=8, Out=6, Bal=2
+
+  UNTOUCHED [100270] (أدوات كهربائية) 'هيربشن 160 امبير abb': Open=49, In=0, Out=0, Bal=49
+     ---> DISBURSED SIMILAR [100132] 'هيربشن 250 امبير': Open=44, In=0, Out=10, Bal=34
+     ---> DISBURSED SIMILAR [100161] 'هيربشن 100 امبير': Open=21, In=0, Out=6, Bal=15
+     ---> DISBURSED SIMILAR [100191] 'هيربشن 160أمبير gad': Open=28, In=0, Out=2, Bal=26
+
+  UNTOUCHED [100273] (أدوات كهربائية) 'هيربشن 400 امبير': Open=10, In=0, Out=0, Bal=10
+     ---> DISBURSED SIMILAR [100132] 'هيربشن 250 امبير': Open=44, In=0, Out=10, Bal=34
+     ---> DISBURSED SIMILAR [100161] 'هيربشن 100 امبير': Open=21, In=0, Out=6, Bal=15
+
+  UNTOUCHED [100279] (أدوات كهربائية) 'مفتاح 160 امبير': Open=1, In=0, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [100139] 'مفتاح احادي 20 امبير': Open=0, In=129, Out=55, Bal=74
+     ---> DISBURSED SIMILAR [100143] 'مفتاح احادي 16 امبير': Open=0, In=21, Out=21, Bal=0
+     ---> DISBURSED SIMILAR [100174] 'مفتاح شنبدر 25 امبير': Open=0, In=17, Out=17, Bal=0
+
+  UNTOUCHED [100281] (أدوات كهربائية) 'غطاء لوحة كهرباء متوسط': Open=1, In=0, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [100162] 'لوحة كهرباء 40*30': Open=0, In=5, Out=5, Bal=0
+
+  UNTOUCHED [100282] (أدوات كهربائية) 'علبة دهان كيلو اسود مط': Open=1, In=0, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [100242] 'علبة دهان بريمر لاكيه اسود': Open=2, In=0, Out=2, Bal=0
+
+  UNTOUCHED [100305] (أدوات كهربائية) 'مفتاح قاطع تيار 125 امبير': Open=0, In=1, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [100139] 'مفتاح احادي 20 امبير': Open=0, In=129, Out=55, Bal=74
+     ---> DISBURSED SIMILAR [100143] 'مفتاح احادي 16 امبير': Open=0, In=21, Out=21, Bal=0
+     ---> DISBURSED SIMILAR [100174] 'مفتاح شنبدر 25 امبير': Open=0, In=17, Out=17, Bal=0
+
+  UNTOUCHED [100306] (أدوات كهربائية) 'لو حة كهرباء 50*70*20': Open=0, In=1, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [100108] 'سلك كهرباء 1.5 مم ثنائي العزل': Open=0, In=2272, Out=2138, Bal=134
+     ---> DISBURSED SIMILAR [100135] 'سلك كهرباء 2.5 مم ثنائي العزل': Open=0, In=567, Out=516, Bal=51
+     ---> DISBURSED SIMILAR [116103] 'بكرة شريط لحام كهرباء': Open=0, In=123, Out=123, Bal=0
+
+  UNTOUCHED [100312] (أدوات كهربائية) 'ترانس ليد 400 وات': Open=0, In=3, Out=0, Bal=3
+     ---> DISBURSED SIMILAR [100194] 'شريط ليد 18 وات 60 سم': Open=100, In=40, Out=40, Bal=100
+     ---> DISBURSED SIMILAR [100266] 'بكرة ليد 20 وات': Open=0, In=8, Out=8, Bal=0
+     ---> DISBURSED SIMILAR [100219] 'شريط ليد ورم 12 وات': Open=0, In=3, Out=3, Bal=0
+
+  UNTOUCHED [100313] (أدوات كهربائية) 'لمبة كاسة 6 وات': Open=0, In=7, Out=0, Bal=7
+     ---> DISBURSED SIMILAR [100115] 'لمبة 9 وات': Open=200, In=396, Out=596, Bal=0
+     ---> DISBURSED SIMILAR [100123] 'لمبة اليوس 7 وات الترا ورم': Open=0, In=300, Out=191, Bal=109
+     ---> DISBURSED SIMILAR [100121] 'لمبة 8 وات': Open=0, In=100, Out=100, Bal=0
+
+  UNTOUCHED [100314] (أدوات كهربائية) 'لمبة ديكور 4 وات': Open=0, In=1, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [100115] 'لمبة 9 وات': Open=200, In=396, Out=596, Bal=0
+     ---> DISBURSED SIMILAR [100123] 'لمبة اليوس 7 وات الترا ورم': Open=0, In=300, Out=191, Bal=109
+     ---> DISBURSED SIMILAR [100121] 'لمبة 8 وات': Open=0, In=100, Out=100, Bal=0
+
+  UNTOUCHED [100316] (أدوات كهربائية) 'لمبة G9 5 وات': Open=0, In=2, Out=0, Bal=2
+     ---> DISBURSED SIMILAR [100115] 'لمبة 9 وات': Open=200, In=396, Out=596, Bal=0
+     ---> DISBURSED SIMILAR [100123] 'لمبة اليوس 7 وات الترا ورم': Open=0, In=300, Out=191, Bal=109
+     ---> DISBURSED SIMILAR [100121] 'لمبة 8 وات': Open=0, In=100, Out=100, Bal=0
+
+  UNTOUCHED [101127] (أدوات سباكة) 'كوع 63 مم بولي': Open=0, In=1, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [101233] 'كوع 63 مم كومر': Open=0, In=282, Out=280, Bal=2
+     ---> DISBURSED SIMILAR [101210] 'كوع 32 مم كومر': Open=0, In=113, Out=109, Bal=4
+     ---> DISBURSED SIMILAR [101222] 'كوع 50 مم كومر': Open=1, In=73, Out=65, Bal=9
+
+  UNTOUCHED [101158] (أدوات سباكة) 'طبة 50 مم بولي': Open=5, In=0, Out=0, Bal=5
+     ---> DISBURSED SIMILAR [101215] 'طبة 32 مم كومر': Open=0, In=125, Out=106, Bal=19
+     ---> DISBURSED SIMILAR [101216] 'طبة سن 32 مم كومر': Open=0, In=24, Out=23, Bal=1
+     ---> DISBURSED SIMILAR [101227] 'طبة 50 مم كومر': Open=0, In=25, Out=22, Bal=3
+
+  UNTOUCHED [101160] (أدوات سباكة) 'حنفية 3/4 بوصة بولي': Open=0, In=20, Out=0, Bal=20
+     ---> DISBURSED SIMILAR [101301] 'حنفية 0.5 بوصة مجمعة': Open=0, In=7, Out=2, Bal=5
+     ---> DISBURSED SIMILAR [101302] 'حنفية غسالة BG': Open=0, In=5, Out=2, Bal=3
+     ---> DISBURSED SIMILAR [101303] 'حنفية فلتر': Open=0, In=1, Out=1, Bal=0
+
+  UNTOUCHED [101168] (أدوات سباكة) 'جلبة 50 مم كاسل': Open=0, In=1, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [101234] 'جلبة 63 مم كومر': Open=0, In=236, Out=198, Bal=38
+     ---> DISBURSED SIMILAR [101218] 'جلبة سن خارجي 32 مم كومر': Open=0, In=53, Out=50, Bal=3
+     ---> DISBURSED SIMILAR [101250] 'جلبة 75 مم كومر': Open=0, In=76, Out=48, Bal=28
+
+  UNTOUCHED [101172] (أدوات سباكة) 'جلبة 63 مم كاسل': Open=0, In=2, Out=0, Bal=2
+     ---> DISBURSED SIMILAR [101234] 'جلبة 63 مم كومر': Open=0, In=236, Out=198, Bal=38
+     ---> DISBURSED SIMILAR [101218] 'جلبة سن خارجي 32 مم كومر': Open=0, In=53, Out=50, Bal=3
+     ---> DISBURSED SIMILAR [101250] 'جلبة 75 مم كومر': Open=0, In=76, Out=48, Bal=28
+
+  UNTOUCHED [101179] (أدوات سباكة) 'جلبة اصلاح 75 مم كاسل': Open=11, In=0, Out=0, Bal=11
+     ---> DISBURSED SIMILAR [101192] 'جلبة اصلاح 110 مم كاسل': Open=12, In=1, Out=9, Bal=4
+     ---> DISBURSED SIMILAR [101204] 'جلبة اصلاح 160 مم كاسل': Open=0, In=1, Out=1, Bal=0
+
+  UNTOUCHED [101183] (أدوات سباكة) 'مشترك Y 75 مم كاسل': Open=1, In=1, Out=0, Bal=2
+     ---> DISBURSED SIMILAR [101169] 'مشترك 2*1 110/50 مم كاسل': Open=1, In=0, Out=1, Bal=0
+     ---> DISBURSED SIMILAR [101182] 'مشترك 3*1 110/75 مم كاسل': Open=1, In=0, Out=1, Bal=0
+     ---> DISBURSED SIMILAR [101195] 'مشترك 3*1 110 مم كاسل': Open=2, In=0, Out=1, Bal=1
+
+  UNTOUCHED [101196] (أدوات سباكة) 'مشترك 4*1 110 مم كاسل': Open=2, In=0, Out=0, Bal=2
+     ---> DISBURSED SIMILAR [101169] 'مشترك 2*1 110/50 مم كاسل': Open=1, In=0, Out=1, Bal=0
+     ---> DISBURSED SIMILAR [101182] 'مشترك 3*1 110/75 مم كاسل': Open=1, In=0, Out=1, Bal=0
+     ---> DISBURSED SIMILAR [101195] 'مشترك 3*1 110 مم كاسل': Open=2, In=0, Out=1, Bal=1
+
+  UNTOUCHED [101199] (أدوات سباكة) 'طبة تهوية 110 مم كاسل': Open=0, In=10, Out=0, Bal=10
+     ---> DISBURSED SIMILAR [101197] 'طبة 110 مم كاسل': Open=7, In=11, Out=17, Bal=1
+     ---> DISBURSED SIMILAR [101198] 'طبة تسليك 110 مم كاسل': Open=0, In=3, Out=3, Bal=0
+     ---> DISBURSED SIMILAR [101275] 'طبة 110 مم كومر': Open=1, In=1, Out=2, Bal=0
+
+  UNTOUCHED [101202] (أدوات سباكة) 'كوع 160 مم د 90 كاسل': Open=0, In=9, Out=0, Bal=9
+     ---> DISBURSED SIMILAR [101201] 'كوع 160 مم د 45 كاسل': Open=0, In=4, Out=4, Bal=0
+
+  UNTOUCHED [101205] (أدوات سباكة) 'تي 160 مم كاسل': Open=0, In=4, Out=0, Bal=4
+     ---> DISBURSED SIMILAR [101203] 'جلبة 160 مم كاسل': Open=2, In=6, Out=7, Bal=1
+     ---> DISBURSED SIMILAR [101201] 'كوع 160 مم د 45 كاسل': Open=0, In=4, Out=4, Bal=0
+     ---> DISBURSED SIMILAR [101287] 'فلانشة 160 مم كومر': Open=0, In=4, Out=2, Bal=2
+
+  UNTOUCHED [101214] (أدوات سباكة) 'لاكور 32 مم كومر': Open=0, In=1, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [101237] 'لاكور 63 مم كومر': Open=0, In=65, Out=53, Bal=12
+     ---> DISBURSED SIMILAR [101146] 'محبس 1 بوصة 2 لاكور نحاس بولي': Open=1, In=33, Out=20, Bal=14
+     ---> DISBURSED SIMILAR [101293] 'محبس كومر 1.5 بوصة 2 لاكور': Open=0, In=17, Out=14, Bal=3
+
+  UNTOUCHED [101236] (أدوات سباكة) 'بوش 63 مم كومر': Open=0, In=3, Out=0, Bal=3
+     ---> DISBURSED SIMILAR [101255] 'بوش 75/63 مم كومر': Open=0, In=37, Out=31, Bal=6
+     ---> DISBURSED SIMILAR [101282] 'بوش 110/75 مم كومر': Open=0, In=17, Out=15, Bal=2
+     ---> DISBURSED SIMILAR [101241] 'بوش 63/50 مم كومر': Open=0, In=12, Out=10, Bal=2
+
+  UNTOUCHED [101239] (أدوات سباكة) 'جلبة سن داخلي 63 مم كومر': Open=0, In=1, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [101217] 'جلبة سن داخلي 32 مم كومر': Open=0, In=42, Out=26, Bal=16
+     ---> DISBURSED SIMILAR [101115] 'جلبة سن داخلي 32 مم بولي': Open=0, In=3, Out=3, Bal=0
+     ---> DISBURSED SIMILAR [101113] 'جلبة سن داخلي 32/25 مم بولي': Open=0, In=2, Out=2, Bal=0
+
+  UNTOUCHED [101264] (أدوات سباكة) 'محبس 90 مم كومر': Open=1, In=0, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [101220] 'جزرة محبس 1.5 بوصة كومر': Open=0, In=30, Out=29, Bal=1
+     ---> DISBURSED SIMILAR [101146] 'محبس 1 بوصة 2 لاكور نحاس بولي': Open=1, In=33, Out=20, Bal=14
+     ---> DISBURSED SIMILAR [101300] 'غطاء محبس مياه شرب': Open=15, In=4, Out=15, Bal=4
+
+  UNTOUCHED [101274] (أدوات سباكة) 'مسلوب 110/63 مم كومر': Open=0, In=1, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [101184] 'مسلوب 110/75 مم كاسل': Open=0, In=4, Out=3, Bal=1
+     ---> DISBURSED SIMILAR [101170] 'مسلوب 110/50 مم كاسل': Open=0, In=1, Out=1, Bal=0
+
+  UNTOUCHED [101277] (أدوات سباكة) 'تي 110/63 مم كومر': Open=0, In=1, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [101108] 'ماسورة 110 مم بولي': Open=0, In=48, Out=26, Bal=22
+     ---> DISBURSED SIMILAR [101187] 'ماسورة 110 مم كاسل': Open=6.5, In=18, Out=24.5, Bal=0
+     ---> DISBURSED SIMILAR [101191] 'جلبة 110 مم كاسل': Open=13, In=8, Out=21, Bal=0
+
+  UNTOUCHED [101289] (أدوات سباكة) 'ماسورة 6 بوصة مخرم صرف زراعي كومر': Open=1, In=0, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [101290] 'ماسورة صرف 8 بوصة 10 بار كومر': Open=0, In=1, Out=1, Bal=0
+
+  UNTOUCHED [101308] (أدوات سباكة) 'هاند شطاف خارجي': Open=1, In=0, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [101307] 'شطاف خارجي كامل': Open=0, In=9, Out=4, Bal=5
+     ---> DISBURSED SIMILAR [101315] 'وصلة شطاف خارجي': Open=0, In=1, Out=1, Bal=0
+
+  UNTOUCHED [101325] (أدوات سباكة) 'جوان جلد 1.5 عادي': Open=56, In=0, Out=0, Bal=56
+     ---> DISBURSED SIMILAR [101327] 'جوان جلد 3 بوصة مخرم': Open=23, In=12, Out=31, Bal=4
+     ---> DISBURSED SIMILAR [101322] 'افيز 90 مم بجوان جلد': Open=0, In=28, Out=20, Bal=8
+     ---> DISBURSED SIMILAR [101328] 'جوان جلد 4 بوصة مخرم': Open=0, In=19, Out=19, Bal=0
+
+  UNTOUCHED [101330] (أدوات سباكة) 'جوان جلد عادي 2 بوصة': Open=13, In=0, Out=0, Bal=13
+     ---> DISBURSED SIMILAR [101327] 'جوان جلد 3 بوصة مخرم': Open=23, In=12, Out=31, Bal=4
+     ---> DISBURSED SIMILAR [101322] 'افيز 90 مم بجوان جلد': Open=0, In=28, Out=20, Bal=8
+     ---> DISBURSED SIMILAR [101328] 'جوان جلد 4 بوصة مخرم': Open=0, In=19, Out=19, Bal=0
+
+  UNTOUCHED [101331] (أدوات سباكة) 'جوان جلد عادي 6 بوصة': Open=7, In=0, Out=0, Bal=7
+     ---> DISBURSED SIMILAR [101327] 'جوان جلد 3 بوصة مخرم': Open=23, In=12, Out=31, Bal=4
+     ---> DISBURSED SIMILAR [101322] 'افيز 90 مم بجوان جلد': Open=0, In=28, Out=20, Bal=8
+     ---> DISBURSED SIMILAR [101328] 'جوان جلد 4 بوصة مخرم': Open=0, In=19, Out=19, Bal=0
+
+  UNTOUCHED [101332] (أدوات سباكة) 'جوان جلد عادي 8 بوصة': Open=7, In=0, Out=0, Bal=7
+     ---> DISBURSED SIMILAR [101327] 'جوان جلد 3 بوصة مخرم': Open=23, In=12, Out=31, Bal=4
+     ---> DISBURSED SIMILAR [101322] 'افيز 90 مم بجوان جلد': Open=0, In=28, Out=20, Bal=8
+     ---> DISBURSED SIMILAR [101328] 'جوان جلد 4 بوصة مخرم': Open=0, In=19, Out=19, Bal=0
+
+  UNTOUCHED [101358] (أدوات سباكة) 'بردة 4 بوصة حديد': Open=1, In=0, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [101281] 'بردة 110 مم كومر': Open=0, In=9, Out=9, Bal=0
+     ---> DISBURSED SIMILAR [101269] 'بردة 90 مم كومر': Open=1, In=6, Out=7, Bal=0
+     ---> DISBURSED SIMILAR [101162] 'بردة 4 بوصة بولي': Open=0, In=5, Out=5, Bal=0
+
+  UNTOUCHED [101363] (أدوات سباكة) 'بوش حديد 1 * 3/4 بوصة': Open=0, In=20, Out=0, Bal=20
+     ---> DISBURSED SIMILAR [101255] 'بوش 75/63 مم كومر': Open=0, In=37, Out=31, Bal=6
+     ---> DISBURSED SIMILAR [101282] 'بوش 110/75 مم كومر': Open=0, In=17, Out=15, Bal=2
+     ---> DISBURSED SIMILAR [101241] 'بوش 63/50 مم كومر': Open=0, In=12, Out=10, Bal=2
+
+  UNTOUCHED [101364] (أدوات سباكة) 'بوش حديد 2 بوصة * 1/2 بوصة': Open=7, In=0, Out=0, Bal=7
+     ---> DISBURSED SIMILAR [101255] 'بوش 75/63 مم كومر': Open=0, In=37, Out=31, Bal=6
+     ---> DISBURSED SIMILAR [101282] 'بوش 110/75 مم كومر': Open=0, In=17, Out=15, Bal=2
+     ---> DISBURSED SIMILAR [101241] 'بوش 63/50 مم كومر': Open=0, In=12, Out=10, Bal=2
+
+  UNTOUCHED [101365] (أدوات سباكة) 'تي زهر 6 بوصة': Open=1, In=0, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [101359] 'بردة 4 بوصة زهر': Open=4, In=5, Out=3, Bal=6
+     ---> DISBURSED SIMILAR [101375] 'لاجارد زهر': Open=5, In=0, Out=1, Bal=4
+     ---> DISBURSED SIMILAR [101378] 'مشترك زهر 3/4': Open=0, In=1, Out=1, Bal=0
+
+  UNTOUCHED [101368] (أدوات سباكة) 'طبة 4 بوصة 12 مم حديد': Open=2, In=0, Out=0, Bal=2
+     ---> DISBURSED SIMILAR [101215] 'طبة 32 مم كومر': Open=0, In=125, Out=106, Bal=19
+     ---> DISBURSED SIMILAR [101216] 'طبة سن 32 مم كومر': Open=0, In=24, Out=23, Bal=1
+     ---> DISBURSED SIMILAR [101227] 'طبة 50 مم كومر': Open=0, In=25, Out=22, Bal=3
+
+  UNTOUCHED [101369] (أدوات سباكة) 'طبة 6 بوصة 12 مم حديد': Open=1, In=0, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [101215] 'طبة 32 مم كومر': Open=0, In=125, Out=106, Bal=19
+     ---> DISBURSED SIMILAR [101216] 'طبة سن 32 مم كومر': Open=0, In=24, Out=23, Bal=1
+     ---> DISBURSED SIMILAR [101227] 'طبة 50 مم كومر': Open=0, In=25, Out=22, Bal=3
+
+  UNTOUCHED [101370] (أدوات سباكة) 'طبة حديد 0.5 بوصة': Open=0, In=13, Out=0, Bal=13
+     ---> DISBURSED SIMILAR [101215] 'طبة 32 مم كومر': Open=0, In=125, Out=106, Bal=19
+     ---> DISBURSED SIMILAR [101216] 'طبة سن 32 مم كومر': Open=0, In=24, Out=23, Bal=1
+     ---> DISBURSED SIMILAR [101227] 'طبة 50 مم كومر': Open=0, In=25, Out=22, Bal=3
+
+  UNTOUCHED [101371] (أدوات سباكة) 'طبة حديد 2 بوصة': Open=32, In=0, Out=0, Bal=32
+     ---> DISBURSED SIMILAR [101215] 'طبة 32 مم كومر': Open=0, In=125, Out=106, Bal=19
+     ---> DISBURSED SIMILAR [101216] 'طبة سن 32 مم كومر': Open=0, In=24, Out=23, Bal=1
+     ---> DISBURSED SIMILAR [101227] 'طبة 50 مم كومر': Open=0, In=25, Out=22, Bal=3
+
+  UNTOUCHED [102160] (أدوات خامات الري) 'سادل 63/نص بوصة': Open=0, In=15, Out=0, Bal=15
+     ---> DISBURSED SIMILAR [102107] 'سادل 32/.نص بوصة': Open=0, In=368, Out=330, Bal=38
+     ---> DISBURSED SIMILAR [102148] 'سادل 32*3/4 بوصة': Open=0, In=30, Out=21, Bal=9
+     ---> DISBURSED SIMILAR [102150] 'سادل50/نص بوصة': Open=0, In=41, Out=5, Bal=36
+
+  UNTOUCHED [102161] (أدوات خامات الري) 'محبس كهرباء هانتر 1 بوصة ICV': Open=0, In=5, Out=0, Bal=5
+     ---> DISBURSED SIMILAR [102139] 'محبس كهرباء هانتر 1.5 بوصة ICV': Open=0, In=7, Out=5, Bal=2
+     ---> DISBURSED SIMILAR [102154] 'محبس كهرباء هانتر 2 بوصة ICV': Open=0, In=4, Out=1, Bal=3
+     ---> DISBURSED SIMILAR [102141] 'محبس كهرباء هانتر': Open=0, In=4, Out=4, Bal=0
+
+  UNTOUCHED [102162] (أدوات خامات الري) 'مانع تسريب رشاش هانتر نصف بوصة': Open=0, In=150, Out=0, Bal=150
+     ---> DISBURSED SIMILAR [102108] 'رشاش فونية 17 A هانتر': Open=3, In=260, Out=228, Bal=35
+     ---> DISBURSED SIMILAR [102114] 'رشاش فونية 12 A هانتر': Open=0, In=116, Out=95, Bal=21
+     ---> DISBURSED SIMILAR [102137] 'رشاش هانتر PGP': Open=0, In=24, Out=22, Bal=2
+
+  UNTOUCHED [102167] (أدوات خامات الري) 'سادل 63*3/4 بوصة': Open=0, In=5, Out=0, Bal=5
+     ---> DISBURSED SIMILAR [102107] 'سادل 32/.نص بوصة': Open=0, In=368, Out=330, Bal=38
+     ---> DISBURSED SIMILAR [102148] 'سادل 32*3/4 بوصة': Open=0, In=30, Out=21, Bal=9
+     ---> DISBURSED SIMILAR [102150] 'سادل50/نص بوصة': Open=0, In=41, Out=5, Bal=36
+
+  UNTOUCHED [102169] (أدوات خامات الري) 'كويك كابلر 1 بوصة نحاس هانتر': Open=2, In=0, Out=0, Bal=2
+     ---> DISBURSED SIMILAR [102156] 'كويك كابلر 1 بوصة بلاستك': Open=0, In=2, Out=1, Bal=1
+
+  UNTOUCHED [103146] (حمامات سباحة) 'طلمبة غاطس 2 حصان لا يعمل': Open=0, In=4, Out=0, Bal=4
+     ---> DISBURSED SIMILAR [103111] 'طلمبة غاطس 1.5 حصان pedrllo': Open=0, In=13, Out=13, Bal=0
+
+  UNTOUCHED [103147] (حمامات سباحة) 'طلمبة غاطس 1.5 حصان لا يعمل': Open=0, In=2, Out=0, Bal=2
+     ---> DISBURSED SIMILAR [103111] 'طلمبة غاطس 1.5 حصان pedrllo': Open=0, In=13, Out=13, Bal=0
+
+  UNTOUCHED [103148] (حمامات سباحة) 'طلمبة غاطس 3 حصان لا يعمل': Open=0, In=2, Out=0, Bal=2
+     ---> DISBURSED SIMILAR [103111] 'طلمبة غاطس 1.5 حصان pedrllo': Open=0, In=13, Out=13, Bal=0
+
+  UNTOUCHED [105139] (أدوات نقاشة) 'فرشة دهان': Open=1, In=0, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [105101] 'فرشة دهان 3 بوصة': Open=0, In=12, Out=12, Bal=0
+     ---> DISBURSED SIMILAR [105111] 'فرشة  دهان  2 بوصة': Open=0, In=4, Out=4, Bal=0
+     ---> DISBURSED SIMILAR [105120] 'فرشة  دهان  1  بوصة': Open=0, In=3, Out=3, Bal=0
+
+  UNTOUCHED [106138] (أدوات وخامات نجارة) 'قلب كالون ماستر': Open=0, In=28, Out=0, Bal=28
+     ---> DISBURSED SIMILAR [106137] 'قلب كالون كميوتر': Open=0, In=1, Out=1, Bal=0
+
+  UNTOUCHED [116116] (قسم المستهلكات) 'جردل شحم نباتي': Open=1, In=0, Out=0, Bal=1
+     ---> DISBURSED SIMILAR [116115] 'انبوبة 1/4 ك شحم نباتي سمارت': Open=1, In=3, Out=4, Bal=0
+
+  UNTOUCHED [116122] (قسم المستهلكات) 'علبة فيشر 8 مم': Open=0, In=4, Out=0, Bal=4
+     ---> DISBURSED SIMILAR [101338] 'افيز فيشر 4 بوصة': Open=0, In=5, Out=5, Bal=0
+     ---> DISBURSED SIMILAR [116121] 'علبة فيشر 6 مم': Open=0, In=4, Out=3, Bal=1
+
+  UNTOUCHED [116124] (قسم المستهلكات) 'مسمار حرف L 8 مم': Open=0, In=7, Out=0, Bal=7
+     ---> DISBURSED SIMILAR [116123] 'مسمار حرف L 6 مم': Open=0, In=11, Out=1, Bal=10
