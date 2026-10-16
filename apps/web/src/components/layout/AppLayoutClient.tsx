@@ -6,6 +6,7 @@ import Topbar from '@/components/layout/Topbar';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 import BrandLoader from '@/components/common/BrandLoader';
 import SecurityGuard from '@/components/common/SecurityGuard';
+import StocklyIntroSplash from '@/components/common/StocklyIntroSplash';
 
 function AppLayoutInner({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -39,6 +40,7 @@ function AppLayoutInner({ children }: { children: React.ReactNode }) {
 export default function AppLayoutClient({ children }: { children: React.ReactNode }) {
   return (
     <AuthProvider>
+      <StocklyIntroSplash />
       <AppLayoutInner>
         {children}
       </AppLayoutInner>

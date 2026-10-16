@@ -24,7 +24,8 @@ import {
   User,
   ShoppingCart,
   History,
-  Building2
+  Building2,
+  Sparkles
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import NotificationBell from '@/components/NotificationBell';
@@ -152,29 +153,37 @@ export default function Topbar() {
     const map: Record<string, string> = {
       'CHAIRMAN': 'رئيس مجلس الإدارة',
       'EXECUTIVE': 'المدير التنفيذي (CEO)',
-      'PROJECT_MANAGER': 'مدير المشروع',
-      'FACILITY_TEAM_LEADER': 'قائد فريق المرافق',
-      'STOREKEEPER': 'أمين المخازن',
-      'IRRIGATION_ENGINEER': 'مهندس الري',
-      'SITE_ENGINEER': 'مهندس الري',
-      'DEPARTMENT_SUPERVISOR': 'مشرف قسم',
-      'CLEANING_SUPERVISOR': 'مشرف خدمات ونظافة',
-      'HELP_DESK': 'مكتب المساعدة والدعم الفني (Help Desk)',
-      'TECHNICIAN': 'فني صيانة وتشغيل',
-      'WORKER': 'عامل مخزن',
-      'SUPER_ADMIN': 'أمين المخازن'
+      'SUPPLY_CHAIN_DIRECTOR': 'مدير عام سلاسل الإمداد',
+      'WAREHOUSE_MANAGER': 'مدير عام المستودعات',
+      'INVENTORY_CONTROLLER': 'مراقب عام المخزون والجرد',
+      'INBOUND_SUPERVISOR': 'مشرف الاستلام والتوريد (Inbound)',
+      'OUTBOUND_SUPERVISOR': 'مشرف الصرف والتوزيع (Outbound)',
+      'QC_INSPECTOR': 'أخصائي فحص جودة ومطابقة',
+      'PROJECT_MANAGER': 'مدير العمليات التشغيلية',
+      'FACILITY_TEAM_LEADER': 'مشرف قطاع المستودعات',
+      'STOREKEEPER': 'أمين المستودع',
+      'IRRIGATION_ENGINEER': 'مهندس تشغيل ودعم فني',
+      'SITE_ENGINEER': 'مهندس موقع ومستودعات',
+      'DEPARTMENT_SUPERVISOR': 'مشرف قسم المخازن',
+      'CLEANING_SUPERVISOR': 'مشرف مناولة ونظافة المستودع',
+      'LOGISTICS_COORDINATOR': 'منسق العمليات اللوجستية',
+      'FORKLIFT_OPERATOR': 'فني مناولة ورافعات',
+      'HELP_DESK': 'مكتب الدعم اللوجستي والمساعدة',
+      'TECHNICIAN': 'فني تشغيل ومناولة',
+      'WORKER': 'فني ومساعد مستودع',
+      'SUPER_ADMIN': 'مدير النظام والمستودعات'
     };
     if (jobTitle && map[jobTitle]) return map[jobTitle];
     if (jobTitle) return jobTitle;
-    if (role === 'admin') return 'أمين المخازن';
-    if (role === 'management') return 'مدير إدارة المرافق';
-    if (role === 'supervisor') return 'مشرف قسم';
-    return 'فني / مستخدم';
+    if (role === 'admin') return 'مدير عام المستودعات';
+    if (role === 'management') return 'مدير العمليات وسلاسل الإمداد';
+    if (role === 'supervisor') return 'مشرف قسم المخازن';
+    return 'فني / مستخدم المستودع';
   };
 
   const getRoleLabel = () => {
     if (isAdmin) return t('users.roleAdmin');
-    if (jobTitle === 'FACILITY_TEAM_LEADER') return 'قائد فريق المرافق';
+    if (jobTitle === 'FACILITY_TEAM_LEADER' || jobTitle === 'WAREHOUSE_MANAGER') return 'مدير المستودعات';
     if (isManagement) return t('users.roleManagement');
     if (role === 'supervisor') return t('users.roleSupervisor');
     return t('users.roleUser');
@@ -525,6 +534,52 @@ export default function Topbar() {
                     </div>
                   </Link>
                 )}
+
+                <div style={{ height: '1px', background: 'var(--border-light)', margin: '0.4rem 0' }} />
+
+                {/* Replay Intro Motion Button */}
+                <button
+                  onClick={() => {
+                    setSettingsOpen(false);
+                    sessionStorage.removeItem('stockly_intro_seen');
+                    window.location.reload();
+                  }}
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: '12px',
+                    padding: '0.65rem 0.8rem',
+                    borderRadius: '8px',
+                    color: '#00e599',
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    textAlign: 'inherit',
+                    transition: 'background 0.2s'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0, 229, 153, 0.08)'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                >
+                  <div style={{ 
+                    width: '32px', 
+                    height: '32px', 
+                    borderRadius: '8px', 
+                    background: 'rgba(0, 229, 153, 0.15)', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    color: '#00e599',
+                    flexShrink: 0 
+                  }}>
+                    <Sparkles size={17} />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <span style={{ fontSize: '0.88rem', fontWeight: 600 }}>عرض إنترو Stockly الموشن</span>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>إعادة تشغيل الإقلاع ثلاثي الأبعاد</span>
+                  </div>
+                </button>
 
                 <div style={{ height: '1px', background: 'var(--border-light)', margin: '0.4rem 0' }} />
 

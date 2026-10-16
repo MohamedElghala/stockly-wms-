@@ -7,7 +7,7 @@ import ToastProvider from "@/components/ToastProvider";
 import PwaInstallPrompt from "@/components/common/PwaInstallPrompt";
 
 export const viewport: Viewport = {
-  themeColor: '#099A75',
+  themeColor: '#00E599',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,

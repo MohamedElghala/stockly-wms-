@@ -60,12 +60,15 @@ export default function RegisterPage() {
   const roles = [
     { value: 'CHAIRMAN', label: t('auth.roles.chairman') },
     { value: 'EXECUTIVE', label: t('auth.roles.ceo') },
+    { value: 'SUPPLY_CHAIN_DIRECTOR', label: t('auth.roles.supplyChainDirector') },
+    { value: 'WAREHOUSE_MANAGER', label: t('auth.roles.whManager') },
+    { value: 'INVENTORY_CONTROLLER', label: t('auth.roles.inventoryController') },
+    { value: 'INBOUND_SUPERVISOR', label: t('auth.roles.inboundSupervisor') },
+    { value: 'OUTBOUND_SUPERVISOR', label: t('auth.roles.outboundSupervisor') },
+    { value: 'QC_INSPECTOR', label: t('auth.roles.qcInspector') },
+    { value: 'STOREKEEPER', label: t('auth.roles.storekeeper') },
     { value: 'PROJECT_MANAGER', label: t('auth.roles.projectManager') },
-    { value: 'FACILITY_TEAM_LEADER', label: t('auth.roles.teamLeader') },
-    { value: 'STOREKEEPER', label: t('auth.roles.whManager') },
-    { value: 'IRRIGATION_ENGINEER', label: t('auth.roles.irrigationEngineer') },
     { value: 'DEPARTMENT_SUPERVISOR', label: t('auth.roles.supervisor') },
-    { value: 'CLEANING_SUPERVISOR', label: t('auth.roles.cleaningSupervisor') },
     { value: 'HELP_DESK', label: t('auth.roles.helpDesk') },
     { value: 'TECHNICIAN', label: t('auth.roles.technician') },
     { value: 'WORKER', label: t('auth.roles.worker') },
@@ -172,8 +175,8 @@ export default function RegisterPage() {
       });
 
       const cleanEmail = formData.email.trim().toLowerCase();
-      const isAdmin = cleanEmail === 'mohamedalghala@gmail.com' || cleanEmail === 'admin@calm.com';
-      const isManagementRole = ['PROJECT_MANAGER', 'FACILITY_MANAGER', 'MAINTENANCE_MANAGER', 'FACILITY_TEAM_LEADER'].includes(formData.role);
+      const isAdmin = cleanEmail === 'mohamedalghala@gmail.com' || cleanEmail === 'stockly.system.app@gmail.com' || cleanEmail.startsWith('admin');
+      const isManagementRole = ['PROJECT_MANAGER', 'SUPPLY_CHAIN_DIRECTOR', 'WAREHOUSE_MANAGER', 'INVENTORY_CONTROLLER', 'FACILITY_TEAM_LEADER'].includes(formData.role);
 
       const normalizedDepts = selectedDepartments.map(d => normalizeCategory(d)).filter(Boolean);
       const isAllSelected = normalizedDepts.length === availableDepartments.length;
