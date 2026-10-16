@@ -228,10 +228,10 @@ importers:
 
   apps/web:
     dependencies:
-      '@calm-wms/domain':
+      '@stockly/domain':
         specifier: workspace:*
         version: link:../../packages/domain
-      '@calm-wms/validation':
+      '@stockly/validation':
         specifier: workspace:*
         version: link:../../packages/validation
       exceljs:
@@ -298,13 +298,13 @@ importers:
 
   functions:
     dependencies:
-      '@calm-wms/domain':
+      '@stockly/domain':
         specifier: workspace:*
         version: link:../packages/domain
-      '@calm-wms/permissions':
+      '@stockly/permissions':
         specifier: workspace:*
         version: link:../packages/permissions
-      '@calm-wms/validation':
+      '@stockly/validation':
         specifier: workspace:*
         version: link:../packages/validation
       firebase-admin:
@@ -346,7 +346,7 @@ importers:
         specifier: ^4.4.3
         version: 4.4.3
     devDependencies:
-      '@calm-wms/permissions':
+      '@stockly/permissions':
         specifier: workspace:*
         version: link:../permissions
 
