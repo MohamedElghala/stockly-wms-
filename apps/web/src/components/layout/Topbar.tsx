@@ -28,6 +28,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import PaletteSelector from '@/components/PaletteSelector';
 import NotificationBell from '@/components/NotificationBell';
 import { useAuth } from '@/contexts/AuthContext';
 import { auth } from '@/lib/firebase';
@@ -370,6 +371,9 @@ export default function Topbar() {
 
         {/* Button 2: Theme Toggle */}
         <ThemeToggle />
+
+        {/* Button 2.5: Color Palette Selector (Cyber Emerald, Industrial Amber, Global Sapphire) */}
+        <PaletteSelector />
 
         {/* Button 3: Settings & Admin Gear Dropdown (Available on Mobile & Desktop) */}
         <div ref={settingsRef} style={{ position: 'relative' }}>
