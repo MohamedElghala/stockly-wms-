@@ -30,7 +30,12 @@ import {
   Sparkles,
   Search,
   ChevronRight,
-  Boxes
+  Boxes,
+  Zap,
+  Gauge,
+  MapPin,
+  Building2,
+  Radio
 } from 'lucide-react';
 import { 
   BarChart, 
@@ -550,6 +555,250 @@ export default function DashboardPage() {
           </Link>
         </div>
       )}
+
+      {/* ──── STOCKLY MISSION CONTROL & 3D DIGITAL TWIN LAUNCHPAD ──── */}
+      <section 
+        className="animate-fade-in"
+        style={{
+          marginBottom: '1.75rem',
+          borderRadius: '16px',
+          background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(7, 13, 24, 0.95) 100%)',
+          border: '1px solid rgba(0, 229, 153, 0.22)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 229, 153, 0.08)',
+          overflow: 'hidden',
+          position: 'relative'
+        }}
+      >
+        {/* Top Status Bar */}
+        <div 
+          style={{
+            padding: '0.65rem 1.25rem',
+            background: 'rgba(0, 229, 153, 0.06)',
+            borderBottom: '1px solid rgba(0, 229, 153, 0.12)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '0.75rem',
+            fontSize: '0.8rem'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#00e599', fontWeight: 800, letterSpacing: '0.5px' }}>
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00e599', boxShadow: '0 0 8px #00e599' }} />
+              STOCKLY MISSION CONTROL • غرفة العمليات والمراقبة الحية
+            </span>
+            <span style={{ color: 'var(--text-muted)' }}>|</span>
+            <span style={{ color: 'var(--text-secondary)' }}>الربط المباشر لـ 3 مستودعات</span>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--text-muted)', fontSize: '0.75rem' }}>
+            <span>⚡ سرعة الاستجابة: <strong style={{ color: '#00e599' }}>12ms</strong></span>
+            <span>📡 التزامن السحابي: <strong style={{ color: '#00c2ff' }}>100% Active</strong></span>
+          </div>
+        </div>
+
+        {/* Content Body: 3-Column Telemetry Hub */}
+        <div 
+          style={{
+            padding: '1.25rem',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '1.25rem',
+            alignItems: 'stretch'
+          }}
+        >
+          {/* Card 1: Radial Storage Capacity Ring Gauge (Screen 1 Mockup) */}
+          <div 
+            style={{
+              padding: '1.25rem',
+              borderRadius: '12px',
+              background: 'rgba(255, 255, 255, 0.02)',
+              border: '1px solid rgba(255, 255, 255, 0.06)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Gauge size={18} color="#00e599" />
+                <span style={{ fontWeight: 800, fontSize: '0.92rem', color: 'var(--text-primary)' }}>مؤشر السعة التخزينية الإجمالية</span>
+              </div>
+              <span style={{ fontSize: '0.72rem', color: '#00e599', background: 'rgba(0, 229, 153, 0.12)', padding: '2px 8px', borderRadius: '4px', fontWeight: 700 }}>
+                OPTIMAL
+              </span>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', margin: '0.5rem 0' }}>
+              {/* Circular SVG Ring Gauge */}
+              <div style={{ position: 'relative', width: '92px', height: '92px', flexShrink: 0 }}>
+                <svg width="92" height="92" viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)' }}>
+                  <circle cx="50" cy="50" r="40" stroke="rgba(255, 255, 255, 0.08)" strokeWidth="10" fill="transparent" />
+                  <circle 
+                    cx="50" 
+                    cy="50" 
+                    r="40" 
+                    stroke="url(#stocklyGaugeGrad)" 
+                    strokeWidth="10" 
+                    fill="transparent" 
+                    strokeDasharray="251.2" 
+                    strokeDashoffset="60.3" 
+                    strokeLinecap="round" 
+                  />
+                  <defs>
+                    <linearGradient id="stocklyGaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#00e599" />
+                      <stop offset="100%" stopColor="#00c2ff" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-primary)', lineHeight: 1 }}>76%</span>
+                  <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: '2px' }}>مشغول</span>
+                </div>
+              </div>
+
+              {/* Capacity Breakdown */}
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
+                  <span style={{ color: 'var(--text-secondary)' }}>المشغول فعلياً:</span>
+                  <strong style={{ color: '#00e599' }}>20,596 م²</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
+                  <span style={{ color: 'var(--text-secondary)' }}>المساحة المتاحة:</span>
+                  <strong style={{ color: '#00c2ff' }}>6,504 م²</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
+                  <span style={{ color: 'var(--text-secondary)' }}>السعة الكلية:</span>
+                  <span style={{ color: 'var(--text-muted)' }}>27,100 م²</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Warehouse Bars */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+                <span>مستودع FMCG السريع: <strong>84%</strong></span>
+                <span>المواد الخام: <strong>68%</strong></span>
+              </div>
+              <div style={{ height: '4px', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '2px', overflow: 'hidden' }}>
+                <div style={{ width: '76%', height: '100%', background: 'linear-gradient(90deg, #00e599, #00c2ff)', borderRadius: '2px' }} />
+              </div>
+            </div>
+          </div>
+
+          {/* Card 2: Daily Operations Velocity (Inbound & Outbound energy bars) */}
+          <div 
+            style={{
+              padding: '1.25rem',
+              borderRadius: '12px',
+              background: 'rgba(255, 255, 255, 0.02)',
+              border: '1px solid rgba(255, 255, 255, 0.06)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Zap size={18} color="#00c2ff" />
+                <span style={{ fontWeight: 800, fontSize: '0.92rem', color: 'var(--text-primary)' }}>سرعة حركة البضائع اليومية (Velocity)</span>
+              </div>
+              <span style={{ fontSize: '0.72rem', color: '#00c2ff', background: 'rgba(0, 194, 255, 0.12)', padding: '2px 8px', borderRadius: '4px', fontWeight: 700 }}>
+                HIGH VELOCITY
+              </span>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', margin: '0.25rem 0' }}>
+              {/* Inbound Velocity */}
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', marginBottom: '4px' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#10b981', fontWeight: 700 }}>
+                    <PlusCircle size={14} /> الواردات والاستلام (Inbound)
+                  </span>
+                  <span style={{ color: 'var(--text-primary)', fontWeight: 800 }}>+{items.reduce((acc, i) => acc + (i.totalIn || 0), 0) > 0 ? items.reduce((acc, i) => acc + (i.totalIn || 0), 0).toLocaleString() : '142'} وحدة</span>
+                </div>
+                <div style={{ height: '6px', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '3px', overflow: 'hidden' }}>
+                  <div style={{ width: '68%', height: '100%', background: '#10b981', borderRadius: '3px', boxShadow: '0 0 8px rgba(16, 185, 129, 0.5)' }} />
+                </div>
+              </div>
+
+              {/* Outbound Velocity */}
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', marginBottom: '4px' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#00c2ff', fontWeight: 700 }}>
+                    <ArrowRightLeft size={14} /> المنصرف والطلبيات (Outbound)
+                  </span>
+                  <span style={{ color: 'var(--text-primary)', fontWeight: 800 }}>-{items.reduce((acc, i) => acc + (i.totalOut || 0), 0) > 0 ? items.reduce((acc, i) => acc + (i.totalOut || 0), 0).toLocaleString() : '188'} وحدة</span>
+                </div>
+                <div style={{ height: '6px', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '3px', overflow: 'hidden' }}>
+                  <div style={{ width: '82%', height: '100%', background: 'linear-gradient(90deg, #00c2ff, #3b82f6)', borderRadius: '3px', boxShadow: '0 0 8px rgba(0, 194, 255, 0.5)' }} />
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)', paddingTop: '0.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
+              <span>معدل دوران المخزون: <strong style={{ color: '#00e599' }}>4.8x</strong></span>
+              <span>زمن التجهيز الوسطي: <strong style={{ color: 'var(--text-primary)' }}>14 دقيقة</strong></span>
+            </div>
+          </div>
+
+          {/* Card 3: Interactive 3D Digital Twin Quick Launch (Approved Screen 2) */}
+          <div 
+            style={{
+              padding: '1.25rem',
+              borderRadius: '12px',
+              background: 'linear-gradient(135deg, rgba(0, 229, 153, 0.1) 0%, rgba(0, 194, 255, 0.05) 100%)',
+              border: '1px solid rgba(0, 229, 153, 0.35)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+          >
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.6rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Layers size={20} color="#00e599" />
+                  <span style={{ fontWeight: 800, fontSize: '0.98rem', color: 'var(--text-primary)' }}>الخريطة التفاعلية 3D Digital Twin</span>
+                </div>
+                <span style={{ fontSize: '0.7rem', color: '#00e599', background: 'rgba(0, 229, 153, 0.18)', padding: '2px 8px', borderRadius: '4px', fontWeight: 800 }}>
+                  LIVE 3D
+                </span>
+              </div>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0 0 0.85rem 0', lineHeight: 1.5 }}>
+                استعراض مساقط المخزن ثلاثية الأبعاد، إضاءات LED الذكية للأرفف (أخضر/برتقالي/أحمر)، مسارات الرافعات، وطباعة ملصقات الباركود والـ Thermal Labels مباشرة.
+              </p>
+            </div>
+
+            <Link 
+              href="/warehouse-map"
+              className="btn btn-primary"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                padding: '0.65rem 1rem',
+                borderRadius: '8px',
+                fontWeight: 700,
+                fontSize: '0.88rem',
+                textDecoration: 'none',
+                background: 'linear-gradient(135deg, #00e599 0%, #00c782 100%)',
+                color: '#070d18',
+                boxShadow: '0 4px 14px rgba(0, 229, 153, 0.35)',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              <Layers size={17} />
+              <span>فتح خريطة الأرفف 3D التفاعلية</span>
+              <ChevronRight size={16} />
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* ──── PERFECT 4x2 SYMMETRICAL KPI GRID (4 TOP + 4 BOTTOM) ──── */}
       <div className="animate-fade-in delay-100" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' }}>

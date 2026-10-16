@@ -25,11 +25,15 @@ import {
   ShoppingCart,
   History,
   Building2,
-  Sparkles
+  Sparkles,
+  Search,
+  Layers
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import PaletteSelector from '@/components/PaletteSelector';
 import NotificationBell from '@/components/NotificationBell';
+import WarehouseSelector from '@/components/layout/WarehouseSelector';
+import CommandBar from '@/components/layout/CommandBar';
 import { useAuth } from '@/contexts/AuthContext';
 import { auth } from '@/lib/firebase';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -83,6 +87,7 @@ export default function Topbar() {
       icon: <Package2 size={18} />,
       items: [
         { href: '/inventory', label: t('nav.inventory'), icon: <Package2 size={16} /> },
+        { href: '/warehouse-map', label: 'خريطة الأرفف 3D', icon: <Layers size={16} /> },
       ]
     },
     {
@@ -126,6 +131,7 @@ export default function Topbar() {
     { href: '/completion-records?tab=inspection', label: 'محضر الفحص الفني', icon: <ClipboardCheck size={15} /> },
     { href: '/completion-records?tab=receipt', label: 'محاضر الاستلام والعهد', icon: <PackageCheck size={15} /> },
     { href: '/inventory', label: t('nav.inventory'), icon: <Package2 size={15} /> },
+    { href: '/warehouse-map', label: 'خريطة الأرفف 3D', icon: <Layers size={15} /> },
     { href: '/requests', label: t('nav.requests'), icon: <ArrowRightLeft size={15} /> },
     ...(isAdmin ? [
       { href: '/additions', label: t('nav.additions'), icon: <Package2 size={15} /> },
@@ -344,6 +350,39 @@ export default function Topbar() {
           
         }}
       >
+        {/* Warehouse Multi-Branch Selector */}
+        <div className="hide-on-mobile">
+          <WarehouseSelector />
+        </div>
+
+        {/* Global Command Bar (Ctrl+K) Trigger */}
+        <button
+          onClick={() => window.dispatchEvent(new CustomEvent('open_stockly_command_bar'))}
+          className="btn btn-glass"
+          title="شريط الأوامر السريع (Ctrl+K)"
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: '0.45rem',
+            padding: '0.45rem 0.75rem',
+            borderRadius: 'var(--radius-full)',
+            height: '38px',
+            color: 'var(--text-secondary)',
+            fontSize: '0.82rem',
+            background: 'var(--bg-tertiary)',
+            border: '1px solid var(--border-light)',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--accent-primary)'}
+          onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--border-light)'}
+        >
+          <Search size={16} color="var(--accent-primary)" />
+          <span className="hide-on-mobile" style={{ fontWeight: 600, color: 'var(--text-primary)' }}>بحث سريع...</span>
+          <kbd className="hide-on-mobile" style={{ fontSize: '9px', fontWeight: 800, padding: '2px 5px', borderRadius: '4px', background: 'var(--bg-primary)', border: '1px solid var(--border-light)', color: 'var(--accent-primary)' }}>Ctrl+K</kbd>
+        </button>
+
         {/* Button 1: Language Switcher */}
         <button 
           onClick={toggleLanguage} 
@@ -944,6 +983,9 @@ export default function Topbar() {
           })}
         </div>
       </div>
+
+      {/* Global Stockly Omni-Command Bar (Ctrl+K) */}
+      <CommandBar />
     </header>
   );
 }
