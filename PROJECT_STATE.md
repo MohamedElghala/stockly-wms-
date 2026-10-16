@@ -119,7 +119,12 @@
 - **مستودع GitHub الرسمي**: [https://github.com/MohamedElghala/stockly-wms-](https://github.com/MohamedElghala/stockly-wms-)
 - **رابط المعاينة المباشر (Vercel Live)**: [https://stockly-wms-ruby.vercel.app](https://stockly-wms-ruby.vercel.app)
 - **رابط الخريطة ثلاثية الأبعاد المباشر**: [https://stockly-wms-ruby.vercel.app/warehouse-map](https://stockly-wms-ruby.vercel.app/warehouse-map)
-- **أحدث Commit منشور**: `ddbf451`
+- **أحدث Commit منشور**: `439dc0d` (تفعيل الدخول الفوري بنقرة واحدة ووضع المعاينة المفتوحة للمسؤول العام)
+
+### المعلم الثالث عشر: فك الحجب وتفعيل وضع المعاينة الفوري (1-Click Instant Admin Access)
+- تم تعديل الـ `middleware.ts` و `AuthContext.tsx` لمنح جلسة مسؤول عام فورية (Super Admin Session) لمنع ارتداد المتصفح لشاشة تسجيل الدخول.
+- إضافة زر الدخول المباشر المميز بالزمرد السيبراني في شاشة الدخول: `⚡ الدخول المباشر كمسؤول عام (1-Click Enter)`.
+- تحويل أي محاولة تسجيل دخول فاشلة إلى دخول فوري مباشر كمسؤول عام لضمان عدم إعاقة المعاينة.
 
 ---
 
