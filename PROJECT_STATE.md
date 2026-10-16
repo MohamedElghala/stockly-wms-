@@ -40,7 +40,11 @@
 
 ### المعلم السادس: سكيما Supabase المعمارية (PostgreSQL) ومحول الاتصال
 - **مخطط قاعدة البيانات**: `stockly_supabase_schema.sql` (مخطط متكامل لـ PostgreSQL يضم الجداول، المفاتيح الأساسية UUID، التريجرز لتحديث الأرصدة تلقائياً، وسجلات التدقيق Audit Logs).
-- **محول الاتصال الخفيف**: `apps/web/src/lib/supabase.ts` (اتصال REST سريع بقاعدة بيانات Supabase بدون تثبيت حزم npm إضافية).
+### المعلم السابع: جاهزية الرفع والنشر السحابي (GitHub & Vercel)
+- **مستودع Git محلي معتمد**: فرع `main` جاهز بكافة الكوميتات المنقحة والمنظفة داخل `D:\Stockly`.
+- **الربط التلقائي بحساب GitHub**: تم فحص وتفعيل `credential.helper = wincred` ليتصل تلقائياً بحسابك المعتمد `MohamedElghala` بدون أي مشاكل مصادقة.
+- **تكوين Vercel Monorepo**: تم إنشاء `vercel.json` وتحديث `apps/web/next.config.js` (`transpilePackages`) ليقوم Vercel ببناء المشروع في السحابة فوراً مع استهلاك 0 ميجابايت من باقتك.
+- **مسار الرفع (Remote Origin)**: تم ربطه بـ `https://github.com/MohamedElghala/stockly-wms.git`.
 
 ## 2. الخطوات القادمة للتسويق والبيع التجاري (Go-To-Market Roadmap)
 1. **تصوير فيديو تجريبي (Demo Video)**: تسجيل شاشة مدته دقيقتان يستعرض سرعة النظام، وإضافة صنف بالباركود، وطباعة الملصق الحراري، وتصدير شيتات الإكسيل.
