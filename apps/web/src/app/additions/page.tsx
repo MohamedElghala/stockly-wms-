@@ -1139,6 +1139,8 @@ export default function AdditionsPage() {
             <PrintSignatures documentTitle={`إذن إضافة وتوريد رسمي معتمد #${printItem.invoiceNo || '—'}`} />
           </div>
         </div>
+      )}
+
       {/* Barcode & QR Code Scanner Modal */}
       <BarcodeScannerModal
         isOpen={isScannerOpen}

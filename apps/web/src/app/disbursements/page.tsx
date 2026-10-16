@@ -1147,6 +1147,8 @@ export default function DisbursementsPage() {
             <PrintSignatures documentTitle={`إذن صرف رسمي معتمد #${printItem.invoiceNo || '—'}`} />
           </div>
         </div>
+      )}
+
       {/* Barcode & QR Code Scanner Modal */}
       <BarcodeScannerModal
         isOpen={isScannerOpen}

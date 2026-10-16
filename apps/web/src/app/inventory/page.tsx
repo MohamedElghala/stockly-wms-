@@ -1389,6 +1389,8 @@ export default function InventoryPage() {
             <span style={{ fontSize: '0.85rem', color: 'var(--accent-primary)', fontFamily: 'monospace', fontWeight: 700 }}>كود الصنف: {previewModalImage.code}</span>
           </div>
         </div>
+      )}
+
       {/* Barcode & QR Code Scanner Modal */}
       <BarcodeScannerModal
         isOpen={isScannerOpen}
