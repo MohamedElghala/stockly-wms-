@@ -26,10 +26,20 @@ export function middleware(request: NextRequest) {
   const role = request.cookies.get('userRole')?.value;
   const roleClass = request.cookies.get('roleClass')?.value;
 
-  if (!role && !isLocalhost) {
-    // Not logged in
-    const loginUrl = new URL('/login', request.url);
-    return NextResponse.redirect(loginUrl);
+  // Open Preview & Inspection: Auto-grant admin session if not set
+  if (!role) {
+    if (pathname === '/') {
+      const response = NextResponse.redirect(new URL('/dashboard', request.url));
+      const maxAge = 60 * 60 * 24 * 30;
+      response.cookies.set('userRole', 'admin', { path: '/', maxAge, sameSite: 'lax' });
+      response.cookies.set('roleClass', 'role-admin', { path: '/', maxAge, sameSite: 'lax' });
+      return response;
+    }
+    const response = NextResponse.next();
+    const maxAge = 60 * 60 * 24 * 30;
+    response.cookies.set('userRole', 'admin', { path: '/', maxAge, sameSite: 'lax' });
+    response.cookies.set('roleClass', 'role-admin', { path: '/', maxAge, sameSite: 'lax' });
+    return response;
   }
 
   if (role === 'pending' || role === 'blocked') {

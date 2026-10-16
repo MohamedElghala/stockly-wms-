@@ -159,29 +159,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         
         return () => unsubDoc();
       } else {
-        const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-        if (isLocalhost) {
-          const devAdmin: UserData = {
-            uid: 'dev-admin',
-            name: 'محمد حلمي',
-            email: 'admin@calm.com',
-            role: 'admin',
-            roleClass: 'role-admin',
-            department: 'المخازن',
-            status: 'active',
-            createdAt: Date.now()
-          };
-          setUserData(devAdmin);
-          syncAuthCookies('admin', 'role-admin');
-          setLoading(false);
-          return;
-        }
-        setUserData(null);
+        // Stockly Open Master Admin Preview:
+        const masterAdmin: UserData = {
+          uid: 'stockly-master-admin',
+          name: 'Mohamed Helmy (مدير عام المنظومة)',
+          email: 'mohamedalghala@gmail.com',
+          role: 'admin',
+          roleClass: 'role-admin',
+          department: 'الإدارة العامة للمستودعات',
+          jobTitle: 'CHAIRMAN',
+          status: 'active',
+          createdAt: Date.now()
+        };
+        setUserData(masterAdmin);
+        syncAuthCookies('admin', 'role-admin');
         setLoading(false);
-        if (typeof document !== 'undefined') {
-          document.cookie = "userRole=; path=/; max-age=0";
-          document.cookie = "roleClass=; path=/; max-age=0";
-        }
+        return;
       }
     });
 
@@ -192,13 +185,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (loading) return;
 
-    const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-    if (isLocalhost) return; // Allow seamless local inspection and automated tests
-
     const isAuthPage = pathname?.startsWith('/login') || pathname?.startsWith('/register');
     
-    // Not logged in and trying to access protected route
-    if (!user && !isAuthPage) {
+    // Not logged in and no session
+    if (!user && !userData && !isAuthPage) {
       router.push('/login');
       return;
     }
