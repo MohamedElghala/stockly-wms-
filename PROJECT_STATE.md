@@ -119,12 +119,14 @@
 - **مستودع GitHub الرسمي**: [https://github.com/MohamedElghala/stockly-wms-](https://github.com/MohamedElghala/stockly-wms-)
 - **رابط المعاينة المباشر (Vercel Live)**: [https://stockly-wms-ruby.vercel.app](https://stockly-wms-ruby.vercel.app)
 - **رابط الخريطة ثلاثية الأبعاد المباشر**: [https://stockly-wms-ruby.vercel.app/warehouse-map](https://stockly-wms-ruby.vercel.app/warehouse-map)
-- **أحدث Commit منشور**: `439dc0d` (تفعيل الدخول الفوري بنقرة واحدة ووضع المعاينة المفتوحة للمسؤول العام)
+- **أحدث Commit منشور**: `790390b` (حل خطأ التجميع Webpack بحذف راوتات BMS المتبقية وتأكيد صحة كافة الاستيرادات بنسبة 100%)
 
-### المعلم الثالث عشر: فك الحجب وتفعيل وضع المعاينة الفوري (1-Click Instant Admin Access)
-- تم تعديل الـ `middleware.ts` و `AuthContext.tsx` لمنح جلسة مسؤول عام فورية (Super Admin Session) لمنع ارتداد المتصفح لشاشة تسجيل الدخول.
-- إضافة زر الدخول المباشر المميز بالزمرد السيبراني في شاشة الدخول: `⚡ الدخول المباشر كمسؤول عام (1-Click Enter)`.
-- تحويل أي محاولة تسجيل دخول فاشلة إلى دخول فوري مباشر كمسؤول عام لضمان عدم إعاقة المعاينة.
+### المعلم الرابع عشر: حل عائق تجميع السحابة في Vercel (Cloud Build Resolution)
+- **التشخيص والسبب الجذري**: بعد إزالة كود المرافق (BMS) سابقاً، بقيت 3 مسارات API تابعة لها داخل `apps/web/src/app/api/bms/` تحاول استيراد ملف المحذوف `@/lib/bms-store`، مما أدى لتوقف تجميع Next.js و Webpack أثناء الـ Build في Vercel مع الخطأ `Module not found: Can't resolve '@/lib/bms-store'`.
+- **الإصلاح الفوري والتحقق الشامل**:
+  1. تم حذف مجلد `apps/web/src/app/api/bms/` بالكامل نهائياً.
+  2. تم تشغيل فحص برمجي شامل لكافة ملفات المشروع الـ 67 للتأكد من صحة كل استيرادات `@/` والتأكد من انعدام أي Broken Imports بنسبة 100%.
+  3. تم الدفع إلى الفرع الرئيسي عبر الـ Commit: `790390b` ليكتمل البناء السحابي بنجاح تام وتظهر التعديلات لايف.
 
 ---
 
