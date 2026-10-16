@@ -123,7 +123,7 @@ export default function InventoryPrintModal({
           background: 'var(--bg-secondary)',
           borderRadius: '20px',
           padding: '1.5rem 1.75rem',
-          border: '1.5px solid rgba(9, 154, 117, 0.4)',
+          border: '1.5px solid rgba(0, 229, 153, 0.4)',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.65)',
           marginTop: 0
         }}
@@ -131,7 +131,7 @@ export default function InventoryPrintModal({
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid var(--border-light)', paddingBottom: '1.25rem', marginBottom: '1.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(9, 154, 117, 0.12)', color: '#099A75', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(0, 229, 153, 0.12)', color: 'var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <Printer size={26} />
             </div>
             <div>
@@ -163,8 +163,8 @@ export default function InventoryPrintModal({
             <div 
               onClick={() => setScope('ALL_CATEGORIES')}
               style={{
-                border: scope === 'ALL_CATEGORIES' ? '2px solid #099A75' : '1px solid var(--border-light)',
-                background: scope === 'ALL_CATEGORIES' ? 'rgba(9, 154, 117, 0.08)' : 'var(--bg-tertiary)',
+                border: scope === 'ALL_CATEGORIES' ? '2px solid var(--accent-primary)' : '1px solid var(--border-light)',
+                background: scope === 'ALL_CATEGORIES' ? 'rgba(0, 229, 153, 0.08)' : 'var(--bg-tertiary)',
                 borderRadius: '12px',
                 padding: '1rem',
                 cursor: 'pointer',
@@ -173,12 +173,12 @@ export default function InventoryPrintModal({
               }}
             >
               {scope === 'ALL_CATEGORIES' && (
-                <div style={{ position: 'absolute', top: '8px', [isAr ? 'left' : 'right']: '8px', color: '#099A75' }}>
+                <div style={{ position: 'absolute', top: '8px', [isAr ? 'left' : 'right']: '8px', color: 'var(--accent-primary)' }}>
                   <CheckCircle2 size={18} />
                 </div>
               )}
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.35rem' }}>
-                <FolderTree size={18} color="#099A75" />
+                <FolderTree size={18} color="var(--accent-primary)" />
                 <strong style={{ fontSize: '0.95rem', color: 'var(--text-primary)' }}>
                   {isAr ? 'كافة الأقسام (الكل دفعة واحدة)' : 'All Departments (All-in-One)'}
                 </strong>
@@ -186,7 +186,7 @@ export default function InventoryPrintModal({
               <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>
                 {isAr ? 'طباعة شاملة لجميع أقسام المستودع مع فصل وتنسيق كشف كل قسم مستقلاً.' : 'Print all departments separated with distinct headers and counts.'}
               </p>
-              <div style={{ marginTop: '0.5rem', display: 'inline-block', fontSize: '0.7rem', fontWeight: 700, color: '#099A75', background: 'rgba(9, 154, 117, 0.12)', padding: '2px 6px', borderRadius: '4px' }}>
+              <div style={{ marginTop: '0.5rem', display: 'inline-block', fontSize: '0.7rem', fontWeight: 700, color: 'var(--accent-primary)', background: 'rgba(0, 229, 153, 0.12)', padding: '2px 6px', borderRadius: '4px' }}>
                 {isAr ? 'موصى به للجرد الدوري' : 'Recommended for Audit'}
               </div>
             </div>
@@ -195,8 +195,8 @@ export default function InventoryPrintModal({
             <div 
               onClick={() => setScope('SELECTED_CATEGORY')}
               style={{
-                border: scope === 'SELECTED_CATEGORY' ? '2px solid #099A75' : '1px solid var(--border-light)',
-                background: scope === 'SELECTED_CATEGORY' ? 'rgba(9, 154, 117, 0.08)' : 'var(--bg-tertiary)',
+                border: scope === 'SELECTED_CATEGORY' ? '2px solid var(--accent-primary)' : '1px solid var(--border-light)',
+                background: scope === 'SELECTED_CATEGORY' ? 'rgba(0, 229, 153, 0.08)' : 'var(--bg-tertiary)',
                 borderRadius: '12px',
                 padding: '1rem',
                 cursor: 'pointer',
@@ -205,7 +205,7 @@ export default function InventoryPrintModal({
               }}
             >
               {scope === 'SELECTED_CATEGORY' && (
-                <div style={{ position: 'absolute', top: '8px', [isAr ? 'left' : 'right']: '8px', color: '#099A75' }}>
+                <div style={{ position: 'absolute', top: '8px', [isAr ? 'left' : 'right']: '8px', color: 'var(--accent-primary)' }}>
                   <CheckCircle2 size={18} />
                 </div>
               )}
@@ -293,7 +293,7 @@ export default function InventoryPrintModal({
                 type="checkbox"
                 checked={pageBreakPerDept}
                 onChange={e => setPageBreakPerDept(e.target.checked)}
-                style={{ width: '18px', height: '18px', accentColor: '#099A75', cursor: 'pointer' }}
+                style={{ width: '18px', height: '18px', accentColor: 'var(--accent-primary)', cursor: 'pointer' }}
               />
             </label>
 
@@ -312,7 +312,7 @@ export default function InventoryPrintModal({
                   type="checkbox"
                   checked={includeCoverPage}
                   onChange={e => setIncludeCoverPage(e.target.checked)}
-                  style={{ width: '18px', height: '18px', accentColor: '#099A75', cursor: 'pointer' }}
+                  style={{ width: '18px', height: '18px', accentColor: 'var(--accent-primary)', cursor: 'pointer' }}
                 />
               </label>
             )}
@@ -331,7 +331,7 @@ export default function InventoryPrintModal({
                 type="checkbox"
                 checked={includeSignatures}
                 onChange={e => setIncludeSignatures(e.target.checked)}
-                style={{ width: '18px', height: '18px', accentColor: '#099A75', cursor: 'pointer' }}
+                style={{ width: '18px', height: '18px', accentColor: 'var(--accent-primary)', cursor: 'pointer' }}
               />
             </label>
 
@@ -352,9 +352,9 @@ export default function InventoryPrintModal({
                   style={{
                     padding: '0.65rem 0.5rem',
                     borderRadius: '8px',
-                    border: includeZeroStock ? '2px solid #099A75' : '1px solid var(--border-light)',
-                    background: includeZeroStock ? 'rgba(9, 154, 117, 0.12)' : 'transparent',
-                    color: includeZeroStock ? '#099A75' : 'var(--text-muted)',
+                    border: includeZeroStock ? '2px solid var(--accent-primary)' : '1px solid var(--border-light)',
+                    background: includeZeroStock ? 'rgba(0, 229, 153, 0.12)' : 'transparent',
+                    color: includeZeroStock ? 'var(--accent-primary)' : 'var(--text-muted)',
                     cursor: 'pointer',
                     fontWeight: 700,
                     fontSize: '0.82rem',
@@ -421,8 +421,8 @@ export default function InventoryPrintModal({
               display: 'flex', 
               alignItems: 'center', 
               gap: '8px',
-              background: '#099A75',
-              borderColor: '#099A75'
+              background: 'var(--accent-primary)',
+              borderColor: 'var(--accent-primary)'
             }}
           >
             <Printer size={18} />

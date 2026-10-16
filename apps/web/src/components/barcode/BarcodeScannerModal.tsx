@@ -294,10 +294,10 @@ export default function BarcodeScannerModal({
           width: '100%',
           maxWidth: '520px',
           background: '#041c18',
-          border: '1px solid rgba(0, 223, 143, 0.3)',
+          border: '1px solid rgba(0, 229, 153, 0.3)',
           borderRadius: '20px',
           overflow: 'hidden',
-          boxShadow: '0 25px 50px -12px rgba(0, 223, 143, 0.15)',
+          boxShadow: '0 25px 50px -12px rgba(0, 229, 153, 0.15)',
           color: '#ffffff',
           fontFamily: "'Cairo', sans-serif",
           direction: 'rtl'
@@ -307,11 +307,11 @@ export default function BarcodeScannerModal({
         <div 
           style={{
             padding: '1.25rem 1.5rem',
-            borderBottom: '1px solid rgba(0, 223, 143, 0.15)',
+            borderBottom: '1px solid rgba(0, 229, 153, 0.15)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            background: 'linear-gradient(180deg, rgba(0, 223, 143, 0.08) 0%, transparent 100%)'
+            background: 'linear-gradient(180deg, rgba(0, 229, 153, 0.08) 0%, transparent 100%)'
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -320,12 +320,12 @@ export default function BarcodeScannerModal({
                 width: '42px',
                 height: '42px',
                 borderRadius: '12px',
-                background: 'rgba(0, 223, 143, 0.15)',
-                border: '1px solid rgba(0, 223, 143, 0.3)',
+                background: 'rgba(0, 229, 153, 0.15)',
+                border: '1px solid rgba(0, 229, 153, 0.3)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: '#00DF8F'
+                color: 'var(--accent-primary)'
               }}
             >
               <Barcode size={22} />
@@ -372,7 +372,7 @@ export default function BarcodeScannerModal({
               borderRadius: '14px',
               overflow: 'hidden',
               background: '#02100d',
-              border: '1.5px solid rgba(0, 223, 143, 0.25)',
+              border: '1.5px solid rgba(0, 229, 153, 0.25)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -399,8 +399,8 @@ export default function BarcodeScannerModal({
                     left: '10%',
                     right: '10%',
                     height: '2px',
-                    background: '#00DF8F',
-                    boxShadow: '0 0 12px #00DF8F, 0 0 20px #00DF8F',
+                    background: 'var(--accent-primary)',
+                    boxShadow: '0 0 12px var(--accent-primary), 0 0 20px var(--accent-primary)',
                     animation: 'scannerLaser 2s cubic-bezier(0.4, 0, 0.2, 1) infinite'
                   }}
                 />
@@ -411,7 +411,7 @@ export default function BarcodeScannerModal({
                     position: 'absolute',
                     width: '180px',
                     height: '140px',
-                    border: '2px dashed rgba(0, 223, 143, 0.6)',
+                    border: '2px dashed rgba(0, 229, 153, 0.6)',
                     borderRadius: '12px',
                     pointerEvents: 'none',
                     boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.35)'
@@ -420,7 +420,7 @@ export default function BarcodeScannerModal({
               </>
             ) : (
               <div style={{ textAlign: 'center', padding: '1.5rem', color: '#94a3b8' }}>
-                <Camera size={44} style={{ color: 'rgba(0, 223, 143, 0.4)', marginBottom: '0.75rem' }} />
+                <Camera size={44} style={{ color: 'rgba(0, 229, 153, 0.4)', marginBottom: '0.75rem' }} />
                 <p style={{ margin: '0 0 0.5rem', fontSize: '0.9rem', color: '#e2e8f0', fontWeight: 600 }}>
                   {cameraError || 'الكاميرا غير نشطة'}
                 </p>
@@ -428,9 +428,9 @@ export default function BarcodeScannerModal({
                   type="button"
                   onClick={startCamera}
                   style={{
-                    background: 'rgba(0, 223, 143, 0.15)',
-                    border: '1px solid #00DF8F',
-                    color: '#00DF8F',
+                    background: 'rgba(0, 229, 153, 0.15)',
+                    border: '1px solid var(--accent-primary)',
+                    color: 'var(--accent-primary)',
                     padding: '6px 14px',
                     borderRadius: '8px',
                     fontSize: '0.85rem',
@@ -463,7 +463,7 @@ export default function BarcodeScannerModal({
                   onClick={toggleTorch}
                   title="فلاش الكاميرا"
                   style={{
-                    background: torchOn ? '#00DF8F' : 'rgba(0, 0, 0, 0.6)',
+                    background: torchOn ? 'var(--accent-primary)' : 'rgba(0, 0, 0, 0.6)',
                     color: torchOn ? '#041c18' : '#ffffff',
                     border: 'none',
                     borderRadius: '8px',
@@ -503,7 +503,7 @@ export default function BarcodeScannerModal({
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  background: 'rgba(0, 223, 143, 0.9)',
+                  background: 'rgba(0, 229, 153, 0.9)',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
@@ -541,14 +541,14 @@ export default function BarcodeScannerModal({
                   width: '8px',
                   height: '8px',
                   borderRadius: '50%',
-                  background: cameraActive ? '#00DF8F' : '#f59e0b',
-                  boxShadow: cameraActive ? '0 0 8px #00DF8F' : 'none'
+                  background: cameraActive ? 'var(--accent-primary)' : '#f59e0b',
+                  boxShadow: cameraActive ? '0 0 8px var(--accent-primary)' : 'none'
                 }}
               />
               <span>{cameraActive ? 'الكاميرا جاهزة للمسح الفوري' : 'جاهز للمسح عبر قارئ الباركود اليدوي'}</span>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#00DF8F' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--accent-primary)' }}>
               <Keyboard size={13} />
               <span>دعم القارئ اللاسلكي USB مفعّل</span>
             </div>
@@ -568,7 +568,7 @@ export default function BarcodeScannerModal({
                     width: '100%',
                     padding: '0.75rem 1rem',
                     background: '#02100d',
-                    border: '1.5px solid rgba(0, 223, 143, 0.3)',
+                    border: '1.5px solid rgba(0, 229, 153, 0.3)',
                     borderRadius: '10px',
                     color: '#ffffff',
                     fontSize: '0.9rem',
@@ -584,7 +584,7 @@ export default function BarcodeScannerModal({
                 disabled={!manualCode.trim()}
                 style={{
                   padding: '0 1.5rem',
-                  background: manualCode.trim() ? '#00DF8F' : 'rgba(255, 255, 255, 0.1)',
+                  background: manualCode.trim() ? 'var(--accent-primary)' : 'rgba(255, 255, 255, 0.1)',
                   color: manualCode.trim() ? '#041c18' : '#64748b',
                   border: 'none',
                   borderRadius: '10px',

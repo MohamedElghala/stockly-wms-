@@ -23,7 +23,7 @@ export default function PrintHeader({ title, documentNumber, subtitle, category 
   });
 
   return (
-    <div className="print-official-header" style={{ width: '100%', direction: 'rtl', borderBottom: '2px solid #099A75', paddingBottom: '6px', marginBottom: '8px', boxSizing: 'border-box' }}>
+    <div className="print-official-header" style={{ width: '100%', direction: 'rtl', borderBottom: '2px solid var(--accent-primary)', paddingBottom: '6px', marginBottom: '8px', boxSizing: 'border-box' }}>
       <div className="print-header-top" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', direction: 'rtl', width: '100%' }}>
         
         {/* 1. الجانب الأيمن (شعار النظام الرسمي المعتمد BrandLogo) */}
@@ -42,7 +42,7 @@ export default function PrintHeader({ title, documentNumber, subtitle, category 
             </p>
           )}
           {category && (
-            <span className="print-category-badge" style={{ display: 'inline-block', fontSize: '8pt', fontWeight: 900, color: '#099A75', background: '#f0fdf4', border: '1.2px solid #86efac', padding: '1px 8px', borderRadius: '4px', marginTop: '3px' }}>
+            <span className="print-category-badge" style={{ display: 'inline-block', fontSize: '8pt', fontWeight: 900, color: 'var(--accent-primary)', background: '#f0fdf4', border: '1.2px solid #86efac', padding: '1px 8px', borderRadius: '4px', marginTop: '3px' }}>
               القسم: {category}
             </span>
           )}

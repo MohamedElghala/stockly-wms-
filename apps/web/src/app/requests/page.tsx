@@ -444,7 +444,7 @@ function RequestsContent() {
 
       {/* PENDING / ARCHIVE (Printable Document) */}
       {(activeTab === 'PENDING' || activeTab === 'ARCHIVE') && (
-        <div className={`official-document-paper animate-fade-in ${printItem ? 'hide-on-print' : ''}`} style={{ padding: '1rem' }}>
+        <div className={`glass-card animate-fade-in ${printItem ? 'hide-on-print' : ''}`} style={{ padding: '1.5rem' }}>
           
           <PrintHeader 
             title={activeTab === 'PENDING' ? "تقرير الطلبات المعلقة والمرفوضة" : "تقرير أرشيف الطلبات المنصرفة"}

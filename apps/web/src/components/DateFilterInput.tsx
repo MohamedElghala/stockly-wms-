@@ -53,7 +53,7 @@ export default function DateFilterInput({ value, onChange, label }: DateFilterIn
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: value ? 'var(--text-primary)' : 'var(--text-muted)', fontWeight: value ? 700 : 400, fontSize: '0.85rem', fontFamily: value ? 'monospace' : 'inherit' }}>
-          <Calendar size={18} style={{ color: value ? '#099A75' : 'var(--text-muted)' }} />
+          <Calendar size={18} style={{ color: value ? 'var(--accent-primary)' : 'var(--text-muted)' }} />
           <span>{value ? value : placeholderText}</span>
         </div>
 

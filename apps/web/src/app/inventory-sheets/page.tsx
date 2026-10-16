@@ -112,7 +112,7 @@ function InventoryAuditSignatures({ storekeeperName, footerNotice }: { storekeep
             paddingLeft: '10px'
           }}
         >
-          <span style={{ fontSize: '9pt', fontWeight: 900, color: '#099A75', marginBottom: '2px', display: 'block' }}>
+          <span style={{ fontSize: '9pt', fontWeight: 900, color: 'var(--accent-primary)', marginBottom: '2px', display: 'block' }}>
             المعاين والفاحص الفني
           </span>
           <span style={{ fontSize: '8.5pt', fontWeight: 800, color: '#0f172a', marginBottom: '4px' }}>
@@ -136,7 +136,7 @@ function InventoryAuditSignatures({ storekeeperName, footerNotice }: { storekeep
             paddingLeft: '10px'
           }}
         >
-          <span style={{ fontSize: '9pt', fontWeight: 900, color: '#099A75', marginBottom: '2px', display: 'block' }}>
+          <span style={{ fontSize: '9pt', fontWeight: 900, color: 'var(--accent-primary)', marginBottom: '2px', display: 'block' }}>
             أمين المخازن
           </span>
           <span style={{ fontSize: '9.5pt', fontWeight: 900, color: '#0f172a', marginBottom: '4px' }}>
@@ -158,7 +158,7 @@ function InventoryAuditSignatures({ storekeeperName, footerNotice }: { storekeep
             minHeight: '52px'
           }}
         >
-          <span style={{ fontSize: '9pt', fontWeight: 900, color: '#099A75', marginBottom: '2px', display: 'block' }}>
+          <span style={{ fontSize: '9pt', fontWeight: 900, color: 'var(--accent-primary)', marginBottom: '2px', display: 'block' }}>
             يعتمد / مدير المشروع
           </span>
           <span style={{ fontSize: '9.5pt', fontWeight: 900, color: '#0f172a', marginBottom: '4px' }}>
@@ -753,7 +753,7 @@ export default function InventorySheetsPage() {
         <div className="flex-between" style={{ marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.35rem' }}>
-              <div style={{ padding: '0.5rem', borderRadius: '12px', background: 'rgba(9, 154, 117, 0.12)', color: '#099A75' }}>
+              <div style={{ padding: '0.5rem', borderRadius: '12px', background: 'rgba(0, 229, 153, 0.12)', color: 'var(--accent-primary)' }}>
                 <ClipboardList size={26} />
               </div>
               <h1 className="heading-xl" style={{ margin: 0, fontWeight: 800 }}>
@@ -770,7 +770,7 @@ export default function InventorySheetsPage() {
               onClick={handleAutoFillMatch} 
               className="btn btn-outline"
               title={t('inventorySheets.autoFillMatch')}
-              style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#099A75', borderColor: 'rgba(9, 154, 117, 0.4)' }}
+              style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--accent-primary)', borderColor: 'rgba(0, 229, 153, 0.4)' }}
             >
               <Zap size={16} />
               <span>{t('inventorySheets.autoFillMatch')}</span>
@@ -789,14 +789,14 @@ export default function InventorySheetsPage() {
             <button 
               onClick={handleExportExcel} 
               className="btn btn-outline"
-              style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#099A75', borderColor: '#099A75', fontWeight: 600 }}
+              style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', fontWeight: 600 }}
             >
               <FileSpreadsheet size={16} />
               <span>{t('inventorySheets.exportExcel')}</span>
             </button>
 
             {/* Smart Print Button Group */}
-            <div style={{ display: 'inline-flex', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 2px 8px rgba(9, 154, 117, 0.2)' }}>
+            <div style={{ display: 'inline-flex', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 2px 8px rgba(0, 229, 153, 0.2)' }}>
               <button 
                 onClick={handlePrintCurrent} 
                 className="btn btn-primary"
@@ -838,7 +838,7 @@ export default function InventorySheetsPage() {
           
           {/* Total Items (> 0) */}
           <div className="enterprise-card" style={{ padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: 'rgba(9, 154, 117, 0.12)', color: '#099A75', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: 'rgba(0, 229, 153, 0.12)', color: 'var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <ClipboardList size={22} />
             </div>
             <div>
@@ -1071,7 +1071,7 @@ export default function InventorySheetsPage() {
                   )}
 
                   {/* Physical Balance (الرصيد الفعلي) */}
-                  <th style={{ width: '150px', textAlign: 'center', background: 'rgba(9, 154, 117, 0.08)', color: '#099A75', fontWeight: 800 }}>
+                  <th style={{ width: '150px', textAlign: 'center', background: 'rgba(0, 229, 153, 0.08)', color: 'var(--accent-primary)', fontWeight: 800 }}>
                     {language === 'ar' ? 'الرصيد الفعلي' : t('inventorySheets.physicalBalance')}
                   </th>
 
@@ -1101,13 +1101,13 @@ export default function InventorySheetsPage() {
 
                       {/* Book Balance (Actual number without trailing zeros) */}
                       {sheetMode === 'AUDIT' && (
-                        <td style={{ textAlign: 'center', fontWeight: 800, color: '#099A75', fontSize: '0.95rem' }}>
+                        <td style={{ textAlign: 'center', fontWeight: 800, color: 'var(--accent-primary)', fontSize: '0.95rem' }}>
                           {formatCleanQty(row.stock)}
                         </td>
                       )}
 
                       {/* Physical Balance Input + Inline Variance Badge */}
-                      <td style={{ textAlign: 'center', background: 'rgba(9, 154, 117, 0.02)' }}>
+                      <td style={{ textAlign: 'center', background: 'rgba(0, 229, 153, 0.02)' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
                           <input 
                             type="number"
@@ -1121,7 +1121,7 @@ export default function InventorySheetsPage() {
                               width: '85px', 
                               textAlign: 'center', 
                               fontWeight: 800, 
-                              color: '#099A75',
+                              color: 'var(--accent-primary)',
                               padding: '4px 6px',
                               margin: '0'
                             }}
@@ -1232,7 +1232,7 @@ export default function InventorySheetsPage() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginTop: '6px', marginBottom: '10px', textAlign: 'center', direction: 'rtl' }}>
               <div style={{ border: '1px solid #cbd5e1', borderRadius: '6px', padding: '6px 8px', background: '#f8fafc' }}>
                 <div style={{ fontSize: '7.5pt', color: '#64748b', fontWeight: 800 }}>عدد الأقسام المعتمدة</div>
-                <div style={{ fontSize: '13pt', fontWeight: 900, color: '#099A75', lineHeight: 1.15 }}>17 قسماً</div>
+                <div style={{ fontSize: '13pt', fontWeight: 900, color: 'var(--accent-primary)', lineHeight: 1.15 }}>17 قسماً</div>
               </div>
               <div style={{ border: '1px solid #cbd5e1', borderRadius: '6px', padding: '6px 8px', background: '#f8fafc' }}>
                 <div style={{ fontSize: '7.5pt', color: '#64748b', fontWeight: 800 }}>إجمالي أصناف المخزن</div>
@@ -1375,9 +1375,9 @@ export default function InventorySheetsPage() {
               />
 
               {/* Department Banner Ribbon */}
-              <div className="print-category-banner" style={{ background: '#f8fafc', border: '1.5px solid #099A75', borderRadius: '6px', padding: '4px 10px', marginBottom: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', direction: 'rtl' }}>
+              <div className="print-category-banner" style={{ background: '#f8fafc', border: '1.5px solid var(--accent-primary)', borderRadius: '6px', padding: '4px 10px', marginBottom: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', direction: 'rtl' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ background: '#099A75', color: '#ffffff', padding: '1px 7px', borderRadius: '4px', fontSize: '8pt', fontWeight: 800 }}>
+                  <span style={{ background: 'var(--accent-primary)', color: '#ffffff', padding: '1px 7px', borderRadius: '4px', fontSize: '8pt', fontWeight: 800 }}>
                     قسم رقم {catIdx + 1}
                   </span>
                   <strong style={{ fontSize: '10pt', color: '#0f172a' }}>
@@ -1386,7 +1386,7 @@ export default function InventorySheetsPage() {
                 </div>
                 <div style={{ fontSize: '7.5pt', color: '#334155', display: 'flex', gap: '12px' }}>
                   <span>عدد الأصناف الفعلية: <strong>{catRows.length}</strong></span>
-                  <span>الرصيد الدفتري: <strong style={{ color: '#099A75' }}>{formatCleanQty(catTotalStock)}</strong> وحدة</span>
+                  <span>الرصيد الدفتري: <strong style={{ color: 'var(--accent-primary)' }}>{formatCleanQty(catTotalStock)}</strong> وحدة</span>
                   <span>النمط: <strong>{printOptions.sheetMode === 'BLIND' ? 'جرد أعمى' : 'جرد معلن'}</strong></span>
                 </div>
               </div>
@@ -1401,7 +1401,7 @@ export default function InventorySheetsPage() {
                     <th style={{ width: '6%', textAlign: 'center', color: '#0f172a', fontWeight: 800, padding: '6px 2px' }}>{t('inventorySheets.unit')}</th>
                     
                     {printOptions.sheetMode === 'AUDIT' && (
-                      <th style={{ width: '12%', textAlign: 'center', color: '#099A75', fontWeight: 800, padding: '6px 4px' }}>{t('inventorySheets.bookBalance')}</th>
+                      <th style={{ width: '12%', textAlign: 'center', color: 'var(--accent-primary)', fontWeight: 800, padding: '6px 4px' }}>{t('inventorySheets.bookBalance')}</th>
                     )}
                     
                     <th style={{ width: '14%', textAlign: 'center', color: '#065f46', background: '#ecfdf5', fontWeight: 800, padding: '6px 4px', border: '1px solid #a7f3d0' }}>

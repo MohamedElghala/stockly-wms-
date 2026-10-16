@@ -197,7 +197,7 @@ export function generateStickerHtml(item: BarcodeStickerData): string {
 
   return `
     <div class="stockly-barcode-sticker" style="width: 340px; border: 1.5px solid #0f172a; padding: 12px; border-radius: 8px; background: #ffffff; font-family: 'Cairo', sans-serif; direction: rtl; box-sizing: border-box; page-break-inside: avoid;">
-      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid #00DF8F; padding-bottom: 6px; margin-bottom: 8px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid var(--accent-primary); padding-bottom: 6px; margin-bottom: 8px;">
         <div style="font-weight: 900; font-size: 13px; color: #042F2C;">
           📦 STOCKLY WMS
         </div>

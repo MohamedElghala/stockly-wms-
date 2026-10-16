@@ -294,7 +294,7 @@ function LoginForm() {
     <div className="flex-center animate-fade-in auth-page-wrapper" style={{ width: '100%', minHeight: '100vh', padding: '1rem', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       {/* Top Floating Controls */}
       <div className="auth-top-controls" style={{ position: 'absolute', top: '1.25rem', [isRTL ? 'left' : 'right']: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', zIndex: 50 }}>
-        <span style={{ fontSize: '0.75rem', fontWeight: 800, background: '#099A7520', color: '#00DF8F', border: '1px solid #099A75', padding: '0.25rem 0.5rem', borderRadius: '10px' }}>
+        <span style={{ fontSize: '0.75rem', fontWeight: 800, background: 'var(--accent-primary)20', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', padding: '0.25rem 0.5rem', borderRadius: '10px' }}>
           v2.2 Live
         </span>
         <button
@@ -325,7 +325,7 @@ function LoginForm() {
           </h2>
 
           {/* Secure Badge */}
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.45rem 1rem', background: 'rgba(9, 154, 117, 0.12)', borderRadius: '12px', border: '1px solid rgba(9, 154, 117, 0.3)', color: '#099A75' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.45rem 1rem', background: 'rgba(0, 229, 153, 0.12)', borderRadius: '12px', border: '1px solid rgba(0, 229, 153, 0.3)', color: 'var(--accent-primary)' }}>
             <ShieldCheck size={18} />
             <span style={{ fontSize: '0.82rem', fontWeight: 700 }}>{t('auth.secureAuth')}</span>
           </div>
@@ -589,7 +589,7 @@ function LoginForm() {
             </button>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
-              <div style={{ padding: '0.6rem', borderRadius: '12px', background: 'rgba(9, 154, 117, 0.15)', color: '#099A75' }}>
+              <div style={{ padding: '0.6rem', borderRadius: '12px', background: 'rgba(0, 229, 153, 0.15)', color: 'var(--accent-primary)' }}>
                 <KeyRound size={24} />
               </div>
               <div>
@@ -632,7 +632,7 @@ function LoginForm() {
                     type="submit"
                     disabled={otpLoading}
                     className="btn btn-primary"
-                    style={{ flex: 1, padding: '0.8rem', background: '#099A75', borderColor: '#099A75', color: '#fff', fontWeight: 700 }}
+                    style={{ flex: 1, padding: '0.8rem', background: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', color: '#fff', fontWeight: 700 }}
                   >
                     {otpLoading ? 'جارِ الإرسال...' : 'إرسال رمز التحقق OTP'}
                   </button>
@@ -689,7 +689,7 @@ function LoginForm() {
                     type="submit"
                     disabled={otpLoading}
                     className="btn btn-primary"
-                    style={{ flex: 1, padding: '0.8rem', background: '#099A75', borderColor: '#099A75', color: '#fff', fontWeight: 700 }}
+                    style={{ flex: 1, padding: '0.8rem', background: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', color: '#fff', fontWeight: 700 }}
                   >
                     {otpLoading ? 'جارِ التحقق والتحديث...' : 'تأكيد وحفظ كلمة المرور'}
                   </button>

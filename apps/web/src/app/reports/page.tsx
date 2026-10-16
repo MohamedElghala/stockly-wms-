@@ -191,7 +191,7 @@ export default function ReportsPage() {
       .slice(0, 10);
 
     const BAR_COLORS = [
-      '#099A75', '#3b82f6', '#10b981', '#8b5cf6', 
+      'var(--accent-primary)', '#3b82f6', '#10b981', '#8b5cf6', 
       '#f59e0b', '#ec4899', '#06b6d4', '#14b8a6',
       '#6366f1', '#84cc16'
     ];
@@ -299,8 +299,8 @@ export default function ReportsPage() {
               <span style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: '0.82rem', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{entry.value}</span>
             </div>
             <span style={{ 
-              background: 'rgba(9, 154, 117, 0.12)', 
-              color: '#099A75', 
+              background: 'rgba(0, 229, 153, 0.12)', 
+              color: 'var(--accent-primary)', 
               padding: '0.15rem 0.5rem', 
               borderRadius: '6px', 
               fontSize: '0.78rem', 
@@ -365,7 +365,7 @@ export default function ReportsPage() {
     if (c.includes('نقاش')) return <Sparkles size={16} color="#ec4899" />;
     if (c.includes('نجار')) return <Hammer size={16} color="#d97706" />;
     if (c.includes('نظاف')) return <Sparkles size={16} color="#14b8a6" />;
-    return <LayoutGrid size={16} color="#099A75" />;
+    return <LayoutGrid size={16} color="var(--accent-primary)" />;
   };
 
   // Master Matrix Breakdown by Department
@@ -842,10 +842,10 @@ export default function ReportsPage() {
                 display: 'flex', 
                 alignItems: 'center', 
                 gap: '0.6rem', 
-                background: 'linear-gradient(135deg, #099A75 0%, #065F46 100%)', 
+                background: 'linear-gradient(135deg, var(--accent-primary) 0%, #065F46 100%)', 
                 color: '#ffffff', 
                 fontWeight: 800, 
-                boxShadow: '0 4px 14px rgba(9, 154, 117, 0.35)',
+                boxShadow: '0 4px 14px rgba(0, 229, 153, 0.35)',
                 border: 'none',
                 padding: '0.65rem 1.25rem',
                 borderRadius: '8px',
@@ -865,10 +865,10 @@ export default function ReportsPage() {
                 display: 'flex', 
                 alignItems: 'center', 
                 gap: '0.5rem', 
-                color: '#099A75', 
-                borderColor: '#099A75', 
+                color: 'var(--accent-primary)', 
+                borderColor: 'var(--accent-primary)', 
                 fontWeight: 700,
-                background: 'rgba(9, 154, 117, 0.06)',
+                background: 'rgba(0, 229, 153, 0.06)',
                 padding: '0.65rem 1.15rem',
                 borderRadius: '8px'
               }}
@@ -980,7 +980,7 @@ export default function ReportsPage() {
                     <XAxis dataKey="name" tick={false} tickLine={false} axisLine={{ stroke: 'var(--border-light)' }} />
                     <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 11 }} axisLine={{ stroke: 'var(--border-light)' }} tickLine={false} />
                     <Tooltip 
-                      cursor={{ fill: 'rgba(9, 154, 117, 0.08)', radius: 6 }}
+                      cursor={{ fill: 'rgba(0, 229, 153, 0.08)', radius: 6 }}
                       contentStyle={{ 
                         backgroundColor: '#0f172a', 
                         border: '1px solid rgba(255, 255, 255, 0.15)', 
@@ -1017,7 +1017,7 @@ export default function ReportsPage() {
             onClick={() => setShowMatrixOverview(!showMatrixOverview)}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <div style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(9, 154, 117, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#099A75' }}>
+              <div style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(0, 229, 153, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-primary)' }}>
                 <FolderTree size={20} />
               </div>
               <div>
@@ -1031,7 +1031,7 @@ export default function ReportsPage() {
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <span style={{ fontSize: '0.8rem', padding: '0.25rem 0.65rem', borderRadius: '12px', background: 'rgba(9, 154, 117, 0.1)', color: '#099A75', fontWeight: 700 }}>
+              <span style={{ fontSize: '0.8rem', padding: '0.25rem 0.65rem', borderRadius: '12px', background: 'rgba(0, 229, 153, 0.1)', color: 'var(--accent-primary)', fontWeight: 700 }}>
                 {scopedItems.length} {language === 'ar' ? 'صنفاً إجمالياً' : 'total items'}
               </span>
               <button 
@@ -1234,7 +1234,7 @@ export default function ReportsPage() {
       </div>
 
       {/* ──── REPORT TABLE & PRINT VIEW ──── */}
-      <div className="official-document-paper enterprise-card" style={{ padding: '2rem' }}>
+      <div className="glass-card" style={{ padding: '2rem' }}>
 
         {/* Executive Action Toolbar (Always Visible Above Table) */}
         <div className="hide-on-print" style={{ 
@@ -1259,8 +1259,8 @@ export default function ReportsPage() {
               {getReportTitle(activeReport)}
             </h2>
             <span style={{ 
-              background: 'rgba(9, 154, 117, 0.12)', 
-              color: '#099A75', 
+              background: 'rgba(0, 229, 153, 0.12)', 
+              color: 'var(--accent-primary)', 
               padding: '0.2rem 0.65rem', 
               borderRadius: '12px', 
               fontSize: '0.85rem', 
@@ -1279,10 +1279,10 @@ export default function ReportsPage() {
                 display: 'flex', 
                 alignItems: 'center', 
                 gap: '0.5rem', 
-                background: 'linear-gradient(135deg, #099A75 0%, #065F46 100%)', 
+                background: 'linear-gradient(135deg, var(--accent-primary) 0%, #065F46 100%)', 
                 color: '#ffffff', 
                 fontWeight: 800, 
-                boxShadow: '0 3px 10px rgba(9, 154, 117, 0.3)',
+                boxShadow: '0 3px 10px rgba(0, 229, 153, 0.3)',
                 border: 'none',
                 padding: '0.55rem 1.15rem',
                 borderRadius: '8px',
@@ -1303,10 +1303,10 @@ export default function ReportsPage() {
                 display: 'flex', 
                 alignItems: 'center', 
                 gap: '0.45rem', 
-                color: '#099A75', 
-                borderColor: '#099A75', 
+                color: 'var(--accent-primary)', 
+                borderColor: 'var(--accent-primary)', 
                 fontWeight: 700, 
-                background: 'rgba(9, 154, 117, 0.05)',
+                background: 'rgba(0, 229, 153, 0.05)',
                 padding: '0.55rem 1rem',
                 borderRadius: '8px',
                 fontSize: '0.875rem'
@@ -1375,8 +1375,8 @@ export default function ReportsPage() {
                 <LayoutGrid size={14} />
                 <span>{language === 'ar' ? 'كافة الأقسام' : 'All Departments'}</span>
                 <span style={{ 
-                  background: selectedDeptFilter === 'all' ? 'rgba(255,255,255,0.25)' : 'rgba(9, 154, 117, 0.15)', 
-                  color: selectedDeptFilter === 'all' ? '#fff' : '#099A75',
+                  background: selectedDeptFilter === 'all' ? 'rgba(255,255,255,0.25)' : 'rgba(0, 229, 153, 0.15)', 
+                  color: selectedDeptFilter === 'all' ? '#fff' : 'var(--accent-primary)',
                   padding: '0.1rem 0.45rem', 
                   borderRadius: '10px', 
                   fontSize: '0.75rem',
@@ -1445,8 +1445,8 @@ export default function ReportsPage() {
                     display: 'inline-flex', 
                     alignItems: 'center', 
                     gap: '0.35rem', 
-                    background: 'rgba(9, 154, 117, 0.12)', 
-                    color: '#099A75', 
+                    background: 'rgba(0, 229, 153, 0.12)', 
+                    color: 'var(--accent-primary)', 
                     padding: '0.2rem 0.6rem', 
                     borderRadius: '6px', 
                     fontSize: '0.8rem',
@@ -1455,7 +1455,7 @@ export default function ReportsPage() {
                     <span>{selectedDeptFilter}</span>
                     <button 
                       onClick={() => setSelectedDeptFilter('all')} 
-                      style={{ background: 'none', border: 'none', color: '#099A75', cursor: 'pointer', padding: 0, display: 'flex' }}
+                      style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', cursor: 'pointer', padding: 0, display: 'flex' }}
                       title="إلغاء الفلتر"
                     >
                       ✕
@@ -1528,13 +1528,13 @@ export default function ReportsPage() {
                         style={{ cursor: 'pointer', userSelect: 'none' }}
                       >
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-                          <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 34, height: 34, borderRadius: '8px', background: 'rgba(9, 154, 117, 0.12)' }}>
+                          <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 34, height: 34, borderRadius: '8px', background: 'rgba(0, 229, 153, 0.12)' }}>
                             {getCategoryIcon(group.category)}
                           </span>
                           <h3 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)' }}>
                             {group.category}
                           </h3>
-                          <span style={{ padding: '0.2rem 0.65rem', borderRadius: '20px', background: 'rgba(9, 154, 117, 0.15)', color: '#099A75', fontSize: '0.8rem', fontWeight: 700 }}>
+                          <span style={{ padding: '0.2rem 0.65rem', borderRadius: '20px', background: 'rgba(0, 229, 153, 0.15)', color: 'var(--accent-primary)', fontSize: '0.8rem', fontWeight: 700 }}>
                             {group.items.length} {language === 'ar' ? 'صنف' : 'items'}
                           </span>
                           <span style={{ padding: '0.2rem 0.65rem', borderRadius: '20px', background: 'rgba(255, 255, 255, 0.05)', color: 'var(--text-secondary)', fontSize: '0.8rem' }}>
@@ -1572,7 +1572,7 @@ export default function ReportsPage() {
                                 <th style={{ width: '95px', minWidth: '95px', textAlign: 'center' }}>{t('common.code')}</th>
                                 <th style={{ minWidth: '240px', width: '280px', textAlign: language === 'ar' ? 'right' : 'left' }}>{t('common.item')}</th>
                                 <th style={{ width: '65px', minWidth: '65px', textAlign: 'center' }}>{t('common.unit')}</th>
-                                <th style={{ width: '95px', minWidth: '95px', textAlign: 'center', background: 'rgba(9, 154, 117, 0.08)', color: '#099A75', fontWeight: 800 }}>{t('inventory.currentStock')}</th>
+                                <th style={{ width: '95px', minWidth: '95px', textAlign: 'center', background: 'rgba(0, 229, 153, 0.08)', color: 'var(--accent-primary)', fontWeight: 800 }}>{t('inventory.currentStock')}</th>
                                 <th style={{ width: activeReport === 'ASSETS' ? '130px' : '95px', minWidth: activeReport === 'ASSETS' ? '130px' : '95px', textAlign: 'center', color: activeReport === 'ASSETS' ? '#8b5cf6' : '#ea580c' }}>
                                   {activeReport === 'ASSETS' ? (language === 'ar' ? 'نوع الأصل' : 'Asset Type') : (language === 'ar' ? 'حد الطلب' : 'Alert Limit')}
                                 </th>
@@ -1595,7 +1595,7 @@ export default function ReportsPage() {
                                   <td style={{ fontFamily: 'monospace', fontWeight: 700, textAlign: 'center' }}>
                                     <span 
                                       onClick={() => router.push('/item-ledger')}
-                                      style={{ padding: '0.2rem 0.4rem', background: 'rgba(9, 154, 117, 0.1)', color: '#099A75', borderRadius: '4px', cursor: 'pointer' }}
+                                      style={{ padding: '0.2rem 0.4rem', background: 'rgba(0, 229, 153, 0.1)', color: 'var(--accent-primary)', borderRadius: '4px', cursor: 'pointer' }}
                                       title={t('inventory.viewLedger')}
                                     >
                                       {item.code}
@@ -1603,7 +1603,7 @@ export default function ReportsPage() {
                                   </td>
                                   <td style={{ fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'normal', wordBreak: 'normal', minWidth: '240px', lineHeight: 1.5 }}>{item.name}</td>
                                   <td style={{ textAlign: 'center', fontSize: '0.85rem' }}>{item.unit}</td>
-                                  <td style={{ textAlign: 'center', fontWeight: 800, fontSize: '1.05rem', color: item.stock <= 0 ? '#ef4444' : (item.stock <= (item.alertLimit || 10) ? '#ea580c' : '#099A75'), background: 'rgba(9, 154, 117, 0.03)' }}>
+                                  <td style={{ textAlign: 'center', fontWeight: 800, fontSize: '1.05rem', color: item.stock <= 0 ? '#ef4444' : (item.stock <= (item.alertLimit || 10) ? '#ea580c' : 'var(--accent-primary)'), background: 'rgba(0, 229, 153, 0.03)' }}>
                                     {item.stock}
                                   </td>
                                   <td style={{ textAlign: 'center', fontWeight: 600, color: activeReport === 'ASSETS' ? '#8b5cf6' : '#ea580c', fontSize: activeReport === 'ASSETS' ? '0.78rem' : '0.875rem' }}>
@@ -1633,7 +1633,7 @@ export default function ReportsPage() {
                                         {item.daysSinceLastDisb !== undefined && item.daysSinceLastDisb < 999 ? `${item.daysSinceLastDisb} ${language === 'ar' ? 'يوم' : 'd'}` : '—'}
                                       </span>
                                     ) : item.drawsLast60 > 0 ? (
-                                      <span style={{ color: '#099A75' }}>
+                                      <span style={{ color: 'var(--accent-primary)' }}>
                                         {item.drawsLast60} مرات ({item.qtyLast60 || 0})
                                       </span>
                                     ) : (
@@ -1693,7 +1693,7 @@ export default function ReportsPage() {
                       <th style={{ minWidth: '240px', width: '280px', textAlign: language === 'ar' ? 'right' : 'left' }}>{t('common.item')}</th>
                       <th style={{ width: '140px', minWidth: '140px', textAlign: language === 'ar' ? 'right' : 'left' }}>{t('common.category')}</th>
                       <th style={{ width: '65px', minWidth: '65px', textAlign: 'center' }}>{t('common.unit')}</th>
-                      <th style={{ width: '95px', minWidth: '95px', textAlign: 'center', background: 'rgba(9, 154, 117, 0.08)', color: '#099A75', fontWeight: 800 }}>{t('inventory.currentStock')}</th>
+                      <th style={{ width: '95px', minWidth: '95px', textAlign: 'center', background: 'rgba(0, 229, 153, 0.08)', color: 'var(--accent-primary)', fontWeight: 800 }}>{t('inventory.currentStock')}</th>
                       <th style={{ width: activeReport === 'ASSETS' ? '130px' : '95px', minWidth: activeReport === 'ASSETS' ? '130px' : '95px', textAlign: 'center', color: activeReport === 'ASSETS' ? '#8b5cf6' : '#ea580c' }}>
                         {activeReport === 'ASSETS' ? (language === 'ar' ? 'نوع الأصل' : 'Asset Type') : (language === 'ar' ? 'حد الطلب' : 'Alert Limit')}
                       </th>
@@ -1716,7 +1716,7 @@ export default function ReportsPage() {
                         <td style={{ fontFamily: 'monospace', fontWeight: 700, textAlign: 'center' }}>
                           <span 
                             onClick={() => router.push('/item-ledger')}
-                            style={{ padding: '0.2rem 0.4rem', background: 'rgba(9, 154, 117, 0.1)', color: '#099A75', borderRadius: '4px', cursor: 'pointer' }}
+                            style={{ padding: '0.2rem 0.4rem', background: 'rgba(0, 229, 153, 0.1)', color: 'var(--accent-primary)', borderRadius: '4px', cursor: 'pointer' }}
                             title={t('inventory.viewLedger')}
                           >
                             {item.code}
@@ -1725,7 +1725,7 @@ export default function ReportsPage() {
                         <td style={{ fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'normal', wordBreak: 'normal', minWidth: '240px', lineHeight: 1.5 }}>{item.name}</td>
                         <td style={{ fontSize: '0.85rem', color: 'var(--text-muted)', wordBreak: 'break-word' }}>{item.category}</td>
                         <td style={{ textAlign: 'center', fontSize: '0.85rem' }}>{item.unit}</td>
-                        <td style={{ textAlign: 'center', fontWeight: 800, fontSize: '1.05rem', color: item.stock <= 0 ? '#ef4444' : (item.stock <= (item.alertLimit || 10) ? '#ea580c' : '#099A75'), background: 'rgba(9, 154, 117, 0.03)' }}>
+                        <td style={{ textAlign: 'center', fontWeight: 800, fontSize: '1.05rem', color: item.stock <= 0 ? '#ef4444' : (item.stock <= (item.alertLimit || 10) ? '#ea580c' : 'var(--accent-primary)'), background: 'rgba(0, 229, 153, 0.03)' }}>
                           {item.stock}
                         </td>
                         <td style={{ textAlign: 'center', fontWeight: 600, color: activeReport === 'ASSETS' ? '#8b5cf6' : '#ea580c', fontSize: activeReport === 'ASSETS' ? '0.78rem' : '0.875rem' }}>
@@ -1755,7 +1755,7 @@ export default function ReportsPage() {
                               {item.daysSinceLastDisb !== undefined && item.daysSinceLastDisb < 999 ? `${item.daysSinceLastDisb} ${language === 'ar' ? 'يوم' : 'd'}` : '—'}
                             </span>
                           ) : item.drawsLast60 > 0 ? (
-                            <span style={{ color: '#099A75' }}>
+                            <span style={{ color: 'var(--accent-primary)' }}>
                               {item.drawsLast60} مرات ({item.qtyLast60 || 0})
                             </span>
                           ) : (
@@ -1837,7 +1837,7 @@ export default function ReportsPage() {
             <tbody>
               {printGroupedData.map(([cat, itemsInCat]) => (
                 <React.Fragment key={cat}>
-                  <tr style={{ background: '#f1f5f9', fontWeight: 800, color: '#099A75', borderTop: '2px solid #cbd5e1' }}>
+                  <tr style={{ background: '#f1f5f9', fontWeight: 800, color: 'var(--accent-primary)', borderTop: '2px solid #cbd5e1' }}>
                     <td colSpan={7} style={{ padding: '0.5rem 0.75rem', fontSize: '0.9rem' }}>
                       📁 {cat} ({itemsInCat.length} {language === 'ar' ? 'صنف' : 'items'})
                     </td>

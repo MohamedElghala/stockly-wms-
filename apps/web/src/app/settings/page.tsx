@@ -262,7 +262,7 @@ export default function SettingsPage() {
             background: activeTab === 'PROFILE' ? 'var(--accent-primary)' : 'var(--bg-secondary)',
             color: activeTab === 'PROFILE' ? '#ffffff' : 'var(--text-secondary)',
             border: activeTab === 'PROFILE' ? '1px solid var(--accent-primary)' : '1px solid var(--border-light)',
-            boxShadow: activeTab === 'PROFILE' ? '0 4px 14px rgba(9, 154, 117, 0.35)' : 'none'
+            boxShadow: activeTab === 'PROFILE' ? '0 4px 14px rgba(0, 229, 153, 0.35)' : 'none'
           }}
         >
           <User size={18} />
@@ -311,7 +311,7 @@ export default function SettingsPage() {
         <div className="enterprise-card animate-fade-in delay-100" style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.75rem' }}>
-            <div style={{ padding: '0.55rem', background: 'rgba(9, 154, 117, 0.12)', borderRadius: '10px', color: '#099A75', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ padding: '0.55rem', background: 'rgba(0, 229, 153, 0.12)', borderRadius: '10px', color: 'var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <User size={24} />
             </div>
             <div>
@@ -583,7 +583,7 @@ export default function SettingsPage() {
             style={{
               padding: '1.75rem 2rem',
               borderRadius: '16px',
-              background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(9, 154, 117, 0.08) 100%)',
+              background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(0, 229, 153, 0.08) 100%)',
               border: '1px solid rgba(59, 130, 246, 0.3)',
               position: 'relative',
               overflow: 'hidden'
@@ -591,7 +591,7 @@ export default function SettingsPage() {
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
               <div>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 12px', borderRadius: '20px', background: 'rgba(0, 223, 143, 0.2)', color: '#00DF8F', fontSize: '0.78rem', fontWeight: 800, marginBottom: '0.65rem' }}>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 12px', borderRadius: '20px', background: 'rgba(0, 229, 153, 0.2)', color: 'var(--accent-primary)', fontSize: '0.78rem', fontWeight: 800, marginBottom: '0.65rem' }}>
                   <Sparkles size={14} /> Stockly WMS • دليل التشغيل الشامل
                 </div>
                 <h2 style={{ margin: '0 0 0.5rem 0', fontSize: '1.5rem', fontWeight: 900, color: 'var(--text-primary)' }}>
@@ -621,8 +621,8 @@ export default function SettingsPage() {
               style={{
                 padding: '0.85rem 1rem',
                 borderRadius: '12px',
-                border: activeGuideSection === 'LIFECYCLE' ? '2px solid #099A75' : '1px solid var(--border-light)',
-                background: activeGuideSection === 'LIFECYCLE' ? 'rgba(9, 154, 117, 0.12)' : 'var(--bg-secondary)',
+                border: activeGuideSection === 'LIFECYCLE' ? '2px solid var(--accent-primary)' : '1px solid var(--border-light)',
+                background: activeGuideSection === 'LIFECYCLE' ? 'rgba(0, 229, 153, 0.12)' : 'var(--bg-secondary)',
                 color: activeGuideSection === 'LIFECYCLE' ? 'var(--accent-primary)' : 'var(--text-secondary)',
                 fontWeight: 800,
                 fontSize: '0.88rem',
@@ -712,7 +712,7 @@ export default function SettingsPage() {
           {activeGuideSection === 'LIFECYCLE' && (
             <div className="enterprise-card animate-fade-in" style={{ padding: '1.75rem' }}>
               <h3 style={{ margin: '0 0 1.25rem 0', fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Workflow size={20} color="#099A75" />
+                <Workflow size={20} color="var(--accent-primary)" />
                 دورة حياة الحركة المخزنية (5 مراحل تشغيلية متتابعة)
               </h3>
 

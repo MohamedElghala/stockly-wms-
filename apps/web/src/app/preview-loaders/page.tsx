@@ -47,7 +47,7 @@ export default function PreviewLoadersPage() {
                 position: 'absolute',
                 inset: '-20px',
                 borderRadius: '50%',
-                background: 'conic-gradient(from 0deg, rgba(0, 223, 143, 0) 0deg, rgba(0, 223, 143, 0.4) 60deg, rgba(255, 255, 255, 0.7) 65deg, rgba(0, 223, 143, 0) 66deg)',
+                background: 'conic-gradient(from 0deg, rgba(0, 229, 153, 0) 0deg, rgba(0, 229, 153, 0.4) 60deg, rgba(255, 255, 255, 0.7) 65deg, rgba(0, 229, 153, 0) 66deg)',
                 animation: 'radarSpin 2s infinite linear',
                 pointerEvents: 'none',
                 maskImage: 'radial-gradient(circle, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 70%)',
@@ -100,7 +100,7 @@ export default function PreviewLoadersPage() {
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', lineHeight: 1 }}>
                     <span style={{ fontSize: '10px', fontWeight: 800, color: '#00BF88', letterSpacing: '1.8px', textTransform: 'uppercase', marginBottom: '2px' }}>THE</span>
-                    <span style={{ fontSize: '28px', fontWeight: 900, color: '#00DF8F', letterSpacing: '1.2px', textShadow: '0 0 12px rgba(0, 223, 143, 0.45)' }}>CALM WMS</span>
+                    <span style={{ fontSize: '28px', fontWeight: 900, color: 'var(--accent-primary)', letterSpacing: '1.2px', textShadow: '0 0 12px rgba(0, 229, 153, 0.45)' }}>CALM WMS</span>
                   </div>
                 </div>
                 <div style={{ width: '100%', textAlign: 'center', fontSize: '8px', fontWeight: 700, color: '#64748B', letterSpacing: '2px', marginTop: '5px' }}>
@@ -123,8 +123,8 @@ export default function PreviewLoadersPage() {
           100% { transform: rotate(360deg); }
         }
         @keyframes laserGlow {
-          0%, 100% { filter: drop-shadow(0 0 8px rgba(0, 223, 143, 0.3)); opacity: 0.85; }
-          50% { filter: drop-shadow(0 0 25px rgba(0, 223, 143, 0.85)); opacity: 1; }
+          0%, 100% { filter: drop-shadow(0 0 8px rgba(0, 229, 153, 0.3)); opacity: 0.85; }
+          50% { filter: drop-shadow(0 0 25px rgba(0, 229, 153, 0.85)); opacity: 1; }
         }
         @keyframes traceArc1 {
           0% { stroke-dashoffset: 200; }

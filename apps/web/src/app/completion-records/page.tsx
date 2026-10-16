@@ -866,7 +866,7 @@ export default function CompletionRecordsPage() {
         {/* ──── 1. PAGE HEADER & GLOBAL ACTIONS ──── */}
       <div className="flex-between" style={{ marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem', borderBottom: '1px solid var(--border-light)', paddingBottom: '1.25rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-          <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(9, 154, 117, 0.12)', color: '#099A75', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(0, 229, 153, 0.12)', color: 'var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <ClipboardCheck size={28} />
           </div>
           <div>
@@ -874,7 +874,7 @@ export default function CompletionRecordsPage() {
               <h1 className="heading-xl" style={{ margin: 0, fontWeight: 800 }}>
                 محاضر الفحص الفني والاستلام وتسوية الأعمال
               </h1>
-              <span style={{ fontSize: '0.75rem', fontWeight: 800, padding: '2px 8px', borderRadius: '6px', background: 'rgba(0, 223, 143, 0.15)', color: '#00DF8F' }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, padding: '2px 8px', borderRadius: '6px', background: 'rgba(0, 229, 153, 0.15)', color: 'var(--accent-primary)' }}>
                 Stockly WMS
               </span>
             </div>
@@ -904,7 +904,7 @@ export default function CompletionRecordsPage() {
                 onClick={handleExportCompletionExcel}
                 disabled={settlementRows.length === 0}
                 className="btn btn-outline"
-                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.65rem 1.25rem', color: '#099A75', borderColor: '#099A75', fontWeight: 700, cursor: 'pointer' }}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.65rem 1.25rem', color: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', fontWeight: 700, cursor: 'pointer' }}
                 title="تصدير كشف التسوية إلى إكسيل"
               >
                 <FileSpreadsheet size={17} />
@@ -1036,7 +1036,7 @@ export default function CompletionRecordsPage() {
             background: activeTab === 'COMPLETION' ? 'var(--accent-primary)' : 'var(--bg-secondary)',
             color: activeTab === 'COMPLETION' ? '#ffffff' : 'var(--text-secondary)',
             border: activeTab === 'COMPLETION' ? '1px solid var(--accent-primary)' : '1px solid var(--border-light)',
-            boxShadow: activeTab === 'COMPLETION' ? '0 4px 14px rgba(9, 154, 117, 0.35)' : 'none'
+            boxShadow: activeTab === 'COMPLETION' ? '0 4px 14px rgba(0, 229, 153, 0.35)' : 'none'
           }}
         >
           <Wrench size={18} />
@@ -1209,7 +1209,7 @@ export default function CompletionRecordsPage() {
               
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: 'var(--text-primary)', fontWeight: 800 }}>
-                  <Tag size={15} style={{ color: '#099A75' }} />
+                  <Tag size={15} style={{ color: 'var(--accent-primary)' }} />
                   <span>تطبيق بيان الاستخدام على كل البنود:</span>
                 </div>
                 <select
@@ -2797,7 +2797,7 @@ export default function CompletionRecordsPage() {
                 </div>
 
                 <div style={{ textAlign: 'center', padding: '0.5rem 1.25rem', borderRadius: '10px', background: '#f8fafc', border: '1px solid #e2e8f0' }}>
-                  <div style={{ fontSize: '1.1rem', fontWeight: 900, color: '#099A75' }}>محضر إنهاء وتسوية أعمال</div>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 900, color: 'var(--accent-primary)' }}>محضر إنهاء وتسوية أعمال</div>
                   <div style={{ fontSize: '0.8rem', fontWeight: 800, color: '#0f172a', marginTop: '0.2rem' }}>
                     {workOrderRef ? `أمر شغل: ${workOrderRef}` : `تاريخ: ${new Date().toLocaleDateString('ar-EG')}`}
                   </div>

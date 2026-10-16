@@ -542,7 +542,7 @@ export default function AdditionsPage() {
         <div className="flex-between" style={{ marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.35rem' }}>
-              <div style={{ padding: '0.5rem', borderRadius: '12px', background: 'rgba(9, 154, 117, 0.12)', color: '#099A75' }}>
+              <div style={{ padding: '0.5rem', borderRadius: '12px', background: 'rgba(0, 229, 153, 0.12)', color: 'var(--accent-primary)' }}>
                 <PackageCheck size={26} />
               </div>
               <h1 className="heading-xl" style={{ margin: 0, fontWeight: 800 }}>{t('additions.title')}</h1>
@@ -567,7 +567,7 @@ export default function AdditionsPage() {
                   type="button"
                   onClick={() => setIsScannerOpen(true)}
                   className="btn btn-outline"
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.25rem', color: '#00DF8F', borderColor: '#00DF8F', fontWeight: 700, background: 'rgba(0, 223, 143, 0.08)' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.25rem', color: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', fontWeight: 700, background: 'rgba(0, 229, 153, 0.08)' }}
                   title="مسح باركود الصنف لإضافته مباشرة"
                 >
                   <Barcode size={18} /> {language === 'ar' ? 'مسح باركود' : 'Scan Barcode'}
@@ -578,7 +578,7 @@ export default function AdditionsPage() {
             <button 
               onClick={handleExportExcel} 
               className="btn btn-outline"
-              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.25rem', color: '#099A75', borderColor: '#099A75', fontWeight: 600 }}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.25rem', color: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', fontWeight: 600 }}
               title={t('common.exportExcel')}
             >
               <FileSpreadsheet size={18} /> {t('common.exportExcel')}
@@ -597,7 +597,7 @@ export default function AdditionsPage() {
         {/* ──── KPI SUMMARY CARDS ──── */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
           <div className="enterprise-card" style={{ padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: 'rgba(9, 154, 117, 0.12)', color: '#099A75', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: 'rgba(0, 229, 153, 0.12)', color: 'var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <FileText size={22} />
             </div>
             <div>
@@ -963,7 +963,7 @@ export default function AdditionsPage() {
                         <td style={{ textAlign: 'center', fontFamily: 'monospace', fontSize: '0.85rem' }}>{row.date}</td>
                         <td style={{ textAlign: 'center', fontWeight: 600 }}>
                           {row.invoiceNo ? (
-                            <span style={{ color: 'var(--accent-primary)', background: 'rgba(9, 154, 117, 0.08)', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
+                            <span style={{ color: 'var(--accent-primary)', background: 'rgba(0, 229, 153, 0.08)', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
                               #{row.invoiceNo}
                             </span>
                           ) : '—'}
@@ -1101,7 +1101,7 @@ export default function AdditionsPage() {
       {/* ──── SINGLE ITEM VOUCHER PRINT VIEW (Centered Official Certificate Frame) ──── */}
       {printItem && (
         <div className="show-on-print-only official-document-paper" style={{ padding: '0', width: '100%', margin: '0', maxWidth: '100%', boxSizing: 'border-box' }}>
-          <div style={{ border: '2px solid #099A75', borderRadius: '10px', padding: '1.25rem', background: '#ffffff', boxSizing: 'border-box' }}>
+          <div style={{ border: '2px solid var(--accent-primary)', borderRadius: '10px', padding: '1.25rem', background: '#ffffff', boxSizing: 'border-box' }}>
             <PrintHeader 
               title={t('additions.singleVoucherTitle')}
               subtitle={`${t('additions.invoiceNo')}: #${printItem.invoiceNo || '—'} - ${t('common.date')}: ${printItem.date}`}
@@ -1127,7 +1127,7 @@ export default function AdditionsPage() {
                 <tbody>
                   <tr style={{ height: '32px' }}>
                     <td style={{ textAlign: 'center', fontFamily: 'monospace', fontWeight: 700 }}>{printItem.itemCode}</td>
-                    <td style={{ fontWeight: 700, color: '#099A75' }}>{printItem.itemName}</td>
+                    <td style={{ fontWeight: 700, color: 'var(--accent-primary)' }}>{printItem.itemName}</td>
                     <td>{printItem.category}</td>
                     <td style={{ textAlign: 'center', fontWeight: 900, fontSize: '1.15rem', color: '#10b981' }}>+{printItem.qty}</td>
                     <td style={{ textAlign: 'center', fontWeight: 700 }}>{printItem.unit}</td>

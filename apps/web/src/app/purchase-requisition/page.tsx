@@ -320,7 +320,7 @@ export default function PurchaseRequisitionPage() {
         <div className="flex-between" style={{ marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.35rem' }}>
-              <div style={{ padding: '0.5rem', borderRadius: '12px', background: 'rgba(9, 154, 117, 0.12)', color: '#099A75' }}>
+              <div style={{ padding: '0.5rem', borderRadius: '12px', background: 'rgba(0, 229, 153, 0.12)', color: 'var(--accent-primary)' }}>
                 <ShoppingCart size={26} />
               </div>
               <h1 className="heading-xl" style={{ margin: 0, fontWeight: 800 }}>
@@ -356,7 +356,7 @@ export default function PurchaseRequisitionPage() {
             <button 
               onClick={handleExportExcel} 
               className="btn btn-outline"
-              style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#099A75', borderColor: '#099A75', fontWeight: 600 }}
+              style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', fontWeight: 600 }}
             >
               <FileSpreadsheet size={16} />
               <span>{t('purchaseRequisition.exportExcel')}</span>
@@ -404,12 +404,12 @@ export default function PurchaseRequisitionPage() {
 
           {/* Total Units to Order */}
           <div className="enterprise-card" style={{ padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: 'rgba(9, 154, 117, 0.12)', color: '#099A75', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: 'rgba(0, 229, 153, 0.12)', color: 'var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <PackageCheck size={22} />
             </div>
             <div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('purchaseRequisition.totalRequiredQty')}</div>
-              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#099A75' }}>
+              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--accent-primary)' }}>
                 {stats.totalRequiredQty.toLocaleString(language === 'ar' ? 'ar-EG' : 'en-US')} {t('purchaseRequisition.unit')}
               </div>
             </div>
@@ -533,7 +533,7 @@ export default function PurchaseRequisitionPage() {
       </div>
 
       {/* ──── DOCUMENT TABLE & PRINT VIEW ──── */}
-      <div className="official-document-paper enterprise-card" style={{ padding: '2rem' }}>
+      <div className="glass-card" style={{ padding: '2rem' }}>
         
         {/* Official Print Header */}
         <PrintHeader 
@@ -545,8 +545,8 @@ export default function PurchaseRequisitionPage() {
 
         {/* Informative Header on Screen */}
         <div className="hide-on-print" style={{ 
-          background: 'rgba(9, 154, 117, 0.05)', 
-          border: '1px solid rgba(9, 154, 117, 0.2)', 
+          background: 'rgba(0, 229, 153, 0.05)', 
+          border: '1px solid rgba(0, 229, 153, 0.2)', 
           padding: '0.75rem 1rem', 
           borderRadius: 'var(--radius-md)', 
           margin: '1.25rem 0',
@@ -556,7 +556,7 @@ export default function PurchaseRequisitionPage() {
           fontSize: '0.85rem',
           color: 'var(--text-secondary)'
         }}>
-          <Info size={18} color="#099A75" />
+          <Info size={18} color="var(--accent-primary)" />
           <span>{t('purchaseRequisition.infoMessage')}</span>
         </div>
 
@@ -574,7 +574,7 @@ export default function PurchaseRequisitionPage() {
                 <th style={{ width: '75px', textAlign: 'center' }}>{t('purchaseRequisition.tableAlertLimit')}</th>
                 <th style={{ width: '85px', textAlign: 'center' }}>{t('purchaseRequisition.tableTotalOut')}</th>
                 <th style={{ width: '90px', textAlign: 'center', color: 'var(--text-muted)' }}>{t('purchaseRequisition.tableSuggested')}</th>
-                <th style={{ width: '120px', textAlign: 'center', color: '#099A75', fontWeight: 800 }}>{t('purchaseRequisition.tableRequested')}</th>
+                <th style={{ width: '120px', textAlign: 'center', color: 'var(--accent-primary)', fontWeight: 800 }}>{t('purchaseRequisition.tableRequested')}</th>
                 <th style={{ minWidth: '180px', textAlign: language === 'ar' ? 'right' : 'left' }}>{t('purchaseRequisition.tableNotes')}</th>
               </tr>
             </thead>
@@ -637,7 +637,7 @@ export default function PurchaseRequisitionPage() {
                               width: '85px', 
                               textAlign: 'center', 
                               fontWeight: 800, 
-                              color: '#099A75',
+                              color: 'var(--accent-primary)',
                               padding: '4px 8px'
                             }}
                           />
@@ -687,7 +687,7 @@ export default function PurchaseRequisitionPage() {
             </div>
             <div>
               <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{t('purchaseRequisition.footerTotalUnits')} </span>
-              <strong style={{ color: '#099A75', fontSize: '1.3rem', marginInlineStart: '6px' }}>
+              <strong style={{ color: 'var(--accent-primary)', fontSize: '1.3rem', marginInlineStart: '6px' }}>
                 {stats.totalRequiredQty.toLocaleString(language === 'ar' ? 'ar-EG' : 'en-US')} {t('purchaseRequisition.unit')}
               </strong>
             </div>

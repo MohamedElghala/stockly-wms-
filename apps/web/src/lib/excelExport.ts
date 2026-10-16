@@ -32,7 +32,7 @@ function buildWorksheet(worksheet: any, title: string, columns: ExcelColumn[], d
   titleCell.fill = {
     type: 'pattern',
     pattern: 'solid',
-    fgColor: { argb: 'FF099A75' } // Calm WMS Brand Emerald
+    fgColor: { argb: 'FF00B377' } // Calm WMS Brand Emerald
   };
   titleCell.alignment = { vertical: 'middle', horizontal: 'center' };
 
@@ -67,7 +67,7 @@ function buildWorksheet(worksheet: any, title: string, columns: ExcelColumn[], d
     cell.border = {
       top: { style: 'thin', color: { argb: 'FFCBD5E1' } },
       left: { style: 'thin', color: { argb: 'FFCBD5E1' } },
-      bottom: { style: 'medium', color: { argb: 'FF099A75' } },
+      bottom: { style: 'medium', color: { argb: 'FF00B377' } },
       right: { style: 'thin', color: { argb: 'FFCBD5E1' } }
     };
   });
@@ -94,8 +94,8 @@ function buildWorksheet(worksheet: any, title: string, columns: ExcelColumn[], d
       };
       cell.alignment = { vertical: 'middle', horizontal: 'right', indent: 1 };
       cell.border = {
-        top: { style: 'medium', color: { argb: 'FF099A75' } },
-        bottom: { style: 'medium', color: { argb: 'FF099A75' } }
+        top: { style: 'medium', color: { argb: 'FF00B377' } },
+        bottom: { style: 'medium', color: { argb: 'FF00B377' } }
       };
       currentRowIdx++;
       return;
@@ -142,10 +142,10 @@ function buildWorksheet(worksheet: any, title: string, columns: ExcelColumn[], d
       }
 
       // Check for specific status highlights in Excel
-      let textColor = isCodeCol ? { argb: 'FF099A75' } : { argb: 'FF1E293B' };
+      let textColor = isCodeCol ? { argb: 'FF00B377' } : { argb: 'FF1E293B' };
       if (col.key === 'stock') {
         const numStock = Number(val) || 0;
-        textColor = numStock <= 0 ? { argb: 'FFEF4444' } : { argb: 'FF099A75' };
+        textColor = numStock <= 0 ? { argb: 'FFEF4444' } : { argb: 'FF00B377' };
       } else if (col.key === 'totalOut') {
         textColor = { argb: 'FF2563EB' }; // Executive Blue
       } else if (col.key === 'status') {

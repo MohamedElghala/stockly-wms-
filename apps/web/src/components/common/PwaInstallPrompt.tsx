@@ -86,10 +86,10 @@ export default function PwaInstallPrompt() {
           width: 'calc(100vw - 2.5rem)',
           background: 'rgba(15, 23, 42, 0.95)',
           backdropFilter: 'blur(12px)',
-          border: '1px solid rgba(9, 154, 117, 0.4)',
+          border: '1px solid rgba(0, 229, 153, 0.4)',
           borderRadius: '16px',
           padding: '1rem 1.15rem',
-          boxShadow: '0 12px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(9, 154, 117, 0.25)',
+          boxShadow: '0 12px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 229, 153, 0.25)',
           animation: 'fadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
           display: 'flex',
           flexDirection: 'column',
@@ -104,11 +104,11 @@ export default function PwaInstallPrompt() {
                 width: '42px',
                 height: '42px',
                 borderRadius: '10px',
-                background: 'linear-gradient(135deg, #099A75 0%, #065f46 100%)',
+                background: 'linear-gradient(135deg, var(--accent-primary) 0%, #065f46 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 4px 12px rgba(9, 154, 117, 0.4)',
+                boxShadow: '0 4px 12px rgba(0, 229, 153, 0.4)',
                 flexShrink: 0
               }}
             >
@@ -149,7 +149,7 @@ export default function PwaInstallPrompt() {
             onClick={handleInstallClick}
             style={{
               flex: 1,
-              background: 'linear-gradient(135deg, #099A75 0%, #0b7d60 100%)',
+              background: 'linear-gradient(135deg, var(--accent-primary) 0%, #0b7d60 100%)',
               color: '#ffffff',
               border: 'none',
               borderRadius: '8px',
@@ -161,7 +161,7 @@ export default function PwaInstallPrompt() {
               justifyContent: 'center',
               gap: '0.4rem',
               cursor: 'pointer',
-              boxShadow: '0 2px 8px rgba(9, 154, 117, 0.3)'
+              boxShadow: '0 2px 8px rgba(0, 229, 153, 0.3)'
             }}
           >
             <Download size={16} />
@@ -204,7 +204,7 @@ export default function PwaInstallPrompt() {
           <div 
             style={{
               background: '#0f172a',
-              border: '1px solid rgba(9, 154, 117, 0.3)',
+              border: '1px solid rgba(0, 229, 153, 0.3)',
               borderRadius: '18px',
               padding: '1.75rem',
               maxWidth: '400px',
@@ -219,8 +219,8 @@ export default function PwaInstallPrompt() {
                 width: '54px',
                 height: '54px',
                 borderRadius: '14px',
-                background: 'rgba(9, 154, 117, 0.15)',
-                color: '#099A75',
+                background: 'rgba(0, 229, 153, 0.15)',
+                color: 'var(--accent-primary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -249,7 +249,7 @@ export default function PwaInstallPrompt() {
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', background: 'rgba(255, 255, 255, 0.04)', padding: '0.75rem 1rem', borderRadius: '10px' }}>
-                <PlusSquare size={20} color="#099A75" style={{ flexShrink: 0 }} />
+                <PlusSquare size={20} color="var(--accent-primary)" style={{ flexShrink: 0 }} />
                 <span style={{ fontSize: '0.85rem', color: '#f8fafc' }}>
                   {language === 'ar' ? '2. اختر "إضافة إلى الصفحة الرئيسية" (Add to Home Screen)' : '2. Select "Add to Home Screen"'}
                 </span>
@@ -260,7 +260,7 @@ export default function PwaInstallPrompt() {
               onClick={() => setShowIosGuide(false)}
               style={{
                 width: '100%',
-                background: '#099A75',
+                background: 'var(--accent-primary)',
                 color: '#ffffff',
                 border: 'none',
                 borderRadius: '10px',

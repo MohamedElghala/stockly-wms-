@@ -46,7 +46,7 @@ export default function BrandLoader({
               width: `${config.svgSize}px`, 
               height: `${config.svgSize}px`, 
               flexShrink: 0,
-              filter: 'drop-shadow(0 0 16px rgba(0, 223, 143, 0.55))'
+              filter: 'drop-shadow(0 0 16px rgba(0, 229, 153, 0.55))'
             }}
           >
             <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
@@ -180,7 +180,7 @@ export default function BrandLoader({
           position: 'fixed',
           inset: 0,
           zIndex: 99999,
-          background: '#0b132b',
+          background: '#070D18',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

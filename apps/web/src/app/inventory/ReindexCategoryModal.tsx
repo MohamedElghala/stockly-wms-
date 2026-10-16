@@ -269,7 +269,7 @@ export default function ReindexCategoryModal({
 
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '1.25rem' }}>
-          <div style={{ padding: '0.65rem', background: 'rgba(9, 154, 117, 0.15)', color: '#099A75', borderRadius: '12px' }}>
+          <div style={{ padding: '0.65rem', background: 'rgba(0, 229, 153, 0.15)', color: 'var(--accent-primary)', borderRadius: '12px' }}>
             <Hash size={28} />
           </div>
           <div>
@@ -307,7 +307,7 @@ export default function ReindexCategoryModal({
           {/* Starting Base Code */}
           <div className="form-group">
             <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '0.35rem', display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <Hash size={15} color="#099A75" />
+              <Hash size={15} color="var(--accent-primary)" />
               <span>كود البداية (يبدأ التسلسل من):</span>
             </label>
             <input 
@@ -323,7 +323,7 @@ export default function ReindexCategoryModal({
               disabled={loading}
               className="input-field"
               placeholder="اكتب رقم البداية مثلاً: 3000"
-              style={{ width: '100%', fontFamily: 'monospace', fontWeight: 800, fontSize: '1.1rem', color: '#099A75', direction: 'ltr', textAlign: 'center' }}
+              style={{ width: '100%', fontFamily: 'monospace', fontWeight: 800, fontSize: '1.1rem', color: 'var(--accent-primary)', direction: 'ltr', textAlign: 'center' }}
             />
           </div>
 
@@ -374,7 +374,7 @@ export default function ReindexCategoryModal({
                 <th style={{ width: '45%', textAlign: isRTL ? 'right' : 'left' }}>اسم الصنف</th>
                 <th style={{ width: '18%', textAlign: 'center' }}>الكود الحالي</th>
                 <th style={{ width: '5%', textAlign: 'center' }}>➡️</th>
-                <th style={{ width: '18%', textAlign: 'center', color: '#099A75', fontWeight: 800 }}>الكود الجديد</th>
+                <th style={{ width: '18%', textAlign: 'center', color: 'var(--accent-primary)', fontWeight: 800 }}>الكود الجديد</th>
                 <th style={{ width: '6%', textAlign: 'center' }}>الحالة</th>
               </tr>
             </thead>
@@ -392,7 +392,7 @@ export default function ReindexCategoryModal({
                     <td style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{p.item.name}</td>
                     <td style={{ textAlign: 'center', fontFamily: 'monospace', color: 'var(--text-muted)' }}>{p.oldCode || '—'}</td>
                     <td style={{ textAlign: 'center', color: 'var(--text-muted)' }}>➡️</td>
-                    <td style={{ textAlign: 'center', fontFamily: 'monospace', fontWeight: 800, color: p.isCollision ? '#ef4444' : '#099A75', fontSize: '0.95rem' }}>
+                    <td style={{ textAlign: 'center', fontFamily: 'monospace', fontWeight: 800, color: p.isCollision ? '#ef4444' : 'var(--accent-primary)', fontSize: '0.95rem' }}>
                       {p.newCode}
                     </td>
                     <td style={{ textAlign: 'center' }}>
@@ -411,7 +411,7 @@ export default function ReindexCategoryModal({
 
         {/* Action Buttons & Progress Status */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border-light)' }}>
-          <div style={{ fontSize: '0.85rem', color: '#099A75', fontWeight: 600 }}>
+          <div style={{ fontSize: '0.85rem', color: 'var(--accent-primary)', fontWeight: 600 }}>
             {progressMsg && (
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <RefreshCw size={15} className="animate-spin" />
@@ -436,7 +436,7 @@ export default function ReindexCategoryModal({
               onClick={handleExecuteReindex}
               disabled={loading || hasCollisions || previewPlan.length === 0}
               className="btn btn-primary"
-              style={{ padding: '0.65rem 1.75rem', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 800, background: '#099A75', borderColor: '#099A75', opacity: (hasCollisions || previewPlan.length === 0) ? 0.5 : 1 }}
+              style={{ padding: '0.65rem 1.75rem', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 800, background: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', opacity: (hasCollisions || previewPlan.length === 0) ? 0.5 : 1 }}
             >
               <Play size={16} />
               <span>{loading ? (progressMsg || 'جاري التنفيذ...') : (language === 'ar' ? `تنفيذ إعادة الترقيم (${previewPlan.length} صنف)` : `Execute Re-indexing (${previewPlan.length})`)}</span>

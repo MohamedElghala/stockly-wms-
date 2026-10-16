@@ -247,13 +247,13 @@ export default function RegisterPage() {
         minHeight: '100vh', 
         padding: '2rem 1rem', 
         position: 'relative', 
-        background: 'radial-gradient(circle at 50% 10%, rgba(9, 154, 117, 0.15), transparent 70%), var(--bg-primary)',
+        background: 'radial-gradient(circle at 50% 10%, rgba(0, 229, 153, 0.15), transparent 70%), var(--bg-primary)',
         direction: isRTL ? 'rtl' : 'ltr'
       }}
     >
       {/* Top Navbar Controls */}
       <div style={{ position: 'absolute', top: '1.5rem', [isRTL ? 'left' : 'right']: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', zIndex: 10 }}>
-        <span style={{ fontSize: '0.75rem', fontWeight: 800, background: '#099A7520', color: '#00DF8F', border: '1px solid #099A75', padding: '0.3rem 0.65rem', borderRadius: '12px' }}>
+        <span style={{ fontSize: '0.75rem', fontWeight: 800, background: 'var(--accent-primary)20', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', padding: '0.3rem 0.65rem', borderRadius: '12px' }}>
           v2.2 Live
         </span>
         <ThemeToggle />
@@ -288,7 +288,7 @@ export default function RegisterPage() {
           style={{ 
             flex: '0.8', 
             padding: '3rem 2.5rem', 
-            background: 'linear-gradient(135deg, rgba(9, 154, 117, 0.2), rgba(12, 213, 159, 0.05)), var(--bg-tertiary)', 
+            background: 'linear-gradient(135deg, rgba(0, 229, 153, 0.2), rgba(12, 213, 159, 0.05)), var(--bg-tertiary)', 
             borderRight: isRTL ? 'none' : '1px solid var(--border-light)', 
             borderLeft: isRTL ? '1px solid var(--border-light)' : 'none', 
             display: 'flex', 
@@ -313,7 +313,7 @@ export default function RegisterPage() {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <div style={{ padding: '0.5rem', background: 'rgba(9, 154, 117, 0.15)', color: '#099A75', borderRadius: '10px' }}>
+                <div style={{ padding: '0.5rem', background: 'rgba(0, 229, 153, 0.15)', color: 'var(--accent-primary)', borderRadius: '10px' }}>
                   <ShieldCheck size={20} />
                 </div>
                 <div>
@@ -336,7 +336,7 @@ export default function RegisterPage() {
 
           <div style={{ borderTop: '1px solid var(--border-light)', paddingTop: '1.25rem', marginTop: '2rem' }}>
             <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{t('auth.haveAccount')} </span>
-            <Link href="/login" style={{ color: '#099A75', fontWeight: 800, textDecoration: 'none' }}>
+            <Link href="/login" style={{ color: 'var(--accent-primary)', fontWeight: 800, textDecoration: 'none' }}>
               {t('auth.loginLink')}
             </Link>
           </div>
@@ -372,7 +372,7 @@ export default function RegisterPage() {
                   type="button"
                   onClick={() => setFormData({ ...formData, userType: 'internal' })}
                   className={`btn ${formData.userType === 'internal' ? 'btn-primary' : 'btn-outline'}`}
-                  style={{ flex: 1, padding: '0.55rem', fontSize: '0.85rem', fontWeight: 700, border: 'none', background: formData.userType === 'internal' ? '#099A75' : 'transparent', color: formData.userType === 'internal' ? '#fff' : 'var(--text-muted)' }}
+                  style={{ flex: 1, padding: '0.55rem', fontSize: '0.85rem', fontWeight: 700, border: 'none', background: formData.userType === 'internal' ? 'var(--accent-primary)' : 'transparent', color: formData.userType === 'internal' ? '#fff' : 'var(--text-muted)' }}
                 >
                   <User size={15} style={{ marginLeft: isRTL ? '5px' : 0, marginRight: isRTL ? 0 : '5px' }} />
                   <span>{t('auth.internalEmployee')}</span>
@@ -382,7 +382,7 @@ export default function RegisterPage() {
                   type="button"
                   onClick={() => setFormData({ ...formData, userType: 'company' })}
                   className={`btn ${formData.userType === 'company' ? 'btn-primary' : 'btn-outline'}`}
-                  style={{ flex: 1, padding: '0.55rem', fontSize: '0.85rem', fontWeight: 700, border: 'none', background: formData.userType === 'company' ? '#099A75' : 'transparent', color: formData.userType === 'company' ? '#fff' : 'var(--text-muted)' }}
+                  style={{ flex: 1, padding: '0.55rem', fontSize: '0.85rem', fontWeight: 700, border: 'none', background: formData.userType === 'company' ? 'var(--accent-primary)' : 'transparent', color: formData.userType === 'company' ? '#fff' : 'var(--text-muted)' }}
                 >
                   <Building size={15} style={{ marginLeft: isRTL ? '5px' : 0, marginRight: isRTL ? 0 : '5px' }} />
                   <span>{t('auth.externalCompany')}</span>
@@ -411,7 +411,7 @@ export default function RegisterPage() {
 
             {/* Profile Avatar Upload Box */}
             <div style={{ background: 'var(--bg-tertiary)', padding: '1rem', borderRadius: '14px', border: '1px solid var(--border-light)', display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-              <div style={{ width: '60px', height: '60px', borderRadius: '50%', overflow: 'hidden', border: '2px solid #099A75', background: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <div style={{ width: '60px', height: '60px', borderRadius: '50%', overflow: 'hidden', border: '2px solid var(--accent-primary)', background: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 {previewUrl ? (
                   <img src={previewUrl} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 ) : (
@@ -459,7 +459,7 @@ export default function RegisterPage() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
               <div className="form-group">
                 <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.35rem', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <User size={15} color="#099A75" />
+                  <User size={15} color="var(--accent-primary)" />
                   <span>{t('auth.fullName')}</span>
                 </label>
                 <input
@@ -538,9 +538,9 @@ export default function RegisterPage() {
                         gap: '8px',
                         padding: '0.5rem 0.75rem',
                         borderRadius: '8px',
-                        background: isChecked ? 'rgba(9, 154, 117, 0.12)' : 'var(--bg-secondary)',
-                        border: isChecked ? '1.5px solid #099A75' : '1px solid var(--border-light)',
-                        color: isChecked ? '#099A75' : 'var(--text-secondary)',
+                        background: isChecked ? 'rgba(0, 229, 153, 0.12)' : 'var(--bg-secondary)',
+                        border: isChecked ? '1.5px solid var(--accent-primary)' : '1px solid var(--border-light)',
+                        color: isChecked ? 'var(--accent-primary)' : 'var(--text-secondary)',
                         cursor: 'pointer',
                         fontSize: '0.82rem',
                         fontWeight: isChecked ? 700 : 500,
@@ -551,7 +551,7 @@ export default function RegisterPage() {
                         type="checkbox"
                         checked={isChecked}
                         onChange={() => {}}
-                        style={{ accentColor: '#099A75', cursor: 'pointer' }}
+                        style={{ accentColor: 'var(--accent-primary)', cursor: 'pointer' }}
                       />
                       <span style={{ lineHeight: 1.2 }}>{dept}</span>
                     </div>
@@ -563,7 +563,7 @@ export default function RegisterPage() {
             {/* Email */}
             <div className="form-group">
               <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.35rem', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                <Mail size={15} color="#099A75" />
+                <Mail size={15} color="var(--accent-primary)" />
                 <span>{t('auth.emailOrPhone')}</span>
               </label>
               <input
@@ -633,7 +633,7 @@ export default function RegisterPage() {
               type="submit"
               disabled={loading}
               className="btn btn-primary"
-              style={{ width: '100%', padding: '0.85rem', fontSize: '1rem', fontWeight: 800, marginTop: '0.5rem', background: '#099A75', borderColor: '#099A75', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+              style={{ width: '100%', padding: '0.85rem', fontSize: '1rem', fontWeight: 800, marginTop: '0.5rem', background: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
             >
               {loading ? (
                 <span>{t('auth.registering')}</span>
@@ -647,7 +647,7 @@ export default function RegisterPage() {
 
             <div className="show-on-mobile-only" style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.85rem' }}>
               <span style={{ color: 'var(--text-muted)' }}>{t('auth.haveAccount')} </span>
-              <Link href="/login" style={{ color: '#099A75', fontWeight: 800 }}>
+              <Link href="/login" style={{ color: 'var(--accent-primary)', fontWeight: 800 }}>
                 {t('auth.loginLink')}
               </Link>
             </div>

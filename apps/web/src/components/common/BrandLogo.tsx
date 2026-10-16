@@ -38,7 +38,7 @@ export default function BrandLogo({ size = 'md', showSubtitle = true, className 
             width: `${config.svgSize}px`, 
             height: `${config.svgSize}px`, 
             flexShrink: 0,
-            filter: 'drop-shadow(0 0 10px rgba(0, 223, 143, 0.45))'
+            filter: 'drop-shadow(0 0 10px rgba(0, 229, 153, 0.45))'
           }}
         >
           <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%', overflow: 'visible' }}>

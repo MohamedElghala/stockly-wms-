@@ -51,7 +51,7 @@ export default function PrintSignatures({
         
         {/* 1. الطرف الأول: الفني / المهندس المستلم / مقدم الطلب (أقصى اليمين) */}
         <div className="print-signature-box" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '85px' }}>
-          <span className="print-sign-role" style={{ fontSize: '8.5pt', fontWeight: 800, color: '#099A75', marginBottom: '4px', display: 'block' }}>
+          <span className="print-sign-role" style={{ fontSize: '8.5pt', fontWeight: 800, color: 'var(--accent-primary)', marginBottom: '4px', display: 'block' }}>
             الفني / المستلم
           </span>
           <span className="print-sign-name" style={{ fontSize: '8.5pt', fontWeight: 'bold', color: '#1e293b' }}>
@@ -67,7 +67,7 @@ export default function PrintSignatures({
 
         {/* 2. الطرف الثاني: المشرف المسؤول (الوسط الأيمن) */}
         <div className="print-signature-box" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '85px', borderRight: '1px dashed #cbd5e1', paddingRight: '10px' }}>
-          <span className="print-sign-role" style={{ fontSize: '8.5pt', fontWeight: 800, color: '#099A75', marginBottom: '4px', display: 'block' }}>
+          <span className="print-sign-role" style={{ fontSize: '8.5pt', fontWeight: 800, color: 'var(--accent-primary)', marginBottom: '4px', display: 'block' }}>
             المشرف المسؤول
           </span>
           <span className="print-sign-name" style={{ fontSize: '8.5pt', fontWeight: 'bold', color: '#1e293b' }}>
@@ -83,7 +83,7 @@ export default function PrintSignatures({
 
         {/* 3. الطرف الثالث: أمين المخزن (الوسط الأيسر) */}
         <div className="print-signature-box" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '85px', borderRight: '1px dashed #cbd5e1', paddingRight: '10px' }}>
-          <span className="print-sign-role" style={{ fontSize: '8.5pt', fontWeight: 800, color: '#099A75', marginBottom: '4px', display: 'block' }}>
+          <span className="print-sign-role" style={{ fontSize: '8.5pt', fontWeight: 800, color: 'var(--accent-primary)', marginBottom: '4px', display: 'block' }}>
             أمين المخزن
           </span>
           <span className="print-sign-name" style={{ fontSize: '8.5pt', fontWeight: 'bold', color: '#1e293b' }}>
@@ -99,7 +99,7 @@ export default function PrintSignatures({
 
         {/* 4. الطرف الرابع والأخير: المهندس المسؤول / مدير إدارة المرافق (أقصى اليسار) */}
         <div className="print-signature-box" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '85px', borderRight: '1px dashed #cbd5e1', paddingRight: '10px' }}>
-          <span className="print-sign-role" style={{ fontSize: '8.5pt', fontWeight: 800, color: '#099A75', marginBottom: '4px', display: 'block' }}>
+          <span className="print-sign-role" style={{ fontSize: '8.5pt', fontWeight: 800, color: 'var(--accent-primary)', marginBottom: '4px', display: 'block' }}>
             المهندس المسؤول / الإدارة
           </span>
           <span className="print-sign-name" style={{ fontSize: '8.5pt', fontWeight: 'bold', color: '#1e293b' }}>

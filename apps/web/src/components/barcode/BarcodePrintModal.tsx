@@ -52,10 +52,10 @@ export default function BarcodePrintModal({
             width: '100%',
             maxWidth: '560px',
             background: '#041c18',
-            border: '1px solid rgba(0, 223, 143, 0.3)',
+            border: '1px solid rgba(0, 229, 153, 0.3)',
             borderRadius: '20px',
             overflow: 'hidden',
-            boxShadow: '0 25px 50px -12px rgba(0, 223, 143, 0.15)',
+            boxShadow: '0 25px 50px -12px rgba(0, 229, 153, 0.15)',
             color: '#ffffff',
             fontFamily: "'Cairo', sans-serif",
             direction: 'rtl'
@@ -65,11 +65,11 @@ export default function BarcodePrintModal({
           <div 
             style={{
               padding: '1.25rem 1.5rem',
-              borderBottom: '1px solid rgba(0, 223, 143, 0.15)',
+              borderBottom: '1px solid rgba(0, 229, 153, 0.15)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              background: 'linear-gradient(180deg, rgba(0, 223, 143, 0.08) 0%, transparent 100%)'
+              background: 'linear-gradient(180deg, rgba(0, 229, 153, 0.08) 0%, transparent 100%)'
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -78,12 +78,12 @@ export default function BarcodePrintModal({
                   width: '42px',
                   height: '42px',
                   borderRadius: '12px',
-                  background: 'rgba(0, 223, 143, 0.15)',
-                  border: '1px solid rgba(0, 223, 143, 0.3)',
+                  background: 'rgba(0, 229, 153, 0.15)',
+                  border: '1px solid rgba(0, 229, 153, 0.3)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#00DF8F'
+                  color: 'var(--accent-primary)'
                 }}
               >
                 <Tag size={22} />
@@ -135,7 +135,7 @@ export default function BarcodePrintModal({
               }}
             >
               {/* Sticker Header */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid #00DF8F', paddingBottom: '6px', marginBottom: '8px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid var(--accent-primary)', paddingBottom: '6px', marginBottom: '8px' }}>
                 <div style={{ fontWeight: 900, fontSize: '13px', color: '#042F2C', display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>📦 STOCKLY WMS</span>
                 </div>
@@ -194,7 +194,7 @@ export default function BarcodePrintModal({
                     width: '100%',
                     padding: '0.6rem 0.8rem',
                     background: '#02100d',
-                    border: '1.5px solid rgba(0, 223, 143, 0.3)',
+                    border: '1.5px solid rgba(0, 229, 153, 0.3)',
                     borderRadius: '8px',
                     color: '#ffffff',
                     fontSize: '0.85rem'
@@ -220,7 +220,7 @@ export default function BarcodePrintModal({
                     width: '100%',
                     padding: '0.6rem 0.8rem',
                     background: '#02100d',
-                    border: '1.5px solid rgba(0, 223, 143, 0.3)',
+                    border: '1.5px solid rgba(0, 229, 153, 0.3)',
                     borderRadius: '8px',
                     color: '#ffffff',
                     fontSize: '0.85rem'
@@ -237,8 +237,8 @@ export default function BarcodePrintModal({
                   width: '18px',
                   height: '18px',
                   borderRadius: '4px',
-                  background: includeQr ? '#00DF8F' : 'transparent',
-                  border: '1.5px solid #00DF8F',
+                  background: includeQr ? 'var(--accent-primary)' : 'transparent',
+                  border: '1.5px solid var(--accent-primary)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -260,7 +260,7 @@ export default function BarcodePrintModal({
                 style={{
                   flex: 1,
                   padding: '0.8rem',
-                  background: 'linear-gradient(135deg, #00DF8F 0%, #00BF88 100%)',
+                  background: 'linear-gradient(135deg, var(--accent-primary) 0%, #00BF88 100%)',
                   color: '#041c18',
                   border: 'none',
                   borderRadius: '10px',
@@ -271,7 +271,7 @@ export default function BarcodePrintModal({
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
-                  boxShadow: '0 4px 14px rgba(0, 223, 143, 0.3)'
+                  boxShadow: '0 4px 14px rgba(0, 229, 153, 0.3)'
                 }}
               >
                 <Printer size={18} />

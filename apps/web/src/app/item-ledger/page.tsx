@@ -335,7 +335,7 @@ export default function ItemLedgerPage() {
         <div className="flex-between" style={{ marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.35rem' }}>
-              <div style={{ padding: '0.5rem', borderRadius: '12px', background: 'rgba(9, 154, 117, 0.12)', color: '#099A75' }}>
+              <div style={{ padding: '0.5rem', borderRadius: '12px', background: 'rgba(0, 229, 153, 0.12)', color: 'var(--accent-primary)' }}>
                 <History size={26} />
               </div>
               <h1 className="heading-xl" style={{ margin: 0, fontWeight: 800 }}>{t('itemLedger.title')}</h1>
@@ -350,7 +350,7 @@ export default function ItemLedgerPage() {
               <button 
                 onClick={handleExportExcel} 
                 className="btn btn-outline" 
-                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.25rem', color: '#099A75', borderColor: '#099A75', fontWeight: 600 }}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.25rem', color: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', fontWeight: 600 }}
               >
                 <FileSpreadsheet size={18} /> {t('itemLedger.exportExcel')}
               </button>
@@ -417,7 +417,7 @@ export default function ItemLedgerPage() {
                       <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '2px' }}>{item.category}</div>
                     </div>
                     <div style={{ textAlign: language === 'ar' ? 'left' : 'right' }}>
-                      <span style={{ padding: '0.2rem 0.5rem', background: 'rgba(9, 154, 117, 0.1)', color: '#099A75', borderRadius: '4px', fontFamily: 'monospace', fontWeight: 600, fontSize: '0.85rem' }}>
+                      <span style={{ padding: '0.2rem 0.5rem', background: 'rgba(0, 229, 153, 0.1)', color: 'var(--accent-primary)', borderRadius: '4px', fontFamily: 'monospace', fontWeight: 600, fontSize: '0.85rem' }}>
                         {item.code || 'NO-CODE'}
                       </span>
                       <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '3px' }}>
@@ -462,7 +462,7 @@ export default function ItemLedgerPage() {
 
       {/* Selected Item Ledger Display */}
       {selectedItem && !loading && itemStats && (
-        <div className="official-document-paper enterprise-card animate-fade-in" style={{ padding: '2rem' }}>
+        <div className="glass-card animate-fade-in" style={{ padding: '2rem' }}>
           
           <PrintHeader 
             title={`${t('itemLedger.title')} - [${selectedItem.code || '-'}] ${selectedItem.name}`}
@@ -474,9 +474,9 @@ export default function ItemLedgerPage() {
           <div className="hide-on-print" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', margin: '1.5rem 0' }}>
             
             {/* Current Stock */}
-            <div className="enterprise-card" style={{ padding: '1rem 1.25rem', background: 'rgba(9, 154, 117, 0.04)', border: '1px solid rgba(9, 154, 117, 0.2)' }}>
+            <div className="enterprise-card" style={{ padding: '1rem 1.25rem', background: 'rgba(0, 229, 153, 0.04)', border: '1px solid rgba(0, 229, 153, 0.2)' }}>
               <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('itemLedger.currentStock')}</div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#099A75', marginTop: '0.25rem' }}>
+              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--accent-primary)', marginTop: '0.25rem' }}>
                 {itemStats.currentStock.toLocaleString(language === 'ar' ? 'ar-EG' : 'en-US')} {selectedItem.unit || ''}
               </div>
             </div>
@@ -560,7 +560,7 @@ export default function ItemLedgerPage() {
                   <th>{t('itemLedger.party')}</th>
                   <th style={{ width: '95px', textAlign: 'center' }}>{t('itemLedger.inboundQty')}</th>
                   <th style={{ width: '95px', textAlign: 'center' }}>{t('itemLedger.outboundQty')}</th>
-                  <th style={{ width: '120px', textAlign: 'center', background: 'rgba(9, 154, 117, 0.08)', color: '#099A75' }}>
+                  <th style={{ width: '120px', textAlign: 'center', background: 'rgba(0, 229, 153, 0.08)', color: 'var(--accent-primary)' }}>
                     {t('itemLedger.runningBalance')}
                   </th>
                   <th>{t('itemLedger.notes')}</th>
@@ -593,7 +593,7 @@ export default function ItemLedgerPage() {
                       </td>
 
                       {/* Running Balance */}
-                      <td style={{ textAlign: 'center', fontWeight: 800, fontSize: '1rem', color: '#099A75', background: 'rgba(9, 154, 117, 0.03)' }}>
+                      <td style={{ textAlign: 'center', fontWeight: 800, fontSize: '1rem', color: 'var(--accent-primary)', background: 'rgba(0, 229, 153, 0.03)' }}>
                         {row.balance}
                       </td>
 
@@ -624,7 +624,7 @@ export default function ItemLedgerPage() {
                     <td style={{ textAlign: 'center', fontWeight: 800, color: '#ef4444' }}>
                       -{itemStats.totalOut + itemStats.totalScrap}
                     </td>
-                    <td style={{ textAlign: 'center', fontWeight: 900, fontSize: '1.2rem', color: '#099A75', background: 'rgba(9, 154, 117, 0.1)', padding: '1rem' }}>
+                    <td style={{ textAlign: 'center', fontWeight: 900, fontSize: '1.2rem', color: 'var(--accent-primary)', background: 'rgba(0, 229, 153, 0.1)', padding: '1rem' }}>
                       {itemStats.finalCalculated} {selectedItem.unit || ''}
                     </td>
                     <td></td>

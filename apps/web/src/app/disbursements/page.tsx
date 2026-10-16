@@ -521,7 +521,7 @@ export default function DisbursementsPage() {
                   type="button"
                   onClick={() => setIsScannerOpen(true)}
                   className="btn btn-outline"
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.25rem', color: '#00DF8F', borderColor: '#00DF8F', fontWeight: 700, background: 'rgba(0, 223, 143, 0.08)' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.25rem', color: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', fontWeight: 700, background: 'rgba(0, 229, 153, 0.08)' }}
                   title="مسح باركود الصنف لصرفه مباشرة"
                 >
                   <Barcode size={18} /> {language === 'ar' ? 'مسح باركود' : 'Scan Barcode'}
@@ -532,7 +532,7 @@ export default function DisbursementsPage() {
             <button 
               onClick={handleExportExcel} 
               className="btn btn-outline"
-              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.25rem', color: '#099A75', borderColor: '#099A75', fontWeight: 600 }}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.25rem', color: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', fontWeight: 600 }}
               title={t('common.exportExcel')}
             >
               <FileSpreadsheet size={18} /> {t('common.exportExcel')}
@@ -1107,7 +1107,7 @@ export default function DisbursementsPage() {
       {/* ──── SINGLE ITEM VOUCHER PRINT VIEW (Centered Official Certificate Frame) ──── */}
       {printItem && (
         <div className="show-on-print-only official-document-paper" style={{ padding: '0', width: '100%', margin: '0', maxWidth: '100%', boxSizing: 'border-box' }}>
-          <div style={{ border: '2px solid #099A75', borderRadius: '10px', padding: '1.25rem', background: '#ffffff', boxSizing: 'border-box' }}>
+          <div style={{ border: '2px solid var(--accent-primary)', borderRadius: '10px', padding: '1.25rem', background: '#ffffff', boxSizing: 'border-box' }}>
             <PrintHeader 
               title={t('disbursements.singleVoucherTitle')}
               subtitle={`${t('disbursements.invoiceNo')}: #${printItem.invoiceNo || '—'} - ${t('common.date')}: ${printItem.date}`}
@@ -1135,7 +1135,7 @@ export default function DisbursementsPage() {
                 <tbody>
                   <tr style={{ height: '32px' }}>
                     <td style={{ textAlign: 'center', fontFamily: 'monospace', fontWeight: 700 }}>{printItem.itemCode}</td>
-                    <td style={{ fontWeight: 700, color: '#099A75' }}>{printItem.itemName}</td>
+                    <td style={{ fontWeight: 700, color: 'var(--accent-primary)' }}>{printItem.itemName}</td>
                     <td>{printItem.category}</td>
                     <td style={{ textAlign: 'center', fontWeight: 900, fontSize: '1.15rem', color: '#ef4444' }}>-{printItem.qty}</td>
                     <td style={{ textAlign: 'center', fontWeight: 700 }}>{printItem.unit}</td>

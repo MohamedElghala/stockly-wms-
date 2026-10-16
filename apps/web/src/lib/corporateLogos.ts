@@ -7,7 +7,7 @@ export const STOCKLY_LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox
   <defs>
     <linearGradient id="stk-top" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#3DE1A0" />
-      <stop offset="100%" stop-color="#00DF8F" />
+      <stop offset="100%" stop-color="var(--accent-primary)" />
     </linearGradient>
     <linearGradient id="stk-left" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#0B7B5B" />

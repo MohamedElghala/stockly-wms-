@@ -491,7 +491,7 @@ export default function DashboardPage() {
             </Link>
           )}
 
-          <div className="dashboard-user-badge" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(9, 154, 117, 0.12)', padding: '0.45rem 0.95rem', borderRadius: '8px', border: '1px solid rgba(9, 154, 117, 0.3)', fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent-primary)' }}>
+          <div className="dashboard-user-badge" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(0, 229, 153, 0.12)', padding: '0.45rem 0.95rem', borderRadius: '8px', border: '1px solid rgba(0, 229, 153, 0.3)', fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent-primary)' }}>
             <Users size={16} />
             <span>{userData?.name ? `${userData.name} | ${getFormattedUserRole()}` : getFormattedUserRole()}</span>
           </div>
@@ -912,8 +912,8 @@ export default function DashboardPage() {
               <AreaChart data={trendsData.length > 0 ? trendsData : [{date: t('common.noData'), count: 0}]} margin={{ top: 10, right: 20, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#099A75" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#099A75" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="var(--accent-primary)" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="var(--accent-primary)" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" vertical={false} opacity={0.5} />
@@ -921,9 +921,9 @@ export default function DashboardPage() {
                 <YAxis stroke="var(--text-muted)" fontSize={12} tickLine={false} axisLine={false} />
                 <Tooltip 
                   contentStyle={{ backgroundColor: 'var(--bg-panel)', border: '1px solid var(--border-light)', borderRadius: '8px', boxShadow: 'var(--shadow-md)' }}
-                  itemStyle={{ color: '#099A75', fontWeight: '700' }}
+                  itemStyle={{ color: 'var(--accent-primary)', fontWeight: '700' }}
                 />
-                <Area type="monotone" dataKey="count" stroke="#099A75" strokeWidth={3} fillOpacity={1} fill="url(#colorCount)" />
+                <Area type="monotone" dataKey="count" stroke="var(--accent-primary)" strokeWidth={3} fillOpacity={1} fill="url(#colorCount)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>

@@ -522,7 +522,7 @@ export default function Topbar() {
                     width: '32px', 
                     height: '32px', 
                     borderRadius: '8px', 
-                    background: 'rgba(9, 154, 117, 0.12)', 
+                    background: 'rgba(0, 229, 153, 0.12)', 
                     display: 'flex', 
                     alignItems: 'center', 
                     justifyContent: 'center', 
@@ -970,10 +970,10 @@ export default function Topbar() {
                   whiteSpace: 'nowrap',
                   flexShrink: 0,
                   transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                  background: isActive ? 'rgba(9, 154, 117, 0.22)' : 'var(--bg-tertiary)',
+                  background: isActive ? 'rgba(0, 229, 153, 0.22)' : 'var(--bg-tertiary)',
                   border: isActive ? '1.5px solid var(--accent-primary)' : '1px solid var(--border-light)',
                   color: isActive ? 'var(--accent-primary)' : 'var(--text-secondary)',
-                  boxShadow: isActive ? '0 0 10px rgba(9, 154, 117, 0.3)' : 'none'
+                  boxShadow: isActive ? '0 0 10px rgba(0, 229, 153, 0.3)' : 'none'
                 }}
               >
                 {tab.icon}

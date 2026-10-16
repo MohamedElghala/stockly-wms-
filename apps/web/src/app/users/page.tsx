@@ -308,7 +308,7 @@ export default function UsersManagementPage() {
                       <tr key={user.uid}>
                         <td>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <div style={{ width: '32px', height: '32px', borderRadius: '50%', overflow: 'hidden', background: '#099A75', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '0.85rem' }}>
+                            <div style={{ width: '32px', height: '32px', borderRadius: '50%', overflow: 'hidden', background: 'var(--accent-primary)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '0.85rem' }}>
                               {user.photoURL ? (
                                 <img src={user.photoURL} alt={user.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                               ) : (
@@ -327,7 +327,7 @@ export default function UsersManagementPage() {
                         <td>
                           <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', maxWidth: '280px' }}>
                             {Array.isArray(user.departments) && user.departments.length >= 15 ? (
-                              <span className="badge badge-primary" style={{ fontSize: '0.78rem', padding: '0.2rem 0.55rem', background: 'rgba(9, 154, 117, 0.2)', color: '#099A75', fontWeight: 800 }}>
+                              <span className="badge badge-primary" style={{ fontSize: '0.78rem', padding: '0.2rem 0.55rem', background: 'rgba(0, 229, 153, 0.2)', color: 'var(--accent-primary)', fontWeight: 800 }}>
                                 🌟 كافة الأقسام ({user.departments.length} قسم)
                               </span>
                             ) : Array.isArray(user.departments) && user.departments.length > 0 ? (
@@ -345,7 +345,7 @@ export default function UsersManagementPage() {
                             <button 
                               onClick={() => openPermissionsModal(user)} 
                               className="btn btn-primary" 
-                              style={{ fontSize: '0.8rem', padding: '0.4rem 0.85rem', display: 'flex', alignItems: 'center', gap: '4px', background: '#099A75', borderColor: '#099A75' }}
+                              style={{ fontSize: '0.8rem', padding: '0.4rem 0.85rem', display: 'flex', alignItems: 'center', gap: '4px', background: 'var(--accent-primary)', borderColor: 'var(--accent-primary)' }}
                             >
                               <Shield size={14} />
                               <span>مراجعة واعتماد الأقسام 🛡️</span>
@@ -371,7 +371,7 @@ export default function UsersManagementPage() {
           )}
 
           {/* ──── 2. Active Users (Printable) ──── */}
-          <section className="official-document-paper" style={{ padding: '1rem' }}>
+          <section className="glass-card" style={{ padding: '1.5rem' }}>
             
             <PrintHeader 
               title="تقرير المستخدمين والصلاحيات"
@@ -403,7 +403,7 @@ export default function UsersManagementPage() {
                       <tr key={user.uid}>
                         <td>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <div style={{ width: '32px', height: '32px', borderRadius: '50%', overflow: 'hidden', background: '#099A75', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '0.85rem' }}>
+                            <div style={{ width: '32px', height: '32px', borderRadius: '50%', overflow: 'hidden', background: 'var(--accent-primary)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '0.85rem' }}>
                               {user.photoURL ? (
                                 <img src={user.photoURL} alt={user.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                               ) : (
@@ -417,12 +417,12 @@ export default function UsersManagementPage() {
                         <td>
                           <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', maxWidth: '300px' }}>
                             {Array.isArray(user.departments) && user.departments.length >= 15 ? (
-                              <span className="badge badge-primary" style={{ fontSize: '0.78rem', padding: '0.2rem 0.55rem', background: 'rgba(9, 154, 117, 0.2)', color: '#099A75', fontWeight: 800 }}>
+                              <span className="badge badge-primary" style={{ fontSize: '0.78rem', padding: '0.2rem 0.55rem', background: 'rgba(0, 229, 153, 0.2)', color: 'var(--accent-primary)', fontWeight: 800 }}>
                                 🌟 كافة الأقسام ({user.departments.length} قسم)
                               </span>
                             ) : Array.isArray(user.departments) && user.departments.length > 0 ? (
                               user.departments.map((d: string) => (
-                                <span key={d} className="badge badge-primary" style={{ fontSize: '0.72rem', padding: '0.15rem 0.45rem', background: 'rgba(9, 154, 117, 0.15)', color: '#099A75' }}>{d}</span>
+                                <span key={d} className="badge badge-primary" style={{ fontSize: '0.72rem', padding: '0.15rem 0.45rem', background: 'rgba(0, 229, 153, 0.15)', color: 'var(--accent-primary)' }}>{d}</span>
                               ))
                             ) : (
                               <span className="badge badge-outline">{user.category || 'عام'}</span>
@@ -443,7 +443,7 @@ export default function UsersManagementPage() {
                             <button
                               onClick={() => openPermissionsModal(user)}
                               className="btn btn-outline"
-                              style={{ fontSize: '0.78rem', padding: '0.35rem 0.75rem', display: 'flex', alignItems: 'center', gap: '4px', color: '#099A75', borderColor: '#099A75', fontWeight: 600 }}
+                              style={{ fontSize: '0.78rem', padding: '0.35rem 0.75rem', display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', fontWeight: 600 }}
                               title="تعديل الأقسام والصلاحيات"
                             >
                               <Edit3 size={13} />
@@ -535,7 +535,7 @@ export default function UsersManagementPage() {
             {/* Modal Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid var(--border-light)', paddingBottom: '1rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <div style={{ padding: '0.5rem', background: 'rgba(9, 154, 117, 0.15)', color: '#099A75', borderRadius: '10px' }}>
+                <div style={{ padding: '0.5rem', background: 'rgba(0, 229, 153, 0.15)', color: 'var(--accent-primary)', borderRadius: '10px' }}>
                   <Shield size={22} />
                 </div>
                 <div>
@@ -555,7 +555,7 @@ export default function UsersManagementPage() {
 
             {/* User Details Summary Box */}
             <div style={{ background: 'var(--bg-tertiary)', padding: '1rem 1.25rem', borderRadius: '14px', marginBottom: '1.5rem', border: '1px solid var(--border-light)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <div style={{ width: '52px', height: '52px', borderRadius: '50%', overflow: 'hidden', background: '#099A75', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '1.2rem', flexShrink: 0 }}>
+              <div style={{ width: '52px', height: '52px', borderRadius: '50%', overflow: 'hidden', background: 'var(--accent-primary)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '1.2rem', flexShrink: 0 }}>
                 {selectedUser.photoURL ? (
                   <img src={selectedUser.photoURL} alt={selectedUser.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 ) : (
@@ -621,9 +621,9 @@ export default function UsersManagementPage() {
                         gap: '8px',
                         padding: '0.5rem 0.75rem',
                         borderRadius: '8px',
-                        background: isChecked ? 'rgba(9, 154, 117, 0.15)' : 'var(--bg-secondary)',
-                        border: isChecked ? '1.5px solid #099A75' : '1px solid var(--border-light)',
-                        color: isChecked ? '#099A75' : 'var(--text-secondary)',
+                        background: isChecked ? 'rgba(0, 229, 153, 0.15)' : 'var(--bg-secondary)',
+                        border: isChecked ? '1.5px solid var(--accent-primary)' : '1px solid var(--border-light)',
+                        color: isChecked ? 'var(--accent-primary)' : 'var(--text-secondary)',
                         cursor: 'pointer',
                         fontSize: '0.82rem',
                         fontWeight: isChecked ? 700 : 500,
@@ -634,7 +634,7 @@ export default function UsersManagementPage() {
                         type="checkbox"
                         checked={isChecked}
                         onChange={() => {}}
-                        style={{ accentColor: '#099A75', cursor: 'pointer' }}
+                        style={{ accentColor: 'var(--accent-primary)', cursor: 'pointer' }}
                       />
                       <span style={{ lineHeight: 1.2 }}>{dept}</span>
                     </div>
@@ -659,7 +659,7 @@ export default function UsersManagementPage() {
                 disabled={processing === selectedUser.uid}
                 onClick={handleSavePermissions}
                 className="btn btn-primary"
-                style={{ padding: '0.7rem 1.5rem', fontWeight: 800, background: '#099A75', borderColor: '#099A75', display: 'flex', alignItems: 'center', gap: '6px' }}
+                style={{ padding: '0.7rem 1.5rem', fontWeight: 800, background: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', display: 'flex', alignItems: 'center', gap: '6px' }}
               >
                 <Sparkles size={18} />
                 <span>{selectedUser.status === 'pending' ? '✅ اعتماد وتفعيل المستخدم' : '💾 حفظ التعديلات'}</span>

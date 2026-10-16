@@ -376,7 +376,7 @@ export default function ScrapPage() {
             <button 
               onClick={handleExportExcel} 
               className="btn btn-outline"
-              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.25rem', color: '#099A75', borderColor: '#099A75', fontWeight: 600 }}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.25rem', color: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', fontWeight: 600 }}
               title={t('common.exportExcel')}
             >
               <FileSpreadsheet size={18} /> {t('common.exportExcel')}

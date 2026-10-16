@@ -198,7 +198,7 @@ export default function NotificationBell() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: visibleNegativeStockItems.length > 0 ? '#ef4444' : (totalAlertsCount > 0 ? '#099A75' : 'var(--text-primary)'),
+          color: visibleNegativeStockItems.length > 0 ? '#ef4444' : (totalAlertsCount > 0 ? 'var(--accent-primary)' : 'var(--text-primary)'),
           borderColor: visibleNegativeStockItems.length > 0 ? 'rgba(239, 68, 68, 0.4)' : undefined,
           background: visibleNegativeStockItems.length > 0 ? 'rgba(239, 68, 68, 0.12)' : undefined
         }}
@@ -214,7 +214,7 @@ export default function NotificationBell() {
               position: 'absolute', 
               top: '-3px', 
               right: '-3px',
-              background: visibleNegativeStockItems.length > 0 ? '#ef4444' : '#099A75', 
+              background: visibleNegativeStockItems.length > 0 ? '#ef4444' : 'var(--accent-primary)', 
               color: 'white',
               borderRadius: '50%', 
               width: '20px', 
@@ -246,7 +246,7 @@ export default function NotificationBell() {
             background: 'var(--bg-primary)',
             border: '1px solid var(--border-light)', 
             borderRadius: '16px',
-            boxShadow: '0 20px 50px rgba(0,0,0,0.5), 0 0 20px rgba(9, 154, 117, 0.15)', 
+            boxShadow: '0 20px 50px rgba(0,0,0,0.5), 0 0 20px rgba(0, 229, 153, 0.15)', 
             zIndex: 1200,
             overflow: 'hidden', 
             display: 'flex', 
@@ -257,12 +257,12 @@ export default function NotificationBell() {
           {/* Header */}
           <div style={{ padding: '1rem 1.25rem', borderBottom: '1px solid var(--border-light)', background: 'var(--bg-secondary)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Bell size={18} color="#099A75" />
+              <Bell size={18} color="var(--accent-primary)" />
               <strong style={{ fontSize: '0.95rem', color: 'var(--text-primary)' }}>
                 {language === 'ar' ? 'مركز التنبيهات ومتابعة التوريدات' : 'Notifications & Supply Tracker'}
               </strong>
             </div>
-            <span style={{ fontSize: '0.75rem', padding: '2px 8px', borderRadius: '12px', background: 'rgba(9, 154, 117, 0.12)', color: '#099A75', fontWeight: 700 }}>
+            <span style={{ fontSize: '0.75rem', padding: '2px 8px', borderRadius: '12px', background: 'rgba(0, 229, 153, 0.12)', color: 'var(--accent-primary)', fontWeight: 700 }}>
               {totalAlertsCount} تنبيه
             </span>
           </div>
@@ -278,9 +278,9 @@ export default function NotificationBell() {
                 flex: 1,
                 padding: '0.65rem 0.5rem',
                 border: 'none',
-                borderBottom: activeTab === 'SUPPLIES' ? '2px solid #099A75' : '2px solid transparent',
+                borderBottom: activeTab === 'SUPPLIES' ? '2px solid var(--accent-primary)' : '2px solid transparent',
                 background: activeTab === 'SUPPLIES' ? 'var(--bg-primary)' : 'transparent',
-                color: activeTab === 'SUPPLIES' ? '#099A75' : 'var(--text-muted)',
+                color: activeTab === 'SUPPLIES' ? 'var(--accent-primary)' : 'var(--text-muted)',
                 fontWeight: activeTab === 'SUPPLIES' ? 800 : 600,
                 fontSize: '0.78rem',
                 cursor: 'pointer',
@@ -378,7 +378,7 @@ export default function NotificationBell() {
                         {/* Supply Title Row */}
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem' }}>
                           <div>
-                            <span style={{ fontSize: '0.74rem', color: '#099A75', fontWeight: 700, fontFamily: 'monospace' }}>
+                            <span style={{ fontSize: '0.74rem', color: 'var(--accent-primary)', fontWeight: 700, fontFamily: 'monospace' }}>
                               فاتورة رقم: {supply.invoiceNo || '—'}
                             </span>
                             <h4 style={{ margin: '0.15rem 0 0 0', fontSize: '0.88rem', fontWeight: 700, color: 'var(--text-primary)' }}>
@@ -401,14 +401,14 @@ export default function NotificationBell() {
                         <div style={{ marginTop: '0.2rem', padding: '0.5rem', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--border-light)' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', marginBottom: '0.35rem' }}>
                             <span>الكمية الموردة: <strong style={{ color: 'var(--text-primary)' }}>{supply.suppliedQty} {supply.unit}</strong></span>
-                            <span style={{ color: supply.remainingInStock > 0 ? '#099A75' : '#ef4444', fontWeight: 700 }}>
+                            <span style={{ color: supply.remainingInStock > 0 ? 'var(--accent-primary)' : '#ef4444', fontWeight: 700 }}>
                               المتبقي بالمخزن: {supply.remainingInStock} ({supply.remainingPercent}%)
                             </span>
                           </div>
                           
                           {/* Progress bar */}
                           <div style={{ height: '5px', background: 'var(--bg-tertiary)', borderRadius: '3px', overflow: 'hidden' }}>
-                            <div style={{ height: '100%', width: `${supply.remainingPercent}%`, background: supply.remainingPercent > 20 ? '#099A75' : '#ef4444', transition: 'width 0.3s' }}></div>
+                            <div style={{ height: '100%', width: `${supply.remainingPercent}%`, background: supply.remainingPercent > 20 ? 'var(--accent-primary)' : '#ef4444', transition: 'width 0.3s' }}></div>
                           </div>
                         </div>
 
@@ -521,7 +521,7 @@ export default function NotificationBell() {
               type="button" 
               onClick={() => { setIsOpen(false); router.push('/additions'); }}
               className="btn btn-outline" 
-              style={{ padding: '0.35rem 0.75rem', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '4px', color: '#099A75', borderColor: '#099A75' }}
+              style={{ padding: '0.35rem 0.75rem', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--accent-primary)', borderColor: 'var(--accent-primary)' }}
             >
               <Package size={13} />
               <span>سجل الوارد والتوريدات</span>

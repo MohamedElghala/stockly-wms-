@@ -32,13 +32,13 @@ function generateOtpEmailHtml(email: string, otp: string): string {
 <body style="font-family: 'Cairo', -apple-system, sans-serif; background-color: #f1f5f9; margin: 0; padding: 24px 12px; direction: rtl; text-align: right;">
   <div style="max-width: 580px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0;">
     
-    <div style="background: linear-gradient(135deg, #099A75 0%, #065F46 100%); padding: 24px 28px; text-align: center;">
+    <div style="background: linear-gradient(135deg, var(--accent-primary) 0%, #065F46 100%); padding: 24px 28px; text-align: center;">
       <div style="color: #ffffff; font-size: 20px; font-weight: 900;">منظومة إدارة المخازن الذكية | Stockly WMS</div>
       <div style="color: rgba(255, 255, 255, 0.85); font-size: 12px; margin-top: 4px;">منظومة التخزين وسلاسل الإمداد والتشغيل المتطورة</div>
     </div>
 
     <div style="padding: 28px;">
-      <span style="display: inline-block; background-color: #099A7515; color: #099A75; border: 1px solid #099A7540; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 16px;">
+      <span style="display: inline-block; background-color: var(--accent-primary)15; color: var(--accent-primary); border: 1px solid var(--accent-primary)40; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 16px;">
         رمز أمان OTP
       </span>
 
@@ -48,8 +48,8 @@ function generateOtpEmailHtml(email: string, otp: string): string {
       </p>
 
       <div style="background-color: #f0fdf4; border: 1px solid #10b981; border-radius: 8px; padding: 16px; margin: 20px 0; text-align: center;">
-        <div style="font-size: 12px; font-weight: bold; color: #099A75; margin-bottom: 6px;">رمز التحقق السري (صالح لمدة 10 دقائق)</div>
-        <div style="font-size: 28px; font-weight: 900; letter-spacing: 6px; color: #099A75; font-family: monospace;">${otp}</div>
+        <div style="font-size: 12px; font-weight: bold; color: var(--accent-primary); margin-bottom: 6px;">رمز التحقق السري (صالح لمدة 10 دقائق)</div>
+        <div style="font-size: 28px; font-weight: 900; letter-spacing: 6px; color: var(--accent-primary); font-family: monospace;">${otp}</div>
       </div>
 
       <table style="width: 100%; border-collapse: collapse; margin: 20px 0; background-color: #f8fafc; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0;">

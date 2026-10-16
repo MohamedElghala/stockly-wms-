@@ -29,6 +29,7 @@ import {
   Sparkles,
   ShoppingCart,
   Barcode,
+  MapPin,
   X
 } from 'lucide-react';
 import { InventoryItem, INVENTORY_CATEGORIES, ALL_WAREHOUSE_DEPARTMENTS, normalizeCategory } from '../../types/inventory';
@@ -547,7 +548,7 @@ export default function InventoryPage() {
         <div className="flex-between" style={{ marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.35rem' }}>
-              <div style={{ padding: '0.5rem', borderRadius: '12px', background: 'rgba(9, 154, 117, 0.12)', color: '#099A75' }}>
+              <div style={{ padding: '0.5rem', borderRadius: '12px', background: 'rgba(0, 229, 153, 0.12)', color: 'var(--accent-primary)' }}>
                 <PackageOpen size={26} />
               </div>
               <h1 className="heading-xl" style={{ margin: 0, fontWeight: 800 }}>
@@ -581,7 +582,7 @@ export default function InventoryPage() {
                 <button 
                   onClick={() => document.getElementById('import-excel')?.click()}
                   className="btn btn-outline" 
-                  style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#099A75', borderColor: '#099A75', fontWeight: 600 }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', fontWeight: 600 }}
                   title={t('inventory.importExcel')}
                 >
                   <Upload size={16} />
@@ -591,7 +592,7 @@ export default function InventoryPage() {
                 <button 
                   onClick={handleExport}
                   className="btn btn-outline" 
-                  style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#099A75', borderColor: '#099A75', fontWeight: 600, background: 'rgba(9, 154, 117, 0.05)' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', fontWeight: 600, background: 'rgba(0, 229, 153, 0.05)' }}
                   title={language === 'ar' ? 'تصدير أرصدة المخزون بالكامل في ملف إكسيل مصنف ومبوب لكل قسم' : t('inventory.exportExcel')}
                 >
                   <FileSpreadsheet size={16} />
@@ -605,7 +606,7 @@ export default function InventoryPage() {
               type="button"
               onClick={() => setIsScannerOpen(true)}
               className="btn btn-outline"
-              style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#00DF8F', borderColor: '#00DF8F', fontWeight: 700, background: 'rgba(0, 223, 143, 0.08)' }}
+              style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', fontWeight: 700, background: 'rgba(0, 229, 153, 0.08)' }}
               title={language === 'ar' ? 'مسح الباركود بالكاميرا أو القارئ اللاسلكي' : 'Scan Barcode or QR'}
             >
               <Barcode size={18} />
@@ -660,7 +661,7 @@ export default function InventoryPage() {
           
           {/* Total Unique Items */}
           <div className="enterprise-card" style={{ padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: 'rgba(9, 154, 117, 0.12)', color: '#099A75', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: 'rgba(0, 229, 153, 0.12)', color: 'var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <PackageOpen size={22} />
             </div>
             <div>
@@ -734,7 +735,7 @@ export default function InventoryPage() {
                 type="button"
                 onClick={() => setIsReindexModalOpen(true)}
                 className="btn btn-primary"
-                style={{ padding: '0.35rem 0.85rem', fontSize: '0.82rem', background: '#099A75', borderColor: '#099A75', display: 'flex', alignItems: 'center', gap: '5px', fontWeight: 700 }}
+                style={{ padding: '0.35rem 0.85rem', fontSize: '0.82rem', background: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', display: 'flex', alignItems: 'center', gap: '5px', fontWeight: 700 }}
               >
                 <Sparkles size={14} />
                 <span>{language === 'ar' ? '🔢 إعادة ترقيم فئة كاملة' : '🔢 Re-index Category'}</span>
@@ -871,7 +872,7 @@ export default function InventoryPage() {
       <div className="hide-on-print" style={{ marginBottom: '1.25rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '0.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.88rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
-            <Layers size={16} color="#099A75" />
+            <Layers size={16} color="var(--accent-primary)" />
             <span>{language === 'ar' ? 'أقسام وفئات المخزن:' : 'Warehouse Categories:'}</span>
           </div>
 
@@ -880,7 +881,7 @@ export default function InventoryPage() {
               type="button"
               onClick={() => setIsReindexModalOpen(true)}
               className="btn btn-outline animate-fade-in"
-              style={{ padding: '0.3rem 0.75rem', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '4px', color: '#099A75', borderColor: '#099A75', fontWeight: 700, background: 'rgba(9, 154, 117, 0.08)' }}
+              style={{ padding: '0.3rem 0.75rem', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--accent-primary)', borderColor: 'var(--accent-primary)', fontWeight: 700, background: 'rgba(0, 229, 153, 0.08)' }}
             >
               <Sparkles size={13} />
               <span>{language === 'ar' ? `إعادة تسلسل وترقيم فئة (${selectedCategory})` : `Re-index (${selectedCategory})`}</span>
@@ -917,10 +918,10 @@ export default function InventoryPage() {
                 whiteSpace: 'nowrap',
                 flexShrink: 0,
                 transition: 'all 0.2s ease',
-                background: selectedCategory === 'all' ? 'rgba(9, 154, 117, 0.15)' : 'var(--bg-secondary)',
-                border: selectedCategory === 'all' ? '1.5px solid #099A75' : '1px solid var(--border-light)',
-                color: selectedCategory === 'all' ? '#099A75' : 'var(--text-secondary)',
-                boxShadow: selectedCategory === 'all' ? '0 0 10px rgba(9, 154, 117, 0.2)' : 'none'
+                background: selectedCategory === 'all' ? 'rgba(0, 229, 153, 0.15)' : 'var(--bg-secondary)',
+                border: selectedCategory === 'all' ? '1.5px solid var(--accent-primary)' : '1px solid var(--border-light)',
+                color: selectedCategory === 'all' ? 'var(--accent-primary)' : 'var(--text-secondary)',
+                boxShadow: selectedCategory === 'all' ? '0 0 10px rgba(0, 229, 153, 0.2)' : 'none'
               }}
             >
               <span>{isRestrictedUser ? (language === 'ar' ? 'كافة الأقسام المصرحة' : 'All Authorized Depts') : t('inventory.allCategories')}</span>
@@ -929,7 +930,7 @@ export default function InventoryPage() {
                   fontSize: '0.72rem', 
                   padding: '1px 6px', 
                   borderRadius: '6px', 
-                  background: selectedCategory === 'all' ? '#099A75' : 'var(--bg-tertiary)', 
+                  background: selectedCategory === 'all' ? 'var(--accent-primary)' : 'var(--bg-tertiary)', 
                   color: selectedCategory === 'all' ? '#fff' : 'var(--text-muted)',
                   fontWeight: 700
                 }}
@@ -961,10 +962,10 @@ export default function InventoryPage() {
                   whiteSpace: 'nowrap',
                   flexShrink: 0,
                   transition: 'all 0.2s ease',
-                  background: isSelected ? 'rgba(9, 154, 117, 0.15)' : 'var(--bg-secondary)',
-                  border: isSelected ? '1.5px solid #099A75' : '1px solid var(--border-light)',
-                  color: isSelected ? '#099A75' : 'var(--text-secondary)',
-                  boxShadow: isSelected ? '0 0 10px rgba(9, 154, 117, 0.2)' : 'none'
+                  background: isSelected ? 'rgba(0, 229, 153, 0.15)' : 'var(--bg-secondary)',
+                  border: isSelected ? '1.5px solid var(--accent-primary)' : '1px solid var(--border-light)',
+                  color: isSelected ? 'var(--accent-primary)' : 'var(--text-secondary)',
+                  boxShadow: isSelected ? '0 0 10px rgba(0, 229, 153, 0.2)' : 'none'
                 }}
               >
                 <span>{cat}</span>
@@ -973,7 +974,7 @@ export default function InventoryPage() {
                     fontSize: '0.72rem', 
                     padding: '1px 6px', 
                     borderRadius: '6px', 
-                    background: isSelected ? '#099A75' : 'var(--bg-tertiary)', 
+                    background: isSelected ? 'var(--accent-primary)' : 'var(--bg-tertiary)', 
                     color: isSelected ? '#fff' : 'var(--text-muted)',
                     fontWeight: 700
                   }}
@@ -987,7 +988,7 @@ export default function InventoryPage() {
       </div>
 
       {/* ──── SCREEN DATA TABLE ──── */}
-      <div className="official-document-paper enterprise-card hide-on-print" style={{ padding: '1.5rem' }}>
+      <div className="glass-card hide-on-print" style={{ padding: '1.5rem' }}>
         
         {/* Official Print Header */}
         <PrintHeader 
@@ -1029,18 +1030,19 @@ export default function InventoryPage() {
           </div>
         ) : (
           <div className="table-container" style={{ overflowX: 'auto' }}>
-            <table className="wms-table official-print-table" style={{ width: '100%', minWidth: '1050px', borderCollapse: 'collapse', fontSize: '0.875rem' }}>
+            <table className="wms-table official-print-table" style={{ width: '100%', minWidth: '1120px', borderCollapse: 'collapse', fontSize: '0.875rem' }}>
               <thead>
                 <tr style={{ background: 'var(--bg-secondary)' }}>
                   <th style={{ width: '45px', minWidth: '45px', textAlign: 'center' }}>#</th>
                   <th style={{ width: '90px', minWidth: '90px', textAlign: 'center' }}>{t('inventory.code')}</th>
                   <th style={{ minWidth: '240px', maxWidth: '340px', textAlign: language === 'ar' ? 'right' : 'left' }}>{t('inventory.name')}</th>
-                  <th style={{ minWidth: '140px', textAlign: language === 'ar' ? 'right' : 'left' }}>{t('inventory.category')}</th>
+                  <th style={{ minWidth: '130px', textAlign: language === 'ar' ? 'right' : 'left' }}>{t('inventory.category')}</th>
+                  <th style={{ width: '110px', minWidth: '110px', textAlign: 'center', whiteSpace: 'nowrap' }}>{language === 'ar' ? 'الموقع / الرف' : 'Bin / Loc'}</th>
                   <th style={{ width: '65px', minWidth: '65px', textAlign: 'center' }}>{t('inventory.unit')}</th>
                   <th style={{ width: '85px', minWidth: '85px', textAlign: 'center', color: 'var(--text-muted)' }}>{t('inventory.openingBalance')}</th>
                   <th style={{ width: '85px', minWidth: '85px', textAlign: 'center', color: '#10b981' }}>{t('inventory.totalIn')}</th>
                   <th style={{ width: '95px', minWidth: '95px', textAlign: 'center', color: '#3b82f6', whiteSpace: 'nowrap' }}>{t('inventory.totalOut')}</th>
-                  <th style={{ width: '105px', minWidth: '105px', textAlign: 'center', background: 'rgba(9, 154, 117, 0.08)', color: '#099A75', fontWeight: 800, whiteSpace: 'nowrap' }}>{t('inventory.currentStock')}</th>
+                  <th style={{ width: '105px', minWidth: '105px', textAlign: 'center', background: 'rgba(0, 229, 153, 0.08)', color: 'var(--accent-primary)', fontWeight: 800, whiteSpace: 'nowrap' }}>{t('inventory.currentStock')}</th>
                   <th style={{ width: '130px', minWidth: '130px', textAlign: 'center', whiteSpace: 'nowrap' }}>{t('inventory.status')}</th>
                   <th className="hide-on-print" style={{ width: devMode ? '130px' : '90px', minWidth: devMode ? '130px' : '90px', textAlign: 'center', whiteSpace: 'nowrap' }}>{t('inventory.actions')}</th>
                 </tr>
@@ -1061,7 +1063,7 @@ export default function InventoryPage() {
                       <td style={{ fontFamily: 'monospace', fontWeight: 700, textAlign: 'center', whiteSpace: 'nowrap' }}>
                         <span 
                           onClick={() => router.push('/item-ledger')}
-                          style={{ padding: '0.25rem 0.5rem', background: 'rgba(9, 154, 117, 0.1)', color: '#099A75', borderRadius: '4px', cursor: 'pointer', display: 'inline-block' }}
+                          style={{ padding: '0.25rem 0.5rem', background: 'rgba(0, 229, 153, 0.1)', color: 'var(--accent-primary)', borderRadius: '4px', cursor: 'pointer', display: 'inline-block' }}
                           title={t('inventory.viewLedger')}
                         >
                           {item.code || '—'}
@@ -1097,6 +1099,30 @@ export default function InventoryPage() {
                       <td style={{ fontSize: '0.85rem', color: 'var(--text-muted)', whiteSpace: 'nowrap', padding: '0.75rem 0.5rem' }}>
                         {item.category}
                       </td>
+                      {/* Bin Location */}
+                      <td style={{ textAlign: 'center', whiteSpace: 'nowrap', padding: '0.65rem 0.5rem' }}>
+                        <span 
+                          onClick={() => router.push('/warehouse-map')}
+                          style={{
+                            padding: '0.2rem 0.5rem',
+                            borderRadius: '6px',
+                            background: 'rgba(0, 194, 255, 0.08)',
+                            color: '#00C2FF',
+                            border: '1px solid rgba(0, 194, 255, 0.25)',
+                            fontSize: '0.75rem',
+                            fontFamily: 'monospace',
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px'
+                          }}
+                          title={language === 'ar' ? 'عرض على خريطة المستودع التفاعلية' : 'View on Warehouse Map'}
+                        >
+                          <MapPin size={11} />
+                          {item.binLocation || item.location || `Bin ${item.code ? (item.code.charCodeAt(0) % 4 === 0 ? 'A' : item.code.charCodeAt(0) % 4 === 1 ? 'B' : item.code.charCodeAt(0) % 4 === 2 ? 'C' : 'D') + '-' + String((Math.abs(item.code.split('').reduce((acc: number, c: string) => acc + c.charCodeAt(0), 0)) % 18) + 1).padStart(2, '0') : 'A-01'}`}
+                        </span>
+                      </td>
                       <td style={{ textAlign: 'center', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>{item.unit}</td>
                       <td style={{ textAlign: 'center', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>{item.openingBalance || 0}</td>
                       <td style={{ textAlign: 'center', fontWeight: 600, color: '#10b981', whiteSpace: 'nowrap' }}>{item.totalIn ? `+${item.totalIn}` : 0}</td>
@@ -1107,7 +1133,7 @@ export default function InventoryPage() {
                       </td>
                       
                       {/* Current Stock */}
-                      <td style={{ textAlign: 'center', fontWeight: 800, fontSize: '1.05rem', color: isZero ? '#ef4444' : '#099A75', background: 'rgba(9, 154, 117, 0.03)', whiteSpace: 'nowrap', minWidth: '105px' }}>
+                      <td style={{ textAlign: 'center', fontWeight: 800, fontSize: '1.05rem', color: isZero ? '#ef4444' : 'var(--accent-primary)', background: 'rgba(0, 229, 153, 0.03)', whiteSpace: 'nowrap', minWidth: '105px' }}>
                         <div>{stock}</div>
                         {pkg.ruleType !== 'STANDARD_PIECE' && stock > 0 && (
                           <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#3b82f6', marginTop: '2px' }} title={`${pkg.bundleUnitName} (كل ${pkg.bundleSize}م)`}>
@@ -1134,7 +1160,7 @@ export default function InventoryPage() {
                             type="button"
                             onClick={() => router.push(`/requests?itemId=${item.id}&dept=${encodeURIComponent(item.category || '')}`)}
                             className="btn btn-primary"
-                            style={{ padding: '0.25rem 0.6rem', fontSize: '0.78rem', display: 'inline-flex', alignItems: 'center', gap: '3px', fontWeight: 600, background: '#099A75', borderColor: '#099A75' }}
+                            style={{ padding: '0.25rem 0.6rem', fontSize: '0.78rem', display: 'inline-flex', alignItems: 'center', gap: '3px', fontWeight: 600, background: 'var(--accent-primary)', borderColor: 'var(--accent-primary)' }}
                             title={language === 'ar' ? 'طلب صرف لهذا الصنف' : 'Request this item'}
                           >
                             <ShoppingCart size={13} />
@@ -1167,7 +1193,7 @@ export default function InventoryPage() {
                               balance: Number(stock) || 0
                             })}
                             className="btn btn-outline"
-                            style={{ padding: '0.25rem 0.45rem', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '2px', color: '#00DF8F', borderColor: 'rgba(0, 223, 143, 0.4)' }}
+                            style={{ padding: '0.25rem 0.45rem', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '2px', color: 'var(--accent-primary)', borderColor: 'rgba(0, 229, 153, 0.4)' }}
                             title={language === 'ar' ? 'طباعة ملصق الباركود و QR للصنف' : 'Print Barcode Sticker'}
                           >
                             <Barcode size={13} />
@@ -1308,7 +1334,7 @@ export default function InventoryPage() {
                   <td style={{ textAlign: 'center' }}>{item.openingBalance || 0}</td>
                   <td style={{ textAlign: 'center', fontWeight: 600 }}>{item.totalIn ? `+${item.totalIn}` : 0}</td>
                   <td style={{ textAlign: 'center', fontWeight: 600 }}>{item.totalOut ? `-${item.totalOut}` : 0}</td>
-                  <td style={{ textAlign: 'center', fontWeight: 800, color: isZero ? '#ef4444' : '#099A75' }}>{stock}</td>
+                  <td style={{ textAlign: 'center', fontWeight: 800, color: isZero ? '#ef4444' : 'var(--accent-primary)' }}>{stock}</td>
                   <td style={{ textAlign: 'center', fontWeight: 700, fontSize: '0.8rem', color: isZero ? '#ef4444' : '#10b981' }}>
                     {isZero ? 'منتهي' : stock <= 10 ? 'منخفض' : 'آمن'}
                   </td>
