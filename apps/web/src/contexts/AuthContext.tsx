@@ -33,7 +33,8 @@ interface AuthContextType {
 
 const ADMIN_EMAILS = [
   'mohamedalghala@gmail.com',
-  'admin@calm.com'
+  'stockly.system.app@gmail.com',
+  'admin@stockly.com'
 ];
 
 function isSuperAdminEmail(email?: string | null): boolean {
