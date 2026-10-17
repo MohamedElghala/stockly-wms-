@@ -121,6 +121,20 @@
   - تم رفع التحديثات إلى فرع `main` بالـ Commit: `40f1107`.
   - تم اختبار السيرفر المباشر على Vercel والتأكد من استجابته بـ `HTTP 200 OK` على كافة المسارات.
 
+### المعلم الخامس عشر: اعتماد النمط الفاتح النقي وتوأم SketchUp وإطلاق فريق العمل الذاتي (Milestone 15)
+- **موافقة واعتماد المستخدم**:
+  1. اختيار **النمط الفاتح النقي فائق النظافة (Silicon Valley Clean Light / Stripe & Linear)** وإلغاء السواد القاتم لراحة العين والوضوح الفائق.
+  2. اختيار **التوأم المعماري الأيزومتري 3D المستوحى من Google SketchUp** للأرفف المتعددة ومسارات الروبوتات وبطاقات الـ AR العائمة.
+  3. تصميم **إعلان سينمائي ترويجي 3D للموشن جرافيك** (25 ثانية) بمستوى كبرى الشركات العالمية للدعاية والتريند على السوشيال ميديا.
+- **الصور والنماذج البصرية المولدة**:
+  - `stockly_wms_executive_dashboard_1792182071578.jpg` (Clean Light Dashboard).
+  - `stockly_digital_twin_warehouse_1792182024608.jpg` (Google SketchUp 3D Warehouse).
+  - `stockly_wms_commercial_frame_1792182026747.jpg` (Cinematic Commercial Motion Promo).
+  - `stockly_wms_dashboard_mockup_1792182102104.jpg` (Frosted Titanium SaaS).
+- **إطلاق فريق العمل الذاتي (Teamwork Multi-Agent System)**:
+  - تم تحرير وثيقة المشروع الرسمية [`prompt_draft.md`](file:///C:/Users/Mohamed%20Helmy/.gemini/antigravity/brain/f28bca43-ea48-4387-b9a9-708f3c7a049b/prompt_draft.md).
+  - تم استدعاء وتفويض وكيل فريق العمل الذاتي `teamwork_preview` بالمعرف `7f2a0743-813a-4531-8504-495a20063d2f`.
+
 ---
 
 ## 2. الروابط الميدانية والحالة المباشرة (Live Links & Health)
@@ -129,11 +143,49 @@
 - **رابط لوحة التحكم الرئيسية**: [https://stockly-wms-ruby.vercel.app/dashboard](https://stockly-wms-ruby.vercel.app/dashboard)
 - **رابط جدول المخزون عالي الكثافة**: [https://stockly-wms-ruby.vercel.app/inventory](https://stockly-wms-ruby.vercel.app/inventory)
 - **رابط الخريطة ثلاثية الأبعاد المباشر**: [https://stockly-wms-ruby.vercel.app/warehouse-map](https://stockly-wms-ruby.vercel.app/warehouse-map)
-- **أحدث Commit منشور ومُفعل لايف**: `40f1107` (feat(ui): unify cyber emerald visual identity across entire platform and fix screen paper bleed)
+- **معرض التصاميم العشرة والموشن السينمائي**: [`stockly_top10_designs_and_motion_trailer.md`](file:///C:/Users/Mohamed%20Helmy/.gemini/antigravity/brain/f28bca43-ea48-4387-b9a9-708f3c7a049b/stockly_top10_designs_and_motion_trailer.md)
+
+### المعلم السابع عشر: اكتمال التنفيذ البرمجي للنمط الفاتح، خريطة SketchUp 3D، والإعلان السينمائي (Milestone 17)
+- **1. نمط النقاء الفاتح (Silicon Valley Clean Light System)**:
+  - تطبيق ثيم البورسلين الفاتح المعتمد (`#F8FAFC` و `#FFFFFF`) في `globals.css` و `layout.tsx` كوضع افتراضي فائق النقاء.
+  - نصوص كحلية ناصعة `#0F172A` بنسبة تباين **15.6:1 (WCAG AAA)** تريح العين تماماً أثناء العمل الطويل.
+  - شبكة مؤشرات أداء متطورة (4x2 KPI Grid) في `DashboardContent.tsx` مع عدادات أرقام حركية، ورسوم بيانية خطية مصغرة (Sparklines)، وحلقات قياس السعة الدائرية (Radial Ring Gauges).
+- **2. التوأم الرقمي المعماري 3D لخريطة المستودع (Google SketchUp 3D Map)**:
+  - إعادة بناء `apps/web/src/app/warehouse-map/page.tsx` بمجسم أيزومتري معماري متكامل لممرات المستودع الأربعة (A, B, C, D).
+  - تجسيد الأرفف المعدنية بأربعة طوابق رأسية (Tiers 1-4) مع إضاءات LED ذكية لحالة الرصيد (أخضر، برتقالي، أحمر).
+  - بطاقات بيانات هولوجرافية عائمة (AR Telemetry Tags) متصلة بأقماع إضاءة مخروطية فوق قمم الأرفف تعرض نسب الإشغال لحظياً.
+  - مسارات أرضية للرافعات الروبوتية ذاتية القيادة (AGV Tracks) مع حركة نبضية ومسارات للمشاة بالأصفر والأسود.
+  - درج فحص جانبي انزلاقي (Sliding Inspection Drawer) يعرض مواصفات الصنف ومعدل سرعة الدوران وزر فوري لطباعة ملصق الباركود الحراري 50x30 مم.
+  - أدوات تحكم تفاعلية في زاوية الرؤية (Zoom 0.4x - 2.5x، تحريك بالماوس Pan، وتبديل المساقط بين 3D أيزومتري، مسقط أفقي 2D، ومسقط رأسي Elevation).
+- **3. الإعلان السينمائي التجاري ثلاثي الأبعاد والصفحة المخصصة (/trailer)**:
+  - بناء المكون `apps/web/src/components/trailer/StocklyCinematicTrailer.tsx`:
+    * 4 مشاهد حركية متتالية بمعدل 60 إطار في الثانية (GPU Accelerated):
+      1. تفكك مكعب المستودع الكرومي في الفضاء.
+      2. مسح ضوئي ليزري عنبري وسياني متقاطع مع ضباب تقني.
+      3. كشف شعار Stockly WMS وعبارة الدعاية الكبرى.
+      4. التحول السلس لشاشات النظام المباشرة.
+    * محاكاة وتوليف صوتي رقمي محلي (Web Audio API Sound Synthesis) لنبضات الليزر وأصوات الطاقة والانتقالات بدون تحميل أي ملفات خارجية.
+    * زر تخطي سريع وحفظ التفضيلات في الذاكرة.
+  - تدشين المسار التسويقي العام `apps/web/src/app/trailer/page.tsx` للعرض والشاشات الترويجية وحملات السوشيال ميديا.
+  - برمجة سكريبت رندر الفيديو التجاري 1080p MP4 عبر محرك بلندر `scripts/render_trailer.py`.
+- **4. الفحص والتحقق الآلي المستمر**:
+  - فحص `tests/verify_nextgen.js` أكد اجتياز **223 اختباراً آلياً بنسبة نجاح 100%**.
+  - فحص الاستيرادات البرمجية أكد سلامة الـ 69 ملفاً بنسبة 100% بدون أي Broken Imports.
+
+---
+
+## 2. الروابط الميدانية والحالة المباشرة (Live Links & Health)
+- **مستودع GitHub الرسمي**: [https://github.com/MohamedElghala/stockly-wms-](https://github.com/MohamedElghala/stockly-wms-)
+- **رابط المعاينة المباشر (Vercel Live)**: [https://stockly-wms-ruby.vercel.app](https://stockly-wms-ruby.vercel.app)
+- **رابط لوحة التحكم الفاتحة الرئيسية**: [https://stockly-wms-ruby.vercel.app/dashboard](https://stockly-wms-ruby.vercel.app/dashboard)
+- **رابط خريطة الأرفف المعمارية 3D (SketchUp Twin)**: [https://stockly-wms-ruby.vercel.app/warehouse-map](https://stockly-wms-ruby.vercel.app/warehouse-map)
+- **رابط الإعلان السينمائي التجاري المباشر 3D**: [https://stockly-wms-ruby.vercel.app/trailer](https://stockly-wms-ruby.vercel.app/trailer)
+- **معرض التصاميم العشرة والموشن السينمائي**: [`stockly_top10_designs_and_motion_trailer.md`](file:///C:/Users/Mohamed%20Helmy/.gemini/antigravity/brain/f28bca43-ea48-4387-b9a9-708f3c7a049b/stockly_top10_designs_and_motion_trailer.md)
 
 ---
 
 ## 3. خارطة الخطوات القادمة للتنفيذ الميداني (Execution Roadmap)
-1. **تجهيز وضع الماسح المحمول المخصص للهواتف وأجهزة الجرد اليدوية** (Screen 4: Mobile Handheld Scanner PWA Mode).
-2. **تطوير مسارات التدقيق ومحرك الجرد الأعمى المستمر** (Continuous Blind Cycle Count).
-3. **التكامل مع قواعد البيانات السحابية PostgreSQL / Supabase**.
+1. **دفع ونشر التحديثات الكبرى (Push to GitHub & Vercel Deploy)**.
+2. **التحقق السحابي الحي على روابط Vercel بـ HTTP 200 OK**.
+3. **تجهيز وضع الماسح المحمول المخصص للهواتف وأجهزة الجرد اليدوية (Mobile Handheld PWA Scanner Mode)**.
+

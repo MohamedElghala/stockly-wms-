@@ -88,6 +88,7 @@ export default function Topbar() {
       items: [
         { href: '/inventory', label: t('nav.inventory'), icon: <Package2 size={16} /> },
         { href: '/warehouse-map', label: 'خريطة الأرفف 3D', icon: <Layers size={16} /> },
+        { href: '/trailer', label: 'الإعلان السينمائي 3D', icon: <Sparkles size={16} /> },
       ]
     },
     {
@@ -209,13 +210,19 @@ export default function Topbar() {
       <nav 
         className="topbar glass-panel" 
         style={{ 
-          padding: '0.6rem 1.25rem', 
+          margin: '0.65rem 1.25rem 0.35rem 1.25rem',
+          padding: '0.65rem 1.5rem', 
+          borderRadius: '16px',
           display: 'flex', 
           flexDirection: 'row',
           direction: 'ltr', // Force LTR so layout doesn't flip when language changes
           alignItems: 'center', 
           justifyContent: 'space-between', 
-          borderBottom: '1px solid var(--border-light)',
+          border: '1px solid var(--border-light)',
+          background: 'var(--bg-glass)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          boxShadow: 'var(--shadow-enterprise)',
         }}
       >
       {/* 1. Left Section: Logo Area */}
@@ -857,6 +864,8 @@ export default function Topbar() {
         }
         @media screen and (max-width: 900px) {
           .topbar {
+            margin: 0.35rem 0.65rem !important;
+            border-radius: 12px !important;
             padding: 0.5rem 0.75rem !important;
           }
           .desktop-nav {
@@ -867,8 +876,11 @@ export default function Topbar() {
           }
           .mobile-tabs-strip {
             display: block !important;
-            width: 100% !important;
-            max-width: 100vw !important;
+            width: calc(100% - 1.3rem) !important;
+            margin: 0.25rem 0.65rem 0.45rem 0.65rem !important;
+            border-radius: 12px !important;
+            border: 1px solid var(--border-light) !important;
+            box-shadow: var(--shadow-sm) !important;
             overflow: hidden !important;
             box-sizing: border-box !important;
             padding: 0.35rem 0.5rem !important;
@@ -880,6 +892,7 @@ export default function Topbar() {
             white-space: nowrap !important;
             overflow-x: auto !important;
             -webkit-overflow-scrolling: touch !important;
+            touch-action: pan-x !important;
             scrollbar-width: none !important;
             -ms-overflow-style: none !important;
             width: 100% !important;
@@ -889,6 +902,9 @@ export default function Topbar() {
             flex-shrink: 0 !important;
             white-space: nowrap !important;
             display: inline-flex !important;
+            min-height: 44px !important;
+            align-items: center !important;
+            padding: 0.5rem 1rem !important;
           }
           .settings-dropdown-menu {
             position: fixed !important;
@@ -932,7 +948,8 @@ export default function Topbar() {
           background: 'var(--bg-glass)',
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
-          borderBottom: '1px solid var(--border-light)',
+          border: '1px solid var(--border-light)',
+          borderRadius: '12px',
           padding: '0.35rem 0.5rem',
           boxShadow: 'var(--shadow-sm)'
         }}
@@ -970,10 +987,10 @@ export default function Topbar() {
                   whiteSpace: 'nowrap',
                   flexShrink: 0,
                   transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                  background: isActive ? 'rgba(0, 229, 153, 0.22)' : 'var(--bg-tertiary)',
+                  background: isActive ? 'var(--accent-primary-glass)' : 'var(--bg-tertiary)',
                   border: isActive ? '1.5px solid var(--accent-primary)' : '1px solid var(--border-light)',
                   color: isActive ? 'var(--accent-primary)' : 'var(--text-secondary)',
-                  boxShadow: isActive ? '0 0 10px rgba(0, 229, 153, 0.3)' : 'none'
+                  boxShadow: isActive ? '0 0 10px var(--accent-primary-glass)' : 'none'
                 }}
               >
                 {tab.icon}

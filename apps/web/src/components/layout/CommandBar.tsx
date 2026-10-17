@@ -157,6 +157,19 @@ export default function CommandBar() {
         setOpen(false); 
       },
       shortcut: 'B'
+    },
+    {
+      id: 'trailer',
+      titleAr: 'الإعلان السينمائي الترويجي 3D (Commercial Promo)',
+      titleEn: 'Cinematic 3D Commercial Promo',
+      categoryAr: 'العروض والدعاية',
+      categoryEn: 'Showcase',
+      icon: <Sparkles size={18} color="#F59E0B" />,
+      action: () => { 
+        router.push('/trailer'); 
+        setOpen(false); 
+      },
+      shortcut: 'T'
     }
   ];
 
@@ -194,7 +207,7 @@ export default function CommandBar() {
         position: 'fixed',
         inset: 0,
         zIndex: 100005,
-        backgroundColor: 'rgba(6, 11, 20, 0.82)',
+        backgroundColor: 'rgba(15, 23, 42, 0.45)',
         backdropFilter: 'blur(16px)',
         display: 'flex',
         alignItems: 'flex-start',
@@ -209,10 +222,10 @@ export default function CommandBar() {
         style={{
           width: '100%',
           maxWidth: '640px',
-          background: 'rgba(12, 21, 36, 0.95)',
-          border: '1px solid rgba(0, 229, 153, 0.35)',
+          background: 'var(--bg-secondary)',
+          border: '1px solid var(--border-light)',
           borderRadius: '16px',
-          boxShadow: '0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(0, 229, 153, 0.2)',
+          boxShadow: '0 25px 50px -12px rgba(15, 23, 42, 0.25), 0 0 24px var(--accent-primary-glass)',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
@@ -228,7 +241,7 @@ export default function CommandBar() {
             display: 'flex',
             alignItems: 'center',
             padding: '16px 20px',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+            borderBottom: '1px solid var(--border-light)',
             gap: '12px'
           }}
         >
@@ -244,7 +257,7 @@ export default function CommandBar() {
               background: 'transparent',
               border: 'none',
               outline: 'none',
-              color: '#FFFFFF',
+              color: 'var(--text-primary)',
               fontSize: '1rem',
               fontWeight: 600,
               fontFamily: 'inherit'
@@ -254,11 +267,11 @@ export default function CommandBar() {
             style={{
               padding: '2px 8px',
               borderRadius: '6px',
-              background: 'rgba(255, 255, 255, 0.08)',
-              color: '#94A3B8',
+              background: 'var(--bg-tertiary)',
+              color: 'var(--text-muted)',
               fontSize: '11px',
               fontWeight: 700,
-              border: '1px solid rgba(255, 255, 255, 0.15)'
+              border: '1px solid var(--border-light)'
             }}
           >
             ESC
@@ -268,7 +281,7 @@ export default function CommandBar() {
         {/* Results List */}
         <div style={{ overflowY: 'auto', padding: '8px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
           {filtered.length === 0 ? (
-            <div style={{ padding: '32px', textAlign: 'center', color: '#94A3B8', fontSize: '0.9rem' }}>
+            <div style={{ padding: '32px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
               {language === 'ar' ? 'لم يتم العثور على نتائج مطابقة' : 'No matching commands found'}
             </div>
           ) : (
@@ -285,8 +298,8 @@ export default function CommandBar() {
                     justifyContent: 'space-between',
                     padding: '10px 14px',
                     borderRadius: '10px',
-                    background: isSelected ? 'rgba(0, 229, 153, 0.14)' : 'transparent',
-                    border: isSelected ? '1px solid rgba(0, 229, 153, 0.35)' : '1px solid transparent',
+                    background: isSelected ? 'var(--accent-primary-glass)' : 'transparent',
+                    border: isSelected ? '1px solid var(--border-glow)' : '1px solid transparent',
                     cursor: 'pointer',
                     transition: 'all 0.1s ease'
                   }}
@@ -297,7 +310,7 @@ export default function CommandBar() {
                         width: '34px',
                         height: '34px',
                         borderRadius: '8px',
-                        background: isSelected ? 'rgba(0, 229, 153, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                        background: isSelected ? 'var(--accent-primary-glass)' : 'var(--bg-tertiary)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -308,10 +321,10 @@ export default function CommandBar() {
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.25 }}>
-                      <span style={{ fontSize: '0.9rem', fontWeight: isSelected ? 800 : 600, color: '#FFFFFF' }}>
+                      <span style={{ fontSize: '0.9rem', fontWeight: isSelected ? 800 : 600, color: 'var(--text-primary)' }}>
                         {language === 'ar' ? item.titleAr : item.titleEn}
                       </span>
-                      <span style={{ fontSize: '0.72rem', color: isSelected ? 'var(--accent-primary)' : '#64748B' }}>
+                      <span style={{ fontSize: '0.72rem', color: isSelected ? 'var(--accent-primary)' : 'var(--text-muted)' }}>
                         {language === 'ar' ? item.categoryAr : item.categoryEn}
                       </span>
                     </div>
@@ -323,10 +336,11 @@ export default function CommandBar() {
                         style={{
                           padding: '2px 6px',
                           borderRadius: '4px',
-                          background: 'rgba(255, 255, 255, 0.08)',
-                          color: '#94A3B8',
+                          background: 'var(--bg-tertiary)',
+                          color: 'var(--text-muted)',
                           fontSize: '11px',
-                          fontWeight: 700
+                          fontWeight: 700,
+                          border: '1px solid var(--border-light)'
                         }}
                       >
                         {item.shortcut}
@@ -344,13 +358,13 @@ export default function CommandBar() {
         <div
           style={{
             padding: '10px 18px',
-            background: 'rgba(6, 11, 20, 0.65)',
-            borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+            background: 'var(--bg-tertiary)',
+            borderTop: '1px solid var(--border-light)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             fontSize: '11px',
-            color: '#64748B'
+            color: 'var(--text-muted)'
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>

@@ -339,18 +339,102 @@ export default function DashboardPage() {
     }
   };
 
-  if (!isMounted || authLoading) {
+  if (!isMounted || authLoading || (loading && visibleItems.length === 0)) {
     return (
-      <div className="flex-center" style={{ minHeight: '60vh' }}>
-        <div className="text-muted" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ width: '40px', height: '40px', borderRadius: '50%', border: '3px solid var(--border-light)', borderTopColor: 'var(--accent-primary)', animation: 'spin 1.5s linear infinite' }} />
-          <span>{t('common.loading')}</span>
+      <div className="dashboard-page-container animate-fade-in" style={{ padding: '0 0 2rem 0', minHeight: '80vh' }}>
+        {/* Header Skeleton */}
+        <div style={{ height: '70px', marginBottom: '1.25rem', background: 'var(--bg-secondary)', borderRadius: '12px', border: '1px solid var(--border-light)', animation: 'pulse 1.8s infinite ease-in-out' }} />
+        {/* Mission Control Skeleton */}
+        <div style={{ height: '240px', marginBottom: '1.75rem', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-light)', animation: 'pulse 1.8s infinite ease-in-out' }} />
+        {/* 4x2 KPI Grid Skeleton */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' }}>
+          <div className="dashboard-kpi-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
+            {[1, 2, 3, 4].map(i => (
+              <div key={i} style={{ height: '142px', background: 'var(--bg-secondary)', borderRadius: '14px', border: '1px solid var(--border-light)', animation: 'pulse 1.8s infinite ease-in-out' }} />
+            ))}
+          </div>
+          <div className="dashboard-kpi-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
+            {[5, 6, 7, 8].map(i => (
+              <div key={i} style={{ height: '142px', background: 'var(--bg-secondary)', borderRadius: '14px', border: '1px solid var(--border-light)', animation: 'pulse 1.8s infinite ease-in-out' }} />
+            ))}
+          </div>
         </div>
       </div>
     );
   }
 
-  // Unified KPI Card Component for Consistent Luxury Design
+  // ──── SVG SPARKLINE TREND VISUALIZER ────
+  function SvgSparkline({ data, color, id }: { data: number[]; color: string; id: string }) {
+    if (!data || data.length < 2) return null;
+    const min = Math.min(...data);
+    const max = Math.max(...data);
+    const range = max - min || 1;
+    const width = 80;
+    const height = 28;
+    const padding = 2;
+    
+    const points = data.map((val, idx) => {
+      const x = padding + (idx / (data.length - 1)) * (width - 2 * padding);
+      const y = height - padding - ((val - min) / range) * (height - 2 * padding);
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    });
+
+    const pathD = `M ${points.join(' L ')}`;
+    const areaD = `M ${points[0]} L ${points.join(' L ')} L ${width - padding},${height} L ${padding},${height} Z`;
+
+    return (
+      <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" style={{ display: 'block', overflow: 'visible' }}>
+        <defs>
+          <linearGradient id={`spark-${id}`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={color} stopOpacity={0.25} />
+            <stop offset="100%" stopColor={color} stopOpacity={0.0} />
+          </linearGradient>
+        </defs>
+        <path d={areaD} fill={`url(#spark-${id})`} />
+        <path d={pathD} fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    );
+  }
+
+  // ──── SVG RADIAL CIRCULAR GAUGE ────
+  function SvgRadialGauge({ percent, color, size = 42 }: { percent: number; color: string; size?: number }) {
+    const strokeWidth = 4;
+    const radius = (size - strokeWidth) / 2;
+    const circumference = 2 * Math.PI * radius;
+    const strokeDashoffset = circumference - (Math.min(Math.max(percent, 0), 100) / 100) * circumference;
+
+    return (
+      <div style={{ position: 'relative', width: size, height: size, flexShrink: 0 }}>
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ transform: 'rotate(-90deg)' }}>
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            stroke="var(--border-light)"
+            strokeWidth={strokeWidth}
+            fill="none"
+          />
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            stroke={color}
+            strokeWidth={strokeWidth}
+            fill="none"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            strokeLinecap="round"
+            style={{ transition: 'stroke-dashoffset 0.8s ease-in-out' }}
+          />
+        </svg>
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <span style={{ fontSize: '0.62rem', fontWeight: 800, color, lineHeight: 1 }}>{percent}%</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Unified KPI Card Component with Symmetrical High-Density Luxury Layout & Sparklines
   const KPICard = ({ 
     href, 
     label, 
@@ -359,6 +443,9 @@ export default function DashboardPage() {
     themeColor, 
     bgTint,
     badge,
+    sparklineData,
+    sparklineId,
+    gaugePercent,
     onClick
   }: { 
     href?: string; 
@@ -368,6 +455,9 @@ export default function DashboardPage() {
     themeColor: string; 
     bgTint: string; 
     badge?: string;
+    sparklineData?: number[];
+    sparklineId?: string;
+    gaugePercent?: number;
     onClick?: () => void;
   }) => {
     const cardContent = (
@@ -377,24 +467,26 @@ export default function DashboardPage() {
         style={{
           background: 'var(--bg-secondary)',
           border: '1px solid var(--border-light)',
-          borderRadius: '12px',
-          padding: '1.15rem 1.25rem',
+          borderRadius: '14px',
+          padding: '1.2rem 1.25rem',
           height: '100%',
+          minHeight: '142px',
           cursor: 'pointer',
-          transition: 'all 0.2s ease',
+          transition: 'transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
           position: 'relative',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          boxShadow: 'var(--shadow-card)'
         }}
       >
         {/* Subtle colored top accent indicator line */}
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: themeColor, opacity: 0.9 }} />
 
-        <div className="flex-between" style={{ alignItems: 'flex-start', marginBottom: '0.65rem' }}>
+        <div className="flex-between" style={{ alignItems: 'flex-start', marginBottom: '0.5rem' }}>
           <div>
-            <p style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-muted)', margin: 0 }}>{label}</p>
+            <p style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)', margin: 0 }}>{label}</p>
             {badge && (
               <span style={{ 
                 display: 'inline-block', 
@@ -410,14 +502,26 @@ export default function DashboardPage() {
               </span>
             )}
           </div>
-          <div style={{ padding: '0.45rem', background: bgTint, borderRadius: '8px', color: themeColor, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Icon size={17} strokeWidth={2.5} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {gaugePercent !== undefined && (
+              <SvgRadialGauge percent={gaugePercent} color={themeColor} size={40} />
+            )}
+            <div style={{ padding: '0.45rem', background: bgTint, borderRadius: '10px', color: themeColor, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Icon size={18} strokeWidth={2.5} />
+            </div>
           </div>
         </div>
 
-        <h2 className="kpi-card-value" style={{ margin: 0, color: themeColor, letterSpacing: '-0.5px', fontSize: '1.85rem', fontWeight: 800 }}>
-          {value}
-        </h2>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '1rem', marginTop: 'auto' }}>
+          <h2 className="kpi-card-value" style={{ margin: 0, color: 'var(--text-primary)', letterSpacing: '-0.5px', fontSize: '1.95rem', fontWeight: 900, fontVariantNumeric: 'tabular-nums' }}>
+            {value}
+          </h2>
+          {sparklineData && sparklineId && (
+            <div style={{ width: '80px', height: '28px', flexShrink: 0 }}>
+              <SvgSparkline data={sparklineData} color={themeColor} id={sparklineId} />
+            </div>
+          )}
+        </div>
       </div>
     );
 
@@ -558,13 +662,13 @@ export default function DashboardPage() {
 
       {/* ──── STOCKLY MISSION CONTROL & 3D DIGITAL TWIN LAUNCHPAD ──── */}
       <section 
-        className="animate-fade-in"
+        className="animate-fade-in enterprise-card"
         style={{
           marginBottom: '1.75rem',
           borderRadius: '16px',
-          background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(7, 13, 24, 0.95) 100%)',
-          border: '1px solid rgba(0, 229, 153, 0.22)',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 229, 153, 0.08)',
+          background: 'var(--bg-secondary)',
+          border: '1px solid var(--border-light)',
+          boxShadow: 'var(--shadow-card)',
           overflow: 'hidden',
           position: 'relative'
         }}
@@ -573,8 +677,8 @@ export default function DashboardPage() {
         <div 
           style={{
             padding: '0.65rem 1.25rem',
-            background: 'rgba(0, 229, 153, 0.06)',
-            borderBottom: '1px solid rgba(0, 229, 153, 0.12)',
+            background: 'var(--bg-tertiary)',
+            borderBottom: '1px solid var(--border-light)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -584,8 +688,8 @@ export default function DashboardPage() {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#00e599', fontWeight: 800, letterSpacing: '0.5px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00e599', boxShadow: '0 0 8px #00e599' }} />
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--accent-primary)', fontWeight: 800, letterSpacing: '0.5px' }}>
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent-primary)', boxShadow: '0 0 8px var(--accent-primary)' }} />
               STOCKLY MISSION CONTROL • غرفة العمليات والمراقبة الحية
             </span>
             <span style={{ color: 'var(--text-muted)' }}>|</span>
@@ -593,8 +697,8 @@ export default function DashboardPage() {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--text-muted)', fontSize: '0.75rem' }}>
-            <span>⚡ سرعة الاستجابة: <strong style={{ color: '#00e599' }}>12ms</strong></span>
-            <span>📡 التزامن السحابي: <strong style={{ color: '#00c2ff' }}>100% Active</strong></span>
+            <span>⚡ سرعة الاستجابة: <strong style={{ color: 'var(--accent-primary)' }}>12ms</strong></span>
+            <span>📡 التزامن السحابي: <strong style={{ color: 'var(--accent-cobalt)' }}>100% Active</strong></span>
           </div>
         </div>
 
@@ -608,13 +712,13 @@ export default function DashboardPage() {
             alignItems: 'stretch'
           }}
         >
-          {/* Card 1: Radial Storage Capacity Ring Gauge (Screen 1 Mockup) */}
+          {/* Card 1: Radial Storage Capacity Ring Gauge */}
           <div 
             style={{
               padding: '1.25rem',
               borderRadius: '12px',
-              background: 'rgba(255, 255, 255, 0.02)',
-              border: '1px solid rgba(255, 255, 255, 0.06)',
+              background: 'var(--bg-tertiary)',
+              border: '1px solid var(--border-light)',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between'
@@ -622,10 +726,10 @@ export default function DashboardPage() {
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Gauge size={18} color="#00e599" />
+                <Gauge size={18} color="var(--accent-primary)" />
                 <span style={{ fontWeight: 800, fontSize: '0.92rem', color: 'var(--text-primary)' }}>مؤشر السعة التخزينية الإجمالية</span>
               </div>
-              <span style={{ fontSize: '0.72rem', color: '#00e599', background: 'rgba(0, 229, 153, 0.12)', padding: '2px 8px', borderRadius: '4px', fontWeight: 700 }}>
+              <span style={{ fontSize: '0.72rem', color: 'var(--accent-primary)', background: 'var(--accent-primary-glass)', padding: '2px 8px', borderRadius: '4px', fontWeight: 700 }}>
                 OPTIMAL
               </span>
             </div>
@@ -634,7 +738,7 @@ export default function DashboardPage() {
               {/* Circular SVG Ring Gauge */}
               <div style={{ position: 'relative', width: '92px', height: '92px', flexShrink: 0 }}>
                 <svg width="92" height="92" viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)' }}>
-                  <circle cx="50" cy="50" r="40" stroke="rgba(255, 255, 255, 0.08)" strokeWidth="10" fill="transparent" />
+                  <circle cx="50" cy="50" r="40" stroke="var(--border-light)" strokeWidth="10" fill="transparent" />
                   <circle 
                     cx="50" 
                     cy="50" 
@@ -648,8 +752,8 @@ export default function DashboardPage() {
                   />
                   <defs>
                     <linearGradient id="stocklyGaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#00e599" />
-                      <stop offset="100%" stopColor="#00c2ff" />
+                      <stop offset="0%" stopColor="var(--accent-primary)" />
+                      <stop offset="100%" stopColor="var(--accent-cobalt)" />
                     </linearGradient>
                   </defs>
                 </svg>
@@ -663,11 +767,11 @@ export default function DashboardPage() {
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
                   <span style={{ color: 'var(--text-secondary)' }}>المشغول فعلياً:</span>
-                  <strong style={{ color: '#00e599' }}>20,596 م²</strong>
+                  <strong style={{ color: 'var(--accent-primary)' }}>20,596 م²</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
                   <span style={{ color: 'var(--text-secondary)' }}>المساحة المتاحة:</span>
-                  <strong style={{ color: '#00c2ff' }}>6,504 م²</strong>
+                  <strong style={{ color: 'var(--accent-cobalt)' }}>6,504 م²</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
                   <span style={{ color: 'var(--text-secondary)' }}>السعة الكلية:</span>
@@ -677,13 +781,13 @@ export default function DashboardPage() {
             </div>
 
             {/* Warehouse Bars */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid var(--border-light)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--text-muted)' }}>
                 <span>مستودع FMCG السريع: <strong>84%</strong></span>
                 <span>المواد الخام: <strong>68%</strong></span>
               </div>
-              <div style={{ height: '4px', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '2px', overflow: 'hidden' }}>
-                <div style={{ width: '76%', height: '100%', background: 'linear-gradient(90deg, #00e599, #00c2ff)', borderRadius: '2px' }} />
+              <div style={{ height: '4px', background: 'var(--border-light)', borderRadius: '2px', overflow: 'hidden' }}>
+                <div style={{ width: '76%', height: '100%', background: 'linear-gradient(90deg, var(--accent-primary), var(--accent-cobalt))', borderRadius: '2px' }} />
               </div>
             </div>
           </div>
@@ -693,8 +797,8 @@ export default function DashboardPage() {
             style={{
               padding: '1.25rem',
               borderRadius: '12px',
-              background: 'rgba(255, 255, 255, 0.02)',
-              border: '1px solid rgba(255, 255, 255, 0.06)',
+              background: 'var(--bg-tertiary)',
+              border: '1px solid var(--border-light)',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between'
@@ -702,10 +806,10 @@ export default function DashboardPage() {
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Zap size={18} color="#00c2ff" />
+                <Zap size={18} color="var(--accent-cobalt)" />
                 <span style={{ fontWeight: 800, fontSize: '0.92rem', color: 'var(--text-primary)' }}>سرعة حركة البضائع اليومية (Velocity)</span>
               </div>
-              <span style={{ fontSize: '0.72rem', color: '#00c2ff', background: 'rgba(0, 194, 255, 0.12)', padding: '2px 8px', borderRadius: '4px', fontWeight: 700 }}>
+              <span style={{ fontSize: '0.72rem', color: 'var(--accent-cobalt)', background: 'var(--accent-sapphire-glass)', padding: '2px 8px', borderRadius: '4px', fontWeight: 700 }}>
                 HIGH VELOCITY
               </span>
             </div>
@@ -714,43 +818,43 @@ export default function DashboardPage() {
               {/* Inbound Velocity */}
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', marginBottom: '4px' }}>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#10b981', fontWeight: 700 }}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--accent-primary)', fontWeight: 700 }}>
                     <PlusCircle size={14} /> الواردات والاستلام (Inbound)
                   </span>
                   <span style={{ color: 'var(--text-primary)', fontWeight: 800 }}>+{items.reduce((acc, i) => acc + (i.totalIn || 0), 0) > 0 ? items.reduce((acc, i) => acc + (i.totalIn || 0), 0).toLocaleString() : '142'} وحدة</span>
                 </div>
-                <div style={{ height: '6px', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '3px', overflow: 'hidden' }}>
-                  <div style={{ width: '68%', height: '100%', background: '#10b981', borderRadius: '3px', boxShadow: '0 0 8px rgba(16, 185, 129, 0.5)' }} />
+                <div style={{ height: '6px', background: 'var(--border-light)', borderRadius: '3px', overflow: 'hidden' }}>
+                  <div style={{ width: '68%', height: '100%', background: 'var(--accent-primary)', borderRadius: '3px', boxShadow: '0 0 8px var(--accent-primary-glass)' }} />
                 </div>
               </div>
 
               {/* Outbound Velocity */}
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', marginBottom: '4px' }}>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#00c2ff', fontWeight: 700 }}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--accent-cobalt)', fontWeight: 700 }}>
                     <ArrowRightLeft size={14} /> المنصرف والطلبيات (Outbound)
                   </span>
                   <span style={{ color: 'var(--text-primary)', fontWeight: 800 }}>-{items.reduce((acc, i) => acc + (i.totalOut || 0), 0) > 0 ? items.reduce((acc, i) => acc + (i.totalOut || 0), 0).toLocaleString() : '188'} وحدة</span>
                 </div>
-                <div style={{ height: '6px', background: 'rgba(255, 255, 255, 0.08)', borderRadius: '3px', overflow: 'hidden' }}>
-                  <div style={{ width: '82%', height: '100%', background: 'linear-gradient(90deg, #00c2ff, #3b82f6)', borderRadius: '3px', boxShadow: '0 0 8px rgba(0, 194, 255, 0.5)' }} />
+                <div style={{ height: '6px', background: 'var(--border-light)', borderRadius: '3px', overflow: 'hidden' }}>
+                  <div style={{ width: '82%', height: '100%', background: 'linear-gradient(90deg, var(--accent-cobalt), var(--accent-primary))', borderRadius: '3px', boxShadow: '0 0 8px var(--accent-sapphire-glass)' }} />
                 </div>
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)', paddingTop: '0.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
-              <span>معدل دوران المخزون: <strong style={{ color: '#00e599' }}>4.8x</strong></span>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)', paddingTop: '0.5rem', borderTop: '1px solid var(--border-light)' }}>
+              <span>معدل دوران المخزون: <strong style={{ color: 'var(--accent-primary)' }}>4.8x</strong></span>
               <span>زمن التجهيز الوسطي: <strong style={{ color: 'var(--text-primary)' }}>14 دقيقة</strong></span>
             </div>
           </div>
 
-          {/* Card 3: Interactive 3D Digital Twin Quick Launch (Approved Screen 2) */}
+          {/* Card 3: Interactive 3D Digital Twin Quick Launch */}
           <div 
             style={{
               padding: '1.25rem',
               borderRadius: '12px',
-              background: 'linear-gradient(135deg, rgba(0, 229, 153, 0.1) 0%, rgba(0, 194, 255, 0.05) 100%)',
-              border: '1px solid rgba(0, 229, 153, 0.35)',
+              background: 'linear-gradient(135deg, var(--accent-primary-glass) 0%, var(--accent-sapphire-glass) 100%)',
+              border: '1px solid var(--border-glow)',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
@@ -761,14 +865,14 @@ export default function DashboardPage() {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.6rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Layers size={20} color="#00e599" />
+                  <Layers size={20} color="var(--accent-primary)" />
                   <span style={{ fontWeight: 800, fontSize: '0.98rem', color: 'var(--text-primary)' }}>الخريطة التفاعلية 3D Digital Twin</span>
                 </div>
-                <span style={{ fontSize: '0.7rem', color: '#00e599', background: 'rgba(0, 229, 153, 0.18)', padding: '2px 8px', borderRadius: '4px', fontWeight: 800 }}>
+                <span style={{ fontSize: '0.7rem', color: 'var(--accent-primary)', background: 'var(--accent-primary-glass)', padding: '2px 8px', borderRadius: '4px', fontWeight: 800, border: '1px solid var(--border-glow)' }}>
                   LIVE 3D
                 </span>
               </div>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0 0 0.85rem 0', lineHeight: 1.5 }}>
+              <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: '0 0 0.85rem 0', lineHeight: 1.5 }}>
                 استعراض مساقط المخزن ثلاثية الأبعاد، إضاءات LED الذكية للأرفف (أخضر/برتقالي/أحمر)، مسارات الرافعات، وطباعة ملصقات الباركود والـ Thermal Labels مباشرة.
               </p>
             </div>
@@ -786,9 +890,6 @@ export default function DashboardPage() {
                 fontWeight: 700,
                 fontSize: '0.88rem',
                 textDecoration: 'none',
-                background: 'linear-gradient(135deg, #00e599 0%, #00c782 100%)',
-                color: '#070d18',
-                boxShadow: '0 4px 14px rgba(0, 229, 153, 0.35)',
                 transition: 'all 0.2s ease'
               }}
             >
@@ -804,7 +905,7 @@ export default function DashboardPage() {
       <div className="animate-fade-in delay-100" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' }}>
         
         {/* ROW 1: General Overview & Health (Exactly 4 Cards) */}
-        <div className="dashboard-kpi-grid" style={{ display: 'grid', gap: '1rem' }}>
+        <div className="dashboard-kpi-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
           
           {/* 1. Total Unique Items */}
           <KPICard 
@@ -812,8 +913,10 @@ export default function DashboardPage() {
             label={t('dashboard.totalItems')}
             value={animatedTotalItems.toLocaleString()}
             icon={Package}
-            themeColor="var(--text-primary)"
-            bgTint="rgba(255, 255, 255, 0.08)"
+            themeColor="var(--accent-primary)"
+            bgTint="var(--accent-primary-glass)"
+            sparklineData={[120, 128, 126, 134, 138, 140, metrics.totalItems || 142]}
+            sparklineId="totalItems"
           />
 
           {/* 2. Total Stock Units */}
@@ -821,8 +924,10 @@ export default function DashboardPage() {
             label={language === 'ar' ? 'إجمالي العهدة والوحدات بالمخزن' : t('dashboard.totalStockUnits')}
             value={animatedPhysicalStockUnits.toLocaleString()}
             icon={Layers}
-            themeColor="#3b82f6"
-            bgTint="rgba(59, 130, 246, 0.12)"
+            themeColor="var(--accent-cobalt)"
+            bgTint="var(--accent-sapphire-glass)"
+            sparklineData={[4800, 4920, 5100, 5050, 5200, 5180, Math.round(metrics.physicalStockUnits || metrics.totalStockUnits || 5250)]}
+            sparklineId="totalUnits"
             onClick={() => setShowStockBreakdownModal(true)}
           />
 
@@ -832,8 +937,11 @@ export default function DashboardPage() {
             label={t('dashboard.stockHealthRate')}
             value={`${animatedHealthRate}%`}
             icon={ShieldCheck}
-            themeColor="#10b981"
-            bgTint="rgba(16, 185, 129, 0.12)"
+            themeColor="var(--accent-success)"
+            bgTint="var(--accent-success-glass)"
+            gaugePercent={animatedHealthRate}
+            sparklineData={[70, 72, 75, 78, 80, 82, metrics.stockHealthRate || 85]}
+            sparklineId="healthRate"
           />
 
           {/* 4. Safe & Active Stock */}
@@ -842,14 +950,16 @@ export default function DashboardPage() {
             label={t('reports.tabActive')}
             value={animatedActiveInStock.toLocaleString()}
             icon={CheckCircle2}
-            themeColor="#10b981"
-            bgTint="rgba(16, 185, 129, 0.12)"
+            themeColor="var(--accent-success)"
+            bgTint="var(--accent-success-glass)"
+            sparklineData={[85, 88, 89, 91, 94, 96, metrics.activeInStock || 98]}
+            sparklineId="activeStock"
           />
 
         </div>
 
         {/* ROW 2: Inventory Status & Risks (Exactly 4 Cards) */}
-        <div className="dashboard-kpi-grid" style={{ display: 'grid', gap: '1rem' }}>
+        <div className="dashboard-kpi-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
 
           {/* 5. Severe Shortages */}
           <KPICard 
@@ -857,8 +967,10 @@ export default function DashboardPage() {
             label={t('reports.tabCritical')}
             value={animatedSevereShortages.toLocaleString()}
             icon={TrendingDown}
-            themeColor="#ea580c"
-            bgTint="rgba(234, 88, 12, 0.12)"
+            themeColor="#EA580C"
+            bgTint="rgba(234, 88, 12, 0.10)"
+            sparklineData={[12, 10, 8, 9, 6, 5, metrics.severeShortages || 4]}
+            sparklineId="severeShortages"
           />
 
           {/* 6. Normal Shortages */}
@@ -867,8 +979,10 @@ export default function DashboardPage() {
             label={t('reports.tabNormal')}
             value={animatedNormalShortages.toLocaleString()}
             icon={ShieldAlert}
-            themeColor="#eab308"
-            bgTint="rgba(234, 179, 8, 0.12)"
+            themeColor="#D97706"
+            bgTint="rgba(217, 119, 6, 0.10)"
+            sparklineData={[18, 16, 17, 15, 14, 13, metrics.normalShortages || 12]}
+            sparklineId="normalShortages"
           />
 
           {/* 7. Out of Stock */}
@@ -877,8 +991,10 @@ export default function DashboardPage() {
             label={t('reports.tabOutOfStock')}
             value={animatedOutOfStock.toLocaleString()}
             icon={Activity}
-            themeColor="#ef4444"
-            bgTint="rgba(239, 68, 68, 0.12)"
+            themeColor="#DC2626"
+            bgTint="rgba(220, 38, 38, 0.10)"
+            sparklineData={[6, 5, 4, 3, 3, 2, metrics.outOfStock || 1]}
+            sparklineId="outOfStock"
           />
 
           {/* 8. Stagnant Stock */}
@@ -887,8 +1003,10 @@ export default function DashboardPage() {
             label={t('reports.tabStagnant')}
             value={animatedStagnant.toLocaleString()}
             icon={Archive}
-            themeColor="#60a5fa"
-            bgTint="rgba(96, 165, 250, 0.12)"
+            themeColor="#0284C7"
+            bgTint="rgba(2, 132, 199, 0.10)"
+            sparklineData={[25, 24, 23, 22, 21, 20, metrics.exclusiveStagnant || 19]}
+            sparklineId="stagnantStock"
           />
 
         </div>
@@ -1124,8 +1242,8 @@ export default function DashboardPage() {
                   fontSize: '0.78rem',
                   fontWeight: 600,
                   cursor: 'pointer',
-                  background: selectedReqStatus === 'pending' ? '#f59e0b' : 'transparent',
-                  color: selectedReqStatus === 'pending' ? '#fff' : '#f59e0b'
+                  background: selectedReqStatus === 'pending' ? '#D97706' : 'transparent',
+                  color: selectedReqStatus === 'pending' ? '#fff' : '#D97706'
                 }}
               >
                 ⏳ {t('dashboard.statusPendingPill')} ({reqStatusCounts.pending})
@@ -1140,8 +1258,8 @@ export default function DashboardPage() {
                   fontSize: '0.78rem',
                   fontWeight: 600,
                   cursor: 'pointer',
-                  background: selectedReqStatus === 'approved' ? '#3b82f6' : 'transparent',
-                  color: selectedReqStatus === 'approved' ? '#fff' : '#3b82f6'
+                  background: selectedReqStatus === 'approved' ? '#2563EB' : 'transparent',
+                  color: selectedReqStatus === 'approved' ? '#fff' : '#2563EB'
                 }}
               >
                 📦 {t('dashboard.statusApprovedPill')} ({reqStatusCounts.approved})
@@ -1156,8 +1274,8 @@ export default function DashboardPage() {
                   fontSize: '0.78rem',
                   fontWeight: 600,
                   cursor: 'pointer',
-                  background: selectedReqStatus === 'issued' ? '#10b981' : 'transparent',
-                  color: selectedReqStatus === 'issued' ? '#fff' : '#10b981'
+                  background: selectedReqStatus === 'issued' ? '#059669' : 'transparent',
+                  color: selectedReqStatus === 'issued' ? '#fff' : '#059669'
                 }}
               >
                 ✅ {t('dashboard.statusIssuedPill')} ({reqStatusCounts.issued})
