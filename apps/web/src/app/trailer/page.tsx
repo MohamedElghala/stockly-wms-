@@ -5,7 +5,7 @@ import Link from 'next/link';
 import StocklyMobiusCanvas from '@/components/trailer/StocklyMobiusCanvas';
 
 export default function TrailerPage() {
-  const [activeTab, setActiveTab] = useState<'canvas_engine' | 'mp4_video'>('canvas_engine');
+  const [activeTab, setActiveTab] = useState<'disney_intro' | 'canvas_engine'>('disney_intro');
 
   return (
     <div 
@@ -24,11 +24,11 @@ export default function TrailerPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <span style={{ display: 'inline-block', width: '12px', height: '12px', borderRadius: '50%', background: '#00E599', boxShadow: '0 0 16px #00E599' }} />
             <h1 style={{ fontSize: '24px', fontWeight: 800, margin: 0, letterSpacing: '-0.5px' }}>
-              منظومة الموشن جرافيك السينمائي الحقيقي لـ Stockly WMS
+              الإنترو السينمائي الحقيقي لـ Stockly WMS (نمط ديزني / مارفل)
             </h1>
           </div>
           <p style={{ margin: '6px 0 0', color: '#94A3B8', fontSize: '14px' }}>
-            دوران ثلاثي الأبعاد حقيقي للوغو، دوران فيزيائي لبكرات السيور، تدفق حزم البيانات، ومسح ليزري متزامن مع الصوت
+            المجسم الحقيقي المختار (Mobius S) يقترب من عمق الفضاء، وتتحرك سيوره ونبضات النيون، ثم يقذف أحرف STOCKLY WMS في مسارات فيزيائية لتستقر بدقة.
           </p>
         </div>
         <div style={{ display: 'flex', gap: '12px' }}>
@@ -53,118 +53,114 @@ export default function TrailerPage() {
       {/* Mode Switcher Tabs */}
       <div style={{ display: 'flex', gap: '12px', marginBottom: '20px' }}>
         <button
-          onClick={() => setActiveTab('canvas_engine')}
+          onClick={() => setActiveTab('disney_intro')}
           style={{
-            padding: '10px 22px',
+            padding: '12px 26px',
             borderRadius: '10px',
-            background: activeTab === 'canvas_engine' ? '#00E599' : 'rgba(15,23,42,0.8)',
-            color: activeTab === 'canvas_engine' ? '#070D18' : '#CBD5E1',
-            border: activeTab === 'canvas_engine' ? '1px solid #00E599' : '1px solid rgba(255,255,255,0.1)',
+            background: activeTab === 'disney_intro' ? 'linear-gradient(135deg, #00E599, #059669)' : 'rgba(15,23,42,0.8)',
+            color: activeTab === 'disney_intro' ? '#070D18' : '#CBD5E1',
+            border: activeTab === 'disney_intro' ? '1px solid #00E599' : '1px solid rgba(255,255,255,0.1)',
             fontWeight: 800,
-            fontSize: '14px',
+            fontSize: '15px',
             cursor: 'pointer',
             transition: 'all 0.2s',
-            boxShadow: activeTab === 'canvas_engine' ? '0 0 20px rgba(0,229,153,0.35)' : 'none'
+            boxShadow: activeTab === 'disney_intro' ? '0 0 24px rgba(0,229,153,0.4)' : 'none'
           }}
         >
-          ⚡ محرك الموشن الحقيقي الحي 60 FPS (Interactive 3D Engine)
+          🎬 فيديو الإنترو السينمائي النهائي (1080p MP4)
         </button>
 
         <button
-          onClick={() => setActiveTab('mp4_video')}
+          onClick={() => setActiveTab('canvas_engine')}
           style={{
-            padding: '10px 22px',
+            padding: '12px 26px',
             borderRadius: '10px',
-            background: activeTab === 'mp4_video' ? '#2563EB' : 'rgba(15,23,42,0.8)',
-            color: activeTab === 'mp4_video' ? '#FFFFFF' : '#CBD5E1',
-            border: activeTab === 'mp4_video' ? '1px solid #2563EB' : '1px solid rgba(255,255,255,0.1)',
+            background: activeTab === 'canvas_engine' ? '#2563EB' : 'rgba(15,23,42,0.8)',
+            color: activeTab === 'canvas_engine' ? '#FFFFFF' : '#CBD5E1',
+            border: activeTab === 'canvas_engine' ? '1px solid #2563EB' : '1px solid rgba(255,255,255,0.1)',
             fontWeight: 800,
-            fontSize: '14px',
+            fontSize: '15px',
             cursor: 'pointer',
             transition: 'all 0.2s',
-            boxShadow: activeTab === 'mp4_video' ? '0 0 20px rgba(37,99,235,0.35)' : 'none'
+            boxShadow: activeTab === 'canvas_engine' ? '0 0 20px rgba(37,99,235,0.35)' : 'none'
           }}
         >
-          🎬 تشغيل ملف الفيديو المصدر (MP4 Video 1080p)
+          ⚡ محرك الكانفاس التفاعلي (Interactive Canvas)
         </button>
       </div>
 
       {/* Main Display Area */}
-      {activeTab === 'canvas_engine' ? (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <StocklyMobiusCanvas width={1280} height={720} autoPlay={true} />
-          
-          {/* Engineering Breakdown Cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginTop: '12px' }}>
-            <div style={{ background: '#0F172A', padding: '16px 20px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <span style={{ fontSize: '11px', color: '#00E599', fontWeight: 800 }}>01. حركة الشعار (3D Orbit)</span>
-              <h4 style={{ margin: '6px 0 4px', fontSize: '15px', color: '#FFFFFF' }}>دوران محوري حقيقي</h4>
-              <p style={{ margin: 0, fontSize: '12px', color: '#94A3B8', lineHeight: 1.5 }}>
-                حساب رياضي لمنحنى Lemniscate ثلاثي الأبعاد يدور بزوايا Yaw و Pitch و Roll حقيقية.
+      {activeTab === 'disney_intro' ? (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div style={{ background: '#0F172A', borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(0,229,153,0.3)', maxWidth: '1280px', margin: '0 auto', width: '100%', boxShadow: '0 25px 60px rgba(0,0,0,0.8)' }}>
+            <div style={{ position: 'relative', width: '100%', aspectRatio: '16 / 9', background: '#030712' }}>
+              <video
+                src="/videos/stockly_disney_cinematic_intro.mp4"
+                controls
+                autoPlay
+                loop
+                playsInline
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+              />
+            </div>
+            <div style={{ padding: '20px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(15,23,42,0.95)', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+              <div>
+                <h3 style={{ margin: '0 0 6px', fontSize: '18px', color: '#FFFFFF', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ color: '#00E599' }}>●</span> إنترو ديزني/مارفل الحقيقي: stockly_disney_cinematic_intro.mp4
+                </h3>
+                <p style={{ margin: 0, color: '#94A3B8', fontSize: '14px' }}>
+                  شعار الموبيوس الأصلي عالي الدقة (الصورة 3) + اقتراب من الفضاء العميق + قذف وتراص الحروف فيزيائياً + وميض شعاع النصر النهائي.
+                </p>
+              </div>
+              <a
+                href="/videos/stockly_disney_cinematic_intro.mp4"
+                download="stockly_disney_cinematic_intro.mp4"
+                style={{
+                  padding: '12px 24px',
+                  borderRadius: '10px',
+                  background: '#00E599',
+                  color: '#070D18',
+                  fontWeight: 800,
+                  textDecoration: 'none',
+                  fontSize: '14px',
+                  boxShadow: '0 4px 16px rgba(0,229,153,0.35)'
+                }}
+              >
+                ⬇ تحميل الفيديو (1080p Full HD)
+              </a>
+            </div>
+          </div>
+
+          {/* Storyboard Phases Breakdown */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
+            <div style={{ background: '#0F172A', padding: '18px 20px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <span style={{ fontSize: '11px', color: '#38BDF8', fontWeight: 800 }}>المرحلة 1 (0.0s - 3.8s)</span>
+              <h4 style={{ margin: '6px 0 4px', fontSize: '15px', color: '#FFFFFF' }}>الاقتراب من الفضاء العميق</h4>
+              <p style={{ margin: 0, fontSize: '13px', color: '#94A3B8', lineHeight: 1.5 }}>
+                شعار الموبيوس الحقيقي يبدأ صغيراً جداً بحجم 6% مع هالة سيان، ويقترب بسلاسة مع اهتزازات نيون كهربائية حتى يملأ الشاشة.
               </p>
             </div>
 
-            <div style={{ background: '#0F172A', padding: '16px 20px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <span style={{ fontSize: '11px', color: '#38BDF8', fontWeight: 800 }}>02. بكرات السيور (Spinning Rollers)</span>
-              <h4 style={{ margin: '6px 0 4px', fontSize: '15px', color: '#FFFFFF' }}>دوران فيزيائي للبكرات</h4>
-              <p style={{ margin: 0, fontSize: '12px', color: '#94A3B8', lineHeight: 1.5 }}>
-                70 بكرة أوتوماتيكية تدور بسرعات متزامنة مع حركة التوريد والصرف على مسارات الشريط.
+            <div style={{ background: '#0F172A', padding: '18px 20px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <span style={{ fontSize: '11px', color: '#00E599', fontWeight: 800 }}>المرحلة 2 (3.8s - 6.5s)</span>
+              <h4 style={{ margin: '6px 0 4px', fontSize: '15px', color: '#FFFFFF' }}>قذف الأحرف وتراصها (Disney Squash)</h4>
+              <p style={{ margin: 0, fontSize: '13px', color: '#94A3B8', lineHeight: 1.5 }}>
+                الشعار يقذف أحرف STOCKLY WMS حرفاً تلو الآخر في مسارات مقوسة مع ذيول ضوئية لتهبط وترتد فيزيائياً في أماكنها المحددة.
               </p>
             </div>
 
-            <div style={{ background: '#0F172A', padding: '16px 20px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <span style={{ fontSize: '11px', color: '#A855F7', fontWeight: 800 }}>03. حزم البيانات (Telemetry Orbs)</span>
-              <h4 style={{ margin: '6px 0 4px', fontSize: '15px', color: '#FFFFFF' }}>تدفق ضوئي سريع</h4>
-              <p style={{ margin: 0, fontSize: '12px', color: '#94A3B8', lineHeight: 1.5 }}>
-                جسيمات نيون زمردية وسماوية تجري بسرعة البرق على المسارات المزدوجة مع ذيول مضيئة.
-              </p>
-            </div>
-
-            <div style={{ background: '#0F172A', padding: '16px 20px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <span style={{ fontSize: '11px', color: '#F59E0B', fontWeight: 800 }}>04. المسح الليزري (Volumetric Laser)</span>
-              <h4 style={{ margin: '6px 0 4px', fontSize: '15px', color: '#FFFFFF' }}>موجة مسح ضوئي عملاقة</h4>
-              <p style={{ margin: 0, fontSize: '12px', color: '#94A3B8', lineHeight: 1.5 }}>
-                لوح ليزري عالي الكثافة يمسح الشعار مع رنين صوتي وموجة صدمية تبرز الاسم في النهاية.
+            <div style={{ background: '#0F172A', padding: '18px 20px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <span style={{ fontSize: '11px', color: '#A855F7', fontWeight: 800 }}>المرحلة 3 (6.5s - 8.0s)</span>
+              <h4 style={{ margin: '6px 0 4px', fontSize: '15px', color: '#FFFFFF' }}>الاستقرار وشعاع النجوم (Hero Settle)</h4>
+              <p style={{ margin: 0, fontSize: '13px', color: '#94A3B8', lineHeight: 1.5 }}>
+                الشعار يستقر في الأعلى متألقاً، بينما يمسح شعاع ضوئي سينمائي أفقي كامل الكلمة مع ظهور جملة النظام الذكي.
               </p>
             </div>
           </div>
         </div>
       ) : (
-        <div style={{ background: '#0F172A', borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', maxWidth: '1280px', margin: '0 auto', boxShadow: '0 25px 50px rgba(0,0,0,0.7)' }}>
-          <div style={{ position: 'relative', width: '100%', aspectRatio: '16 / 9', background: '#000000' }}>
-            <video
-              src="/videos/stockly_real_motion_graphics.mp4"
-              controls
-              autoPlay
-              loop
-              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-            />
-          </div>
-          <div style={{ padding: '20px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <h3 style={{ margin: '0 0 6px', fontSize: '18px', color: '#FFFFFF' }}>
-                ملف الفيديو المنتج: stockly_real_motion_graphics.mp4 (210 إطار بمعدل 30 FPS)
-              </h3>
-              <p style={{ margin: 0, color: '#94A3B8', fontSize: '14px' }}>
-                فيديو ريندر حقيقي إطاراً بإطار محسوب فيزيائياً مع دوران اللوغو ومسح الليزر وتدفق البيانات.
-              </p>
-            </div>
-            <a
-              href="/videos/stockly_real_motion_graphics.mp4"
-              download
-              style={{
-                padding: '10px 20px',
-                borderRadius: '8px',
-                background: '#00E599',
-                color: '#070D18',
-                fontWeight: 800,
-                textDecoration: 'none',
-                fontSize: '14px'
-              }}
-            >
-              ⬇ تحميل ملف MP4
-            </a>
-          </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <StocklyMobiusCanvas width={1280} height={720} autoPlay={true} />
         </div>
       )}
 
