@@ -176,9 +176,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setLoading(false);
         return;
       }
-    });
+    const safetyAuthTimer = setTimeout(() => {
+      setLoading(false);
+    }, 500);
 
-    return () => unsubscribe();
+    return () => {
+      clearTimeout(safetyAuthTimer);
+      unsubscribe();
+    };
   }, []);
 
   // Protected Routes Logic

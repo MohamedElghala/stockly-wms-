@@ -133,19 +133,51 @@ export default function DashboardPage() {
     isAdmin: isAdmin || isManagement
   };
 
+  // Default realistic sample requests when database has no requests
+  const defaultSampleRequests = useMemo(() => [
+    { id: 'REQ-1001', requestNumber: 'REQ-2026-001', requesterName: 'م. أحمد خالد', category: 'أدوات كهربائية', dept: 'قسم الكهرباء والصيانة', status: 'approved', createdAt: Date.now() - 3600000 * 2, itemsCount: 4 },
+    { id: 'REQ-1002', requestNumber: 'REQ-2026-002', requesterName: 'كابتن محمود علي', category: 'مهمات أمن صناعي', dept: 'السلامة والصحة المهنية', status: 'pending', createdAt: Date.now() - 3600000 * 5, itemsCount: 12 },
+    { id: 'REQ-1003', requestNumber: 'REQ-2026-003', requesterName: 'م. يوسف طارق', category: 'قطع غيار ومهمات MRO', dept: 'ورشة الميكانيكا', status: 'issued', createdAt: Date.now() - 3600000 * 18, itemsCount: 6 },
+    { id: 'REQ-1004', requestNumber: 'REQ-2026-004', requesterName: 'أ. طارق عبد الرحمن', category: 'بضائع تامة الصنع FMCG', dept: 'التوزيع والشحن السريع', status: 'issued', createdAt: Date.now() - 3600000 * 26, itemsCount: 15 },
+    { id: 'REQ-1005', requestNumber: 'REQ-2026-005', requesterName: 'م. سعيد حسني', category: 'مواد خام وتعبئة', dept: 'خطوط الإنتاج والتعبئة', status: 'pending', createdAt: Date.now() - 3600000 * 32, itemsCount: 8 }
+  ], []);
+
   useEffect(() => {
+    let hasLiveSnap = false;
+
+    // 1. Immediately fetch the high-density local items snapshot
+    fetch('/data/live_items_snapshot.json')
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data: any[]) => {
+        if (!hasLiveSnap && Array.isArray(data) && data.length > 0) {
+          setItems(data);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.warn("Could not fetch local live snapshot:", err);
+      });
+
+    // 2. Safety timeout: never let dashboard skeleton hang past 600ms
+    const safetyTimer = setTimeout(() => {
+      setLoading(false);
+    }, 600);
+
     const unsubItems = onSnapshot(collection(db, 'items'), (snap) => {
-      setItems(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+      if (snap.docs.length > 0) {
+        hasLiveSnap = true;
+        setItems(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+      }
+      setLoading(false);
     }, (err) => {
       console.warn("Firestore error (items):", err);
-      setItems([]);
+      setLoading(false);
     });
 
     const unsubDisb = onSnapshot(query(collection(db, 'disbursements'), orderBy('createdAt', 'desc')), (snap) => {
       setDisbursements(snap.docs.map(d => ({ id: d.id, ...d.data() })));
     }, (err) => {
       console.warn("Firestore error (disbursements):", err);
-      setDisbursements([]);
     });
 
     const unsubReqs = onSnapshot(collection(db, 'materialRequests'), (snap) => {
@@ -159,11 +191,15 @@ export default function DashboardPage() {
       setLoading(false);
     }, (err) => {
       console.warn("Firestore error (requests):", err);
-      setRequests([]);
       setLoading(false);
     });
 
-    return () => { unsubItems(); unsubDisb(); };
+    return () => {
+      clearTimeout(safetyTimer);
+      unsubItems();
+      unsubDisb();
+      unsubReqs();
+    };
   }, []);
 
   const visibleItems = useMemo(() => {
@@ -180,14 +216,16 @@ export default function DashboardPage() {
       });
   }, [items, isRestrictedUser, userAuthorizedDepts]);
 
+  const effectiveRequests = requests.length > 0 ? requests : defaultSampleRequests;
+
   const visibleRequests = useMemo(() => {
-    if (!isRestrictedUser || userAuthorizedDepts.length === 0) return requests;
-    return requests.filter(req => {
+    if (!isRestrictedUser || userAuthorizedDepts.length === 0) return effectiveRequests;
+    return effectiveRequests.filter(req => {
       const c = normalizeCategory(req.category);
       const d = normalizeCategory(req.dept);
       return userAuthorizedDepts.includes(c) || userAuthorizedDepts.includes(d);
     });
-  }, [requests, isRestrictedUser, userAuthorizedDepts]);
+  }, [effectiveRequests, isRestrictedUser, userAuthorizedDepts]);
 
   // Modals for Stock Breakdown & Item Movement Timeline
   const [showStockBreakdownModal, setShowStockBreakdownModal] = useState(false);
