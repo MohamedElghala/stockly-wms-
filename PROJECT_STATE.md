@@ -182,10 +182,16 @@
 - **رابط الإعلان السينمائي التجاري المباشر 3D**: [https://stockly-wms-ruby.vercel.app/trailer](https://stockly-wms-ruby.vercel.app/trailer)
 - **معرض التصاميم العشرة والموشن السينمائي**: [`stockly_top10_designs_and_motion_trailer.md`](file:///C:/Users/Mohamed%20Helmy/.gemini/antigravity/brain/f28bca43-ea48-4387-b9a9-708f3c7a049b/stockly_top10_designs_and_motion_trailer.md)
 
+- **التحقق السحابي الحي على Vercel**:
+  - الكوميت المنشور: `400c381`
+  - تم فحص المسارات مباشرة عبر بروتوكول HTTP وأعادت جميعها `HTTP/1.1 200 OK` (X-Vercel-Cache: PRERENDER):
+    * `https://stockly-wms-ruby.vercel.app/dashboard` -> `HTTP 200 OK`
+    * `https://stockly-wms-ruby.vercel.app/warehouse-map` -> `HTTP 200 OK`
+    * `https://stockly-wms-ruby.vercel.app/trailer` -> `HTTP 200 OK`
+
 ---
 
 ## 3. خارطة الخطوات القادمة للتنفيذ الميداني (Execution Roadmap)
-1. **دفع ونشر التحديثات الكبرى (Push to GitHub & Vercel Deploy)**.
-2. **التحقق السحابي الحي على روابط Vercel بـ HTTP 200 OK**.
-3. **تجهيز وضع الماسح المحمول المخصص للهواتف وأجهزة الجرد اليدوية (Mobile Handheld PWA Scanner Mode)**.
+1. **استعراض المنظومة المحدثة مع المستخدم** والتأكد من ملاءمة التجربة البصرية ثلاثية الأبعاد والإعلان السينمائي لكافة تطلعاته.
+2. **تجهيز وضع الماسح المحمول المخصص للهواتف وأجهزة الجرد اليدوية (Mobile Handheld PWA Scanner Mode)**.
 
