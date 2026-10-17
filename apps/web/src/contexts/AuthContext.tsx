@@ -176,6 +176,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setLoading(false);
         return;
       }
+    });
+
     const safetyAuthTimer = setTimeout(() => {
       setLoading(false);
     }, 500);
