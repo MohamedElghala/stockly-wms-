@@ -43,55 +43,50 @@ export default function BrandLogo({ size = 'md', showSubtitle = true, className 
         >
           <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
             <defs>
-              <linearGradient id="stockly-top-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#4FFFC0" />
-                <stop offset="100%" stopColor="#00E599" />
+              <linearGradient id="stk-titanium-bezel" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#475569" />
+                <stop offset="50%" stopColor="#1E293B" />
+                <stop offset="100%" stopColor="#0F172A" />
               </linearGradient>
-              <linearGradient id="stockly-left-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#0D6B52" />
-                <stop offset="100%" stopColor="#063D2E" />
+              <linearGradient id="stk-glass-top" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.95" />
+                <stop offset="100%" stopColor="#0284C7" stopOpacity="0.85" />
               </linearGradient>
-              <linearGradient id="stockly-right-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#00E599" />
-                <stop offset="100%" stopColor="#059968" />
+              <linearGradient id="stk-glass-left" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#0F766E" stopOpacity="0.95" />
+                <stop offset="100%" stopColor="#042F2E" stopOpacity="0.95" />
               </linearGradient>
+              <linearGradient id="stk-glass-right" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#10B981" stopOpacity="0.95" />
+                <stop offset="100%" stopColor="#047857" stopOpacity="0.95" />
+              </linearGradient>
+              <filter id="core-glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="2.5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
             </defs>
 
-            {/* Isometric Warehouse Box - Top Facet */}
-            <polygon 
-              points="50,14 84,33 50,52 16,33" 
-              fill="url(#stockly-top-grad)" 
-              stroke="#03201C" 
-              strokeWidth="2.5" 
-              strokeLinejoin="round" 
-            />
+            {/* Precision Titanium Outer Corner Brackets */}
+            <path d="M 50 8 L 88 28 L 50 48 L 12 28 Z" fill="none" stroke="url(#stk-titanium-bezel)" strokeWidth="5" strokeLinejoin="round" />
+            <path d="M 12 28 L 12 72 L 50 92 L 50 48 Z" fill="none" stroke="url(#stk-titanium-bezel)" strokeWidth="5" strokeLinejoin="round" />
+            <path d="M 88 28 L 88 72 L 50 92 L 50 48 Z" fill="none" stroke="url(#stk-titanium-bezel)" strokeWidth="5" strokeLinejoin="round" />
 
-            {/* Isometric Warehouse Box - Left Facet */}
-            <polygon 
-              points="16,33 50,52 50,86 16,67" 
-              fill="url(#stockly-left-grad)" 
-              stroke="#03201C" 
-              strokeWidth="2.5" 
-              strokeLinejoin="round" 
-            />
+            {/* Chamfered Facets - Top Sapphire Glass */}
+            <polygon points="50,14 82,30 50,46 18,30" fill="url(#stk-glass-top)" stroke="#38BDF8" strokeWidth="1" />
+            {/* Left Emerald/Teal Glass Facet */}
+            <polygon points="18,30 50,46 50,82 18,66" fill="url(#stk-glass-left)" stroke="#14B8A6" strokeWidth="1" />
+            {/* Right Radiant Emerald Facet */}
+            <polygon points="50,46 82,30 82,66 50,82" fill="url(#stk-glass-right)" stroke="#34D399" strokeWidth="1" />
 
-            {/* Isometric Warehouse Box - Right Facet */}
-            <polygon 
-              points="50,52 84,33 84,67 50,86" 
-              fill="url(#stockly-right-grad)" 
-              stroke="#03201C" 
-              strokeWidth="2.5" 
-              strokeLinejoin="round" 
-            />
+            {/* Smart Micro-Conduit Lines & Barcode Telemetry */}
+            <line x1="56" y1="49" x2="56" y2="72" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" opacity="0.95" />
+            <line x1="62" y1="46" x2="62" y2="69" stroke="#38BDF8" strokeWidth="1.5" strokeLinecap="round" opacity="0.9" />
+            <line x1="68" y1="43" x2="68" y2="66" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" opacity="0.95" />
+            <line x1="74" y1="40" x2="74" y2="63" stroke="#34D399" strokeWidth="1.5" strokeLinecap="round" opacity="0.9" />
 
-            {/* Stylized Barcode Slits on Right Facet */}
-            <line x1="58" y1="52" x2="58" y2="76" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" opacity="0.95" />
-            <line x1="64" y1="49" x2="64" y2="73" stroke="#00F0FF" strokeWidth="1.5" strokeLinecap="round" opacity="0.9" />
-            <line x1="70" y1="46" x2="70" y2="70" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" opacity="0.95" />
-            <line x1="76" y1="43" x2="76" y2="67" stroke="#00E599" strokeWidth="1.5" strokeLinecap="round" opacity="0.85" />
-
-            {/* Dynamic Center Pulse Core */}
-            <circle cx="50" cy="52" r="3.5" fill="#00F0FF" />
+            {/* Intelligent Processor Core (Glowing Microchip) */}
+            <rect x="44" y="44" width="12" height="12" rx="2" fill="#0F172A" stroke="#00F0FF" strokeWidth="1.5" transform="rotate(45 50 50)" filter="url(#core-glow)" />
+            <circle cx="50" cy="50" r="3" fill="#FFFFFF" />
           </svg>
         </div>
 

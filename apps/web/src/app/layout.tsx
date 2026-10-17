@@ -25,12 +25,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.ico?v=2.4', sizes: 'any' },
-      { url: '/icon.png?v=2.4', type: 'image/png' },
-      { url: '/icon.svg?v=2.4', type: 'image/svg+xml' }
+      { url: '/favicon.ico?v=3.5', sizes: 'any' },
+      { url: '/icon.png?v=3.5', type: 'image/png' },
+      { url: '/icon.svg?v=3.5', type: 'image/svg+xml' }
     ],
-    shortcut: '/favicon.ico?v=2.4',
-    apple: '/apple-icon.png?v=2.4'
+    shortcut: '/favicon.ico?v=3.5',
+    apple: '/apple-icon.png?v=3.5'
   }
 };
 
@@ -42,9 +42,9 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico?v=2.4" sizes="any" />
-        <link rel="icon" href="/icon.svg?v=2.4" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-icon.png?v=2.4" />
+        <link rel="icon" href="/favicon.ico?v=3.5" sizes="any" />
+        <link rel="icon" href="/icon.svg?v=3.5" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/apple-icon.png?v=3.5" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>

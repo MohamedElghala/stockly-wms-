@@ -581,62 +581,204 @@ export default function DashboardPage() {
   return (
     <div className="dashboard-page-container">
       
-      {/* ──── HEADER ──── */}
-      <header className="flex-between animate-fade-in dashboard-header-container" style={{ padding: '0 0 1.5rem 0', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem' }}>
+      {/* ──── EXECUTIVE COMMAND HEADER ──── */}
+      <header className="flex-between animate-fade-in dashboard-header-container" style={{ padding: '0 0 1.5rem 0', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1.25rem', alignItems: 'center' }}>
         <div>
-          <h1 className="dashboard-main-title" style={{ margin: '0 0 0.25rem 0', fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.5px' }}>
-            {t('dashboard.title')}
-          </h1>
-          <p className="text-secondary" style={{ fontSize: '0.95rem', margin: 0, fontWeight: 500 }}>
-            {activeRole.isAdmin ? t('dashboard.subtitle_admin') : `${t('dashboard.subtitle_dept')}${activeRole.dept}`}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
+            <h1 className="dashboard-main-title" style={{ margin: 0, fontSize: '1.85rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.5px' }}>
+              لوحة التحكم المركزية
+            </h1>
+            <span style={{ 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '5px', 
+              fontSize: '0.72rem', 
+              fontWeight: 700, 
+              padding: '3px 9px', 
+              borderRadius: '9999px', 
+              background: 'rgba(16, 185, 129, 0.1)', 
+              color: '#10B981', 
+              border: '1px solid rgba(16, 185, 129, 0.25)' 
+            }}>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10B981', boxShadow: '0 0 6px #10B981' }}></span>
+              تشغيل حي مباشر
+            </span>
+          </div>
+          <p className="text-secondary" style={{ fontSize: '0.88rem', margin: 0, fontWeight: 500, color: 'var(--text-secondary)' }}>
+            {activeRole.isAdmin ? 'المستودع المركزي العام • مراقبة التدفق اللوجستي والجرد وإدارة الأرصدة اللحظية' : `نطاق الصلاحيات: ${activeRole.dept}`}
           </p>
         </div>
 
         {/* Right Section: Quick Action Buttons & Role Badge */}
-        <div className="dashboard-quick-actions" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
+        <div className="dashboard-quick-actions" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
           
-          {/* Material Requests - For All Roles */}
-          <Link href="/requests" className="btn btn-outline quick-action-btn" style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#3b82f6', borderColor: 'rgba(59, 130, 246, 0.4)', fontWeight: 600 }}>
-            <ArrowRightLeft size={16} />
-            <span>{t('nav.requests')}</span>
-          </Link>
-
-          {/* Purchase Requisition - For Admin, Management, and Supervisor */}
-          {(isAdmin || isManagement || userData?.role === 'supervisor') && (
-            <Link href="/purchase-requisition" className="btn btn-outline quick-action-btn" style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#f59e0b', borderColor: 'rgba(245, 158, 11, 0.4)', fontWeight: 600 }}>
-              <ShoppingCart size={16} />
-              <span>{t('dashboard.quickPurchaseRequisition')}</span>
-            </Link>
-          )}
-
-          {/* Inventory Sheets - Super Admin Only */}
-          {isAdmin && (
-            <Link href="/inventory-sheets" className="btn btn-outline quick-action-btn" style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 600 }}>
-              <FileText size={16} />
-              <span>{t('dashboard.quickInventorySheets')}</span>
-            </Link>
-          )}
-
-          {/* Additions - Super Admin Only */}
-          {isAdmin && (
-            <Link href="/additions" className="btn btn-outline quick-action-btn" style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#10b981', borderColor: 'rgba(16, 185, 129, 0.4)', fontWeight: 600 }}>
-              <PlusCircle size={16} />
-              <span>{t('dashboard.quickAddition')}</span>
-            </Link>
-          )}
-
-          {/* Disbursements - Super Admin Only */}
-          {isAdmin && (
-            <Link href="/disbursements" className="btn btn-primary quick-action-btn primary-action" style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 600 }}>
-              <ArrowRightLeft size={16} />
-              <span>{t('dashboard.quickDisbursement')}</span>
-            </Link>
-          )}
-
-          <div className="dashboard-user-badge" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(0, 229, 153, 0.12)', padding: '0.45rem 0.95rem', borderRadius: '8px', border: '1px solid rgba(0, 229, 153, 0.3)', fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent-primary)' }}>
-            <Users size={16} />
-            <span>{userData?.name ? `${userData.name} | ${getFormattedUserRole()}` : getFormattedUserRole()}</span>
+          {/* Executive Operator Profile Pill */}
+          <div 
+            className="dashboard-user-badge" 
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px', 
+              background: 'var(--bg-secondary)', 
+              padding: '5px 12px', 
+              borderRadius: '10px', 
+              border: '1px solid var(--border-light)', 
+              boxShadow: '0 1px 3px rgba(15, 23, 42, 0.04)' 
+            }}
+          >
+            <div style={{ 
+              width: '26px', 
+              height: '26px', 
+              borderRadius: '7px', 
+              background: 'var(--accent-primary-glass)', 
+              color: 'var(--accent-primary)', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              fontWeight: 800, 
+              fontSize: '0.72rem' 
+            }}>
+              {userData?.name ? userData.name.substring(0, 2).toUpperCase() : 'AD'}
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.15 }}>
+              <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                {userData?.name || 'Mohamed Helmy'}
+              </span>
+              <span style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
+                {getFormattedUserRole()}
+              </span>
+            </div>
           </div>
+
+          {/* Secondary Management Group */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'var(--bg-tertiary)', padding: '3px', borderRadius: '10px', border: '1px solid var(--border-light)' }}>
+            <Link 
+              href="/requests" 
+              className="btn" 
+              title="أذون وطلبات الصرف"
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '6px', 
+                height: '32px', 
+                padding: '0 10px', 
+                borderRadius: '7px', 
+                fontSize: '0.8rem', 
+                fontWeight: 600, 
+                color: 'var(--text-primary)', 
+                background: 'var(--bg-secondary)', 
+                border: '1px solid var(--border-light)',
+                textDecoration: 'none',
+                boxShadow: '0 1px 2px rgba(15, 23, 42, 0.04)'
+              }}
+            >
+              <ArrowRightLeft size={14} color="var(--accent-cobalt)" />
+              <span>طلبات الصرف</span>
+            </Link>
+
+            {(isAdmin || isManagement || userData?.role === 'supervisor') && (
+              <Link 
+                href="/purchase-requisition" 
+                className="btn" 
+                title="طلبات شراء النواقص"
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '6px', 
+                  height: '32px', 
+                  padding: '0 10px', 
+                  borderRadius: '7px', 
+                  fontSize: '0.8rem', 
+                  fontWeight: 600, 
+                  color: 'var(--text-secondary)', 
+                  background: 'transparent', 
+                  border: 'none',
+                  textDecoration: 'none'
+                }}
+              >
+                <ShoppingCart size={14} />
+                <span>طلب شراء</span>
+              </Link>
+            )}
+
+            {isAdmin && (
+              <Link 
+                href="/inventory-sheets" 
+                className="btn" 
+                title="كشوفات الجرد المخزني"
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '6px', 
+                  height: '32px', 
+                  padding: '0 10px', 
+                  borderRadius: '7px', 
+                  fontSize: '0.8rem', 
+                  fontWeight: 600, 
+                  color: 'var(--text-secondary)', 
+                  background: 'transparent', 
+                  border: 'none',
+                  textDecoration: 'none'
+                }}
+              >
+                <FileText size={14} />
+                <span>كشوف الجرد</span>
+              </Link>
+            )}
+          </div>
+
+          {/* Primary Operations Actions */}
+          {isAdmin && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Link 
+                href="/additions" 
+                className="btn" 
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '6px', 
+                  height: '38px', 
+                  padding: '0 14px', 
+                  borderRadius: '10px', 
+                  fontWeight: 700, 
+                  fontSize: '0.84rem', 
+                  color: 'var(--text-primary)', 
+                  background: 'var(--bg-secondary)', 
+                  border: '1px solid var(--border-light)',
+                  textDecoration: 'none',
+                  boxShadow: '0 1px 3px rgba(15, 23, 42, 0.05)',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <PlusCircle size={15} color="var(--accent-primary)" />
+                <span>إضافة توريد</span>
+              </Link>
+
+              <Link 
+                href="/disbursements" 
+                className="btn btn-primary" 
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '6px', 
+                  height: '38px', 
+                  padding: '0 16px', 
+                  borderRadius: '10px', 
+                  fontWeight: 700, 
+                  fontSize: '0.84rem', 
+                  color: '#FFFFFF', 
+                  background: 'linear-gradient(135deg, #10B981, #059669)', 
+                  border: 'none',
+                  textDecoration: 'none',
+                  boxShadow: '0 2px 8px rgba(16, 185, 129, 0.35)',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <ArrowRightLeft size={15} />
+                <span>صرف فوري</span>
+              </Link>
+            </div>
+          )}
         </div>
       </header>
 

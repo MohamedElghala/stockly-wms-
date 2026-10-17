@@ -104,10 +104,10 @@ export default function WarehouseSelector() {
           height: '38px',
           padding: '0 12px',
           borderRadius: '10px',
-          background: open ? 'var(--accent-primary-glass)' : 'rgba(18, 30, 52, 0.65)',
+          background: open ? 'var(--accent-primary-glass)' : 'var(--bg-tertiary)',
           border: '1px solid',
-          borderColor: open ? 'var(--accent-primary)' : 'rgba(255, 255, 255, 0.09)',
-          boxShadow: open ? '0 0 16px var(--accent-primary-glass)' : 'none',
+          borderColor: open ? 'var(--accent-primary)' : 'var(--border-light)',
+          boxShadow: open ? '0 0 12px var(--accent-primary-glass)' : '0 1px 3px rgba(15, 23, 42, 0.05)',
           color: 'var(--text-primary)',
           cursor: 'pointer',
           transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'

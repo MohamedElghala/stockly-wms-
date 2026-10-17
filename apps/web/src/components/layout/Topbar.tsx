@@ -264,19 +264,19 @@ export default function Topbar() {
             flexDirection: 'row', 
             alignItems: 'center', 
             gap: '0.5rem', 
-            padding: '0.5rem 1rem', 
-            borderRadius: 'var(--radius-md)', 
+            padding: '0.45rem 0.95rem', 
+            borderRadius: '10px', 
             textDecoration: 'none', 
             color: pathname === '/dashboard' ? 'var(--accent-primary)' : 'var(--text-secondary)', 
-            background: pathname === '/dashboard' ? 'var(--accent-primary-glass)' : 'transparent', 
-            border: pathname === '/dashboard' ? '1px solid var(--accent-primary)' : '1px solid transparent',
+            background: pathname === '/dashboard' ? 'var(--bg-secondary)' : 'transparent', 
+            border: pathname === '/dashboard' ? '1px solid var(--border-light)' : '1px solid transparent',
             fontWeight: pathname === '/dashboard' ? 700 : 500, 
-            transition: 'all 0.2s ease',
-            boxShadow: pathname === '/dashboard' ? '0 0 12px var(--accent-primary-glass)' : 'none'
+            transition: 'all 0.15s ease',
+            boxShadow: pathname === '/dashboard' ? '0 1px 3px rgba(15, 23, 42, 0.06)' : 'none'
           }}
           className="nav-home-tab"
         >
-          <LayoutDashboard size={17} />
+          <LayoutDashboard size={16} color={pathname === '/dashboard' ? 'var(--accent-primary)' : 'currentColor'} />
           <span>{t('nav.home')}</span>
         </Link>
         {navGroups.map((group, idx) => (
